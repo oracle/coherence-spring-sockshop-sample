@@ -1,0 +1,107 @@
+#
+# Copyright (c) 2021 Oracle and/or its affiliates.
+#
+# Licensed under the Universal Permissive License v 1.0 as shown at
+# https://oss.oracle.com/licenses/upl.
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sockshop-ingress
+spec:
+  rules:
+  - host: ${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+    http:
+      paths:
+      - backend:
+          serviceName: front-end
+          servicePort: 80
+  - host: jaeger.${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+    http:
+      paths:
+      - backend:
+          serviceName: jaeger-query
+          servicePort: 16686
+  - host: api.${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+    http:
+      paths:
+        - path: /carts
+          backend:
+            serviceName: carts
+            servicePort: 80
+        - path: /catalogue
+          backend:
+            serviceName: catalogue
+            servicePort: 80
+        - path: /orders
+          backend:
+            serviceName: orders
+            servicePort: 80
+        - path: /paymentAuth
+          backend:
+            serviceName: payment
+            servicePort: 80
+        - path: /shipping
+          backend:
+            serviceName: shipping
+            servicePort: 80
+        - path: /login
+          backend:
+            serviceName: user
+            servicePort: 80
+        - path: /register
+          backend:
+            serviceName: user
+            servicePort: 80
+        - path: /customers
+          backend:
+            serviceName: user
+            servicePort: 80
+        - path: /addresses
+          backend:
+            serviceName: user
+            servicePort: 80
+        - path: /cards
+          backend:
+            serviceName: user
+            servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$$2
+  name: mp-ingress
+spec:
+  rules:
+  - host: mp.${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+    http:
+      paths:
+        - path: /swagger(/|$)(.*)
+          backend:
+            serviceName: swagger
+            servicePort: 80
+        - path: /carts(/|$)(.*)
+          backend:
+            serviceName: carts
+            servicePort: 80
+        - path: /catalogue(/|$)(.*)
+          backend:
+            serviceName: catalogue
+            servicePort: 80
+        - path: /orders(/|$)(.*)
+          backend:
+            serviceName: orders
+            servicePort: 80
+        - path: /payments(/|$)(.*)
+          backend:
+            serviceName: payment
+            servicePort: 80
+        - path: /shipping(/|$)(.*)
+          backend:
+            serviceName: shipping
+            servicePort: 80
+        - path: /users(/|$)(.*)
+          backend:
+            serviceName: user
+            servicePort: 80

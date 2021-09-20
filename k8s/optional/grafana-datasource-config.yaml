@@ -1,0 +1,28 @@
+#
+# Copyright (c) 2021 Oracle and/or its affiliates.
+#
+# Licensed under the Universal Permissive License v 1.0 as shown at
+# https://oss.oracle.com/licenses/upl.
+#
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sockshop-grafana-datasource
+  namespace: monitoring
+data:
+  prometheus.yaml: |-
+    {
+        "apiVersion": 1,
+        "datasources": [
+            {
+                "access":"proxy",
+                "editable": true,
+                "name": "Prometheus",
+                "isDefault": true,
+                "orgId": 1,
+                "type": "prometheus",
+                "url": "http://prometheus-operated:9090/",
+                "version": 1
+            }
+        ]
+    }

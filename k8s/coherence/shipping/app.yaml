@@ -1,0 +1,37 @@
+#
+# Copyright (c) 2021 Oracle and/or its affiliates.
+#
+# Licensed under the Universal Permissive License v 1.0 as shown at
+# https://oss.oracle.com/licenses/upl.
+#
+apiVersion: coherence.oracle.com/v1
+kind: Coherence
+metadata:
+  name: shipping
+spec:
+#  cluster: SockShop
+  role: Shipping
+  replicas: 1
+  image: ghcr.io/coherence-sockshop-spring/shipping:1.0.0-SNAPSHOT
+  imagePullPolicy: IfNotPresent
+  env:
+    - name: TRACING_HOST
+      value: "jaeger-collector"
+    - name: JAEGER_SAMPLER_TYPE
+      value: "const"
+    - name: JAEGER_SAMPLER_PARAM
+      value: "1"
+  application:
+    main: io.spring.examples.sockshop.shipping.ShippingApp
+  jvm:
+    memory:
+      heapSize: 2g
+  ports:
+    - name: http
+      port: 8080
+      service:
+        name: shipping
+        port: 80
+      serviceMonitor:
+        enabled: true
+        path: /actuator/prometheus

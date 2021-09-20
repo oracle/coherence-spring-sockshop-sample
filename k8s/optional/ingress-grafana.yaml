@@ -1,0 +1,24 @@
+#
+# Copyright (c) 2021 Oracle and/or its affiliates.
+#
+# Licensed under the Universal Permissive License v 1.0 as shown at
+# https://oss.oracle.com/licenses/upl.
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+spec:
+  rules:
+  - host: grafana.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-grafana
+          servicePort: 80
+  - host: prometheus.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-operated
+          servicePort: 9090

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2021 Oracle and/or its affiliates.
+
+  Licensed under the Universal Permissive License v 1.0 as shown at
+  https://oss.oracle.com/licenses/upl.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.spring.examples.sockshop</groupId>
+    <artifactId>sockshop-spring</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.minimum.version>3.6.0</maven.minimum.version>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
+
+        <container.repo>ghcr.io/coherence-sockshop-spring</container.repo>
+        <container.version>${project.version}</container.version>
+        <jib.goal>dockerBuild</jib.goal>
+
+        <version.lib.coherence>21.06</version.lib.coherence>
+        <version.lib.coherence-spring>3.0.0-SNAPSHOT</version.lib.coherence-spring>
+        <version.lib.lombok>1.18.18</version.lib.lombok>
+        <version.lib.bedrock>5.0.16</version.lib.bedrock>
+        <version.lib.junit>5.7.2</version.lib.junit>
+        <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
+        <version.plugin.surefire>2.22.2</version.plugin.surefire>
+        <version.plugin.failsafe>2.22.2</version.plugin.failsafe>
+        <version.opentracing-spring-jaeger>3.3.1</version.opentracing-spring-jaeger>
+        <version.springfox>3.0.0</version.springfox>
+
+        <spring-boot.version>2.5.2</spring-boot.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <version.plugin.jib>2.7.1</version.plugin.jib>
+    </properties>
+    <modules>
+        <module>carts</module>
+        <module>catalog</module>
+        <module>users</module>
+        <module>orders</module>
+        <module>payment</module>
+        <module>shipping</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
