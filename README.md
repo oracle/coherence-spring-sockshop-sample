@@ -1,17 +1,26 @@
-# Spring Sock Shop 
+# Coherence Spring Sock Shop 
 
-This project is an implementation of the microservices based application
-using [Spring Boot Framework](https://spring.io/projects/spring-boot).
+This project is an implementation of a stateful, microservices based application that
+uses [Oracle Coherence CE](https://coherence.community/) as a scalable embedded data
+store, and [Spring Boot](https://spring.io/projects/spring-boot) as application
+framework.
 
-The application is an online store that sells, well, socks, and is based
-on the canonical [SockShop Microservices Demo](https://microservices-demo.github.io)
+The application is an online store that sells socks, and is based
+on the [SockShop Microservices Demo](https://microservices-demo.github.io)
 originally written and published under Apache 2.0 license by [Weaveworks](https://go.weave.works/socks).
 
 You can see a working demo of the original application [here](http://socks.weave.works/).
 
 This demo still uses the original front end implementation provided by Weaveworks,
-but all back end services have been re-implemented from scratch to use Helidon MP 
-and showcase its features and best practices.
+but all back end services have been re-implemented from scratch using Spring Boot 
+and Oracle Coherence, in order to showcase some features of the [Coherence Spring](https://github.com/coherence-community/coherence-spring) 
+integration.
+
+We also have the implementations of the same application that use Micronaut or Helidon
+as the application framework, in case one of those is your framework of choice.
+
+* [Coherence Micronaut Sock Shop](https://github.com/oracle/coherence-micronaut-sockshop-sample)
+* [Coherence Helidon Sock Shop](https://github.com/oracle/coherence-helidon-sockshop-sample)
 
 # Table of Contents
 

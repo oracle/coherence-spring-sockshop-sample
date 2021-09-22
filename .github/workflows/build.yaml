@@ -1,0 +1,49 @@
+name: Java CI
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * *"
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+    - name: Cache Maven packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Build with Maven
+      env:
+        MAVEN_OPTS: -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+      run: mvn -B install --file pom.xml
+    - name: Push container images
+      env:
+        REGISTRY_USER: ${{ github.actor }}
+        REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo $REGISTRY_PASSWORD | docker login ghcr.io -u $REGISTRY_USER --password-stdin
+        mvn package --file pom.xml -Pcontainer -DskipTests
+        docker push ghcr.io/oracle/coherence-spring-sockshop-carts:21.06.1
+        docker push ghcr.io/oracle/coherence-spring-sockshop-catalog:21.06.1
+        docker push ghcr.io/oracle/coherence-spring-sockshop-orders:21.06.1
+        docker push ghcr.io/oracle/coherence-spring-sockshop-payment:21.06.1
+        docker push ghcr.io/oracle/coherence-spring-sockshop-shipping:21.06.1
+        docker push ghcr.io/oracle/coherence-spring-sockshop-users:21.06.1
+      if: github.event_name == 'push'

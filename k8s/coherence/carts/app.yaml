@@ -12,7 +12,7 @@ spec:
 #  cluster: SockShop
   role: Carts
   replicas: 1
-  image: ghcr.io/coherence-sockshop-spring/carts:1.0.0-SNAPSHOT
+  image: ghcr.io/oracle/coherence-spring-sockshop-carts:21.06.1
   imagePullPolicy: IfNotPresent
   env:
     - name: TRACING_HOST

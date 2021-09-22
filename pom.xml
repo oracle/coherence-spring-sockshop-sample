@@ -13,7 +13,7 @@
     <groupId>io.spring.examples.sockshop</groupId>
     <artifactId>sockshop-spring</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>21.06.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,27 +22,27 @@
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <java.version>11</java.version>
 
-        <container.repo>ghcr.io/coherence-sockshop-spring</container.repo>
+        <container.repo>ghcr.io/oracle/coherence-spring-sockshop</container.repo>
         <container.version>${project.version}</container.version>
         <jib.goal>dockerBuild</jib.goal>
 
-        <version.lib.coherence>21.06</version.lib.coherence>
-        <version.lib.coherence-spring>3.0.0-SNAPSHOT</version.lib.coherence-spring>
-        <version.lib.lombok>1.18.18</version.lib.lombok>
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
+        <version.lib.coherence>${project.version}</version.lib.coherence>
+        <version.lib.coherence-spring>3.0.0</version.lib.coherence-spring>
         <version.lib.junit>5.7.2</version.lib.junit>
+        <version.lib.lombok>1.18.18</version.lib.lombok>
+        <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
-        <version.plugin.surefire>2.22.2</version.plugin.surefire>
-        <version.plugin.failsafe>2.22.2</version.plugin.failsafe>
-        <version.opentracing-spring-jaeger>3.3.1</version.opentracing-spring-jaeger>
-        <version.springfox>3.0.0</version.springfox>
+        <version.lib.spring-boot>2.5.2</version.lib.spring-boot>
+        <version.lib.spring-cloud>2020.0.3</version.lib.spring-cloud>
+        <version.lib.springfox>3.0.0</version.lib.springfox>
 
-        <spring-boot.version>2.5.2</spring-boot.version>
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <version.plugin.jib>2.7.1</version.plugin.jib>
+        <version.plugin.jib>3.1.4</version.plugin.jib>
+        <version.plugin.failsafe>2.22.2</version.plugin.failsafe>
+        <version.plugin.surefire>2.22.2</version.plugin.surefire>
     </properties>
+
     <modules>
         <module>carts</module>
         <module>catalog</module>
@@ -57,25 +57,27 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${version.lib.spring-boot}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>${version.lib.spring-cloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${version.plugin.failsafe}</version>
                     <executions>
                         <execution>
                             <goals>

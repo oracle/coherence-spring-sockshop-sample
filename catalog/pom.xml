@@ -13,7 +13,7 @@
     <parent>
         <artifactId>sockshop-spring</artifactId>
         <groupId>io.spring.examples.sockshop</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>21.06.1</version>
     </parent>
 
     <artifactId>catalog</artifactId>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
-            <version>${version.springfox}</version>
+            <version>${version.lib.springfox}</version>
         </dependency>
 
         <!-- Coherence dependencies -->
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-            <version>${version.opentracing-spring-jaeger}</version>
+            <version>${version.lib.opentracing-spring-jaeger}</version>
         </dependency>
 
         <!-- test dependencies -->
@@ -176,7 +176,7 @@
                                 </image>
                             </from>
                             <to>
-                                <image>${container.repo}/${project.artifactId}</image>
+                                <image>${container.repo}-${project.artifactId}</image>
                                 <tags>
                                     <tag>${container.version}</tag>
                                 </tags>
