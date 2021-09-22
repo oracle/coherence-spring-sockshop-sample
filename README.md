@@ -16,7 +16,7 @@ but all back end services have been re-implemented from scratch using Spring Boo
 and Oracle Coherence, in order to showcase some features of the [Coherence Spring](https://github.com/coherence-community/coherence-spring) 
 integration.
 
-We also have the implementations of the same application that use Micronaut or Helidon
+We also provide the implementations of the same application that use Micronaut or Helidon
 as the application framework, in case one of those is your framework of choice.
 
 * [Coherence Micronaut Sock Shop](https://github.com/oracle/coherence-micronaut-sockshop-sample)
