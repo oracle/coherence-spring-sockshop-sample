@@ -8,9 +8,10 @@ package com.oracle.coherence.spring.sockshop.users.controller;
 
 import com.oracle.coherence.spring.sockshop.users.controller.support.BooleanStatusResponse;
 import com.oracle.coherence.spring.sockshop.users.controller.support.IdStatusResponse;
+import com.oracle.coherence.spring.sockshop.users.controller.support.exceptions.AddressNotFoundException;
 import com.oracle.coherence.spring.sockshop.users.model.Address;
 import com.oracle.coherence.spring.sockshop.users.model.AddressId;
-import com.oracle.coherence.spring.sockshop.users.repository.CoherenceUserRepository;
+import com.oracle.coherence.spring.sockshop.users.model.User;
 
 import com.oracle.coherence.spring.sockshop.users.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,68 +21,77 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
-import java.util.Collections;
-import java.util.List;
-
 @RestController
-@RequestMapping("/addresses")
-public class AddressController implements AddressApi {
+@RequestMapping(
+		path = "/addresses",
+		consumes = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE},
+		produces = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE})
+public class AddressController {
 
 	@Autowired
 	private UserService userService;
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping
 	@Operation(summary = "Return all addresses associated with a user; or an empty list if no address found")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	public ResponseEntity<List<Address>> getAllAddresses() {
-		return new ResponseEntity<>(Collections.emptyList(), //TODO
-				HttpStatus.OK);
+	public CollectionModel<Address> getAllAddresses(
+			@AuthenticationPrincipal org.springframework.security.core.userdetails.User securityUser) {
+		final User user = this.userService.getUser(securityUser.getUsername());
+		return CollectionModel.of(user.getAddresses());
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping
 	@Operation(summary = "Register address for a user; no-op if the address exist")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if address is successfully registered")
 	})
 	//@NewSpan
-	public ResponseEntity<IdStatusResponse> registerAddress(
+	public IdStatusResponse registerAddress(
 			@Parameter(description = "Add Address request") @RequestBody AddAddressRequest req) {
 		Address address = new Address(req.number, req.street, req.city, req.postcode, req.country);
 		AddressId id = this.userService.addAddress(req.userID, address);
-		return ResponseEntity.ok(new IdStatusResponse(id.toString()));
+		return new IdStatusResponse(id.toString());
 	}
 
 
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/{id}")
 	@Operation(summary = "Return addresses for the specified identifier")
 //	@NewSpan
 	public Address getAddress(@Parameter(description = "Address identifier")
 					   @PathVariable("id") AddressId id) {
-		return this.userService.getAddress(id);
+		final Address address = this.userService.getAddress(id);
+		if (address != null) {
+			return address;
+		}
+		else {
+			throw new AddressNotFoundException();
+		}
 	}
 
-	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete address for the specified identifier")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if address is successfully deleted")
 	})
 //	@NewSpan
-	public ResponseEntity deleteAddress(@Parameter(description = "Address identifier") @PathVariable("id") AddressId id) {
+	public BooleanStatusResponse deleteAddress(@Parameter(description = "Address identifier") @PathVariable("id") AddressId id) {
+		BooleanStatusResponse booleanStatusResponse;
 		try {
 			this.userService.removeAddress(id);
-			return ResponseEntity.ok(new BooleanStatusResponse(true));
+			booleanStatusResponse = new BooleanStatusResponse(true);
 		}
 		catch (RuntimeException e) {
-			return ResponseEntity.ok(new BooleanStatusResponse(false));
+			booleanStatusResponse = new BooleanStatusResponse(false);
 		}
+		return booleanStatusResponse;
 	}
 
 	@NoArgsConstructor

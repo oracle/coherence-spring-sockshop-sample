@@ -7,20 +7,18 @@
 package com.oracle.coherence.spring.sockshop.users.controller.converters;
 
 import com.oracle.coherence.spring.sockshop.users.model.CardId;
-import org.springframework.beans.TypeConverter;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
-public class StringToCardIdConverter { // implements TypeConverter<String, CardId> {
-//    @Override
-//    public Optional<CardId> convert(String input, Class<CardId> targetType, ConversionContext context) {
-//        if (input != null) {
-//            try {
-//                return Optional.of(new CardId(input));
-//            } catch (IllegalArgumentException e) {
-//                context.reject(e);
-//            }
-//        }
-//        return Optional.empty();
-//    }
+@Component
+public class StringToCardIdConverter implements Converter<String, CardId> {
+	@Override
+	public CardId convert(String source) {
+		if (source != null) {
+			return new CardId(source);
+		}
+		else {
+			return null;
+		}
+	}
 }

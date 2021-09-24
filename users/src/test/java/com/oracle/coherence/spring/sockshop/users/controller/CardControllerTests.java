@@ -71,10 +71,14 @@ public class CardControllerTests {
 
 	@Test
 	public void testGetCard() {
-		User u = this.userService.getOrCreate("cardUser");
-		u.setUsername("cardUser");
-		CardId cardId = u.addCard(new Card("3691369136913691", "01/21", "789")).getId();
-        this.userService.register(u);
+		final User user = this.userService.getOrCreate("cardUser");
+		user.setUsername("cardUser");
+		user.setPassword("not-a-secret");
+
+		final Card card = new Card("3691369136913691", "01/21", "789");
+		final CardId cardId = user.addCard(card).getCardId();
+
+        this.userService.register(user);
 		given().
 				pathParam("id", cardId.toString()).
 				when().
@@ -87,10 +91,14 @@ public class CardControllerTests {
 
 	@Test
 	public void testDeleteCard() {
-		User u = this.userService.getOrCreate("cardUser");
-		u.setUsername("cardUser");
-		CardId cardId = u.addCard(new Card("3691369136913691", "01/21", "789")).getId();
-        this.userService.register(u);
+		final User user = this.userService.getOrCreate("cardUser");
+		user.setUsername("cardUser");
+		user.setPassword("not-a-secret");
+
+		final Card card = new Card("3691369136913691", "01/21", "789");
+		final CardId cardId = user.addCard(card).getCardId();
+
+        this.userService.register(user);
 		given().
 				pathParam("id", cardId.toString()).
 				when().

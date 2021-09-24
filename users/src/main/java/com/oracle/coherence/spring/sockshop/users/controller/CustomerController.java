@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.core.EmbeddedWrappers;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,20 +33,23 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping(
+		path = "/customers",
+		consumes = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE},
+		produces = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE})
 public class CustomerController {
 
 	@Autowired
 	private UserService userService;
 
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping
 	@Operation(summary = "Return all customers; or empty collection if no customer found")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
 	//@NewSpan
-	public ResponseEntity<CollectionModel<User>> getAllCustomers() {
+	public CollectionModel<User> getAllCustomers() {
 		final Collection<User> users = this.userService.getAllUsers();
 		for (final User user : users) {
 			final Link selfLink = linkTo(methodOn(CustomerController.class)
@@ -56,40 +59,40 @@ public class CustomerController {
 		final Link link = linkTo(methodOn(CustomerController.class)
 				.getAllCustomers()).withSelfRel();
 		final CollectionModel<User> result = CollectionModel.of(users, link);
-		return ResponseEntity.ok(result);
+		return result;
 	}
 
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/{id}")
 	@Operation(summary = "Return customer for the specified identifier")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
 	//@NewSpan
-	public ResponseEntity<User> getCustomer(
+	public User getCustomer(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
-		return ResponseEntity.ok(userService.getOrCreate(id));
+		return userService.getOrCreate(id);
 	}
 
-	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete customer for the specified identifier")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the delete is successful")
 	})
 	//@NewSpan
-	public ResponseEntity<BooleanStatusResponse> deleteCustomer(
+	public BooleanStatusResponse deleteCustomer(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		User prev = this.userService.removeUser(id);
-		return ResponseEntity.ok(new BooleanStatusResponse(prev != null));
+		return new BooleanStatusResponse(prev != null);
 	}
 
 	//
-	@GetMapping(value = "/{id}/cards", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/{id}/cards")
 	@Operation(summary = "Return all cards for the specified customer identifier")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
 	//@NewSpan
-	public ResponseEntity<CollectionModel<Object>> getCustomerCards(
+	public CollectionModel<Object> getCustomerCards(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		final User user = this.userService.getUser(id);
 		final Link link = linkTo(methodOn(CustomerController.class)
@@ -100,16 +103,16 @@ public class CustomerController {
 				? new ArrayList<>(cards)
 				: Collections.singletonList(new EmbeddedWrappers(false).emptyCollectionOf(Card.class));
 		CollectionModel<Object> result = CollectionModel.of(content, link);
-		return ResponseEntity.ok(result);
+		return result;
 	}
 
-	@GetMapping(value = "/{id}/addresses", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/{id}/addresses")
 	@Operation(summary = "Return all addresses for the specified customer identifier")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
 	//@NewSpan
-	public ResponseEntity<Object> getCustomerAddresses(
+	public Object getCustomerAddresses(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		final User user = this.userService.getUser(id);
 		final Link link = linkTo(methodOn(CustomerController.class)
@@ -119,6 +122,6 @@ public class CustomerController {
 				? new ArrayList<>(addresses)
 				: Collections.singletonList(new EmbeddedWrappers(false).emptyCollectionOf(Address.class));
 		CollectionModel<Object> result = CollectionModel.of(content, link);
-		return ResponseEntity.ok(result);
+		return result;
 	}
 }

@@ -61,14 +61,25 @@ public abstract class UserControllerTests {
 	}
 
 	@Test
+	public void testAuthenticationWithWrongPassword() {
+		userService.register(new User("foo", "passfoo", "foo@weavesocks.com", "foouser", "pass"));
+		given().auth().preemptive().basic("foouser", "wrong").
+				when().
+				get("/login").
+				then().
+				assertThat().
+				statusCode(401);
+	}
+
+	@Test
 	public void testRegister() {
 		userService.removeUser("baruser");
 		given().
 			contentType(JSON).
-			body(new User("bar", "passbar", "bar@weavesocks.com", "baruser", "pass")).
+			body(new User("bar", "passbar", "bar@weavesocks.com", "baruser", "pass")).log().body().
 		when().
 			post("/register").
-		then().
+		then().log().body().
 			statusCode(200).
 			body("id", is("baruser"));
 	}

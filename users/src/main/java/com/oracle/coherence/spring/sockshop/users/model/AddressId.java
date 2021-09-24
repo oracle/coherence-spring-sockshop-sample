@@ -15,7 +15,6 @@ import java.io.Serializable;
 /**
  * Composite key for the {@link Address class} when using JPA.
  */
-//@JsonbTypeAdapter(AddressId.JsonAdapter.class)
 @Data
 public class AddressId implements Serializable {
 	/**
@@ -28,6 +27,11 @@ public class AddressId implements Serializable {
 	 */
 	private String addressId;
 
+	/**
+	 * Default constructor.
+	 */
+	public AddressId() {}
+
 	@Builder
 	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public AddressId(String id) {
@@ -38,11 +42,6 @@ public class AddressId implements Serializable {
 		user = parts[0];
 		addressId = parts[1];
 	}
-
-	/**
-	 * Default constructor.
-	 */
-	public AddressId() {}
 
 	/**
 	 * Construct an instance of {@code AddressId} with the specified parameters.
@@ -57,15 +56,4 @@ public class AddressId implements Serializable {
 		return user + ":" + addressId;
 	}
 
-//    public static class JsonAdapter implements JsonbAdapter<AddressId, String> {
-//        @Override
-//        public String adaptToJson(AddressId id) throws Exception {
-//            return id.toString();
-//        }
-//
-//        @Override
-//        public AddressId adaptFromJson(String id) throws Exception {
-//            return new AddressId(id);
-//        }
-//    }
 }

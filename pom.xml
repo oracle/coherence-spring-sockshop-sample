@@ -13,7 +13,7 @@
     <groupId>io.spring.examples.sockshop</groupId>
     <artifactId>sockshop-spring</artifactId>
     <packaging>pom</packaging>
-    <version>21.06.1</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,13 +22,14 @@
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
 
         <container.repo>ghcr.io/oracle/coherence-spring-sockshop</container.repo>
         <container.version>${project.version}</container.version>
         <jib.goal>dockerBuild</jib.goal>
 
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
-        <version.lib.coherence>${project.version}</version.lib.coherence>
+        <version.lib.coherence>21.06.1</version.lib.coherence>
         <version.lib.coherence-spring>3.0.0</version.lib.coherence-spring>
         <version.lib.junit>5.7.2</version.lib.junit>
         <version.lib.lombok>1.18.18</version.lib.lombok>
@@ -37,7 +38,6 @@
         <version.lib.spring-boot>2.5.2</version.lib.spring-boot>
         <version.lib.spring-cloud>2020.0.3</version.lib.spring-cloud>
         <version.lib.springfox>3.0.0</version.lib.springfox>
-
         <version.plugin.jib>3.1.4</version.plugin.jib>
         <version.plugin.failsafe>2.22.2</version.plugin.failsafe>
         <version.plugin.surefire>2.22.2</version.plugin.surefire>

@@ -45,7 +45,7 @@ public class CustomerControllerTests {
 		RestAssured.baseURI = "http://localhost";
 		RestAssured.port = webServerApplicationConext.getWebServer().getPort();
 		userService = getUserService();
-		User user = new User("Test", "User", "user@weavesocks.com", "user", "pass");
+		User user = new User("Test", "User", "user@weavesocks.com", "cartman", "pass");
 		user.addCard(new Card("1234123412341234", "12/19", "123"));
 		user.addAddress(new Address("123", "Main St", "Springfield", "12123", "USA"));
 		userService.register(user);
@@ -67,7 +67,7 @@ public class CustomerControllerTests {
     @Test
     void testGetCustomer() {
         when().
-            get("/customers/{id}", "user").
+            get("/customers/{id}", "cartman").
         then().log().all().
             statusCode(200).
             body("firstName", is("Test"));
@@ -76,7 +76,7 @@ public class CustomerControllerTests {
 	@Test
 	void testDeleteCustomer() {
 		given().
-			pathParam("id", "user").
+			pathParam("id", "cartman").
 		when().
 			delete("/customers/{id}").
 		then().
@@ -87,7 +87,7 @@ public class CustomerControllerTests {
 	@Test
 	void testGetCustomerCards() {
 		when().
-			get("/customers/{id}/cards", "user").
+			get("/customers/{id}/cards", "cartman").
 		then().log().all()
 			.statusCode(200)
 			.body("size()", is(2));
@@ -96,8 +96,8 @@ public class CustomerControllerTests {
 	@Test
 	void testGetCustomerAddresses() {
 		when().
-			get("/customers/{id}/addresses", "user").
-		then().
+			get("/customers/{id}/addresses", "cartman").
+		then().log().body().
 			statusCode(200).
 			body("_embedded.address.size()", is(1));
 	}

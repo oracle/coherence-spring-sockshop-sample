@@ -6,9 +6,11 @@
  */
 package com.oracle.coherence.spring.sockshop.users.service;
 
+import com.oracle.coherence.spring.sockshop.users.controller.support.exceptions.CardNotFoundException;
 import com.oracle.coherence.spring.sockshop.users.model.*;
 import com.oracle.coherence.spring.sockshop.users.repository.CoherenceUserRepository;
 import org.springframework.data.util.Streamable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -17,20 +19,29 @@ import java.util.Collection;
 //@Traced
 public class DefaultUserService implements UserService {
 
-	private CoherenceUserRepository userRepository;
+	private final CoherenceUserRepository userRepository;
 
-	public DefaultUserService(CoherenceUserRepository userRepository) {
+	private final PasswordEncoder passwordEncoder;
+
+	public DefaultUserService(CoherenceUserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
 	public AddressId addAddress(String userID, Address address) {
-		return this.userRepository.update(userID, User::addAddress, address, User::new).getId();
+		return this.userRepository.update(userID, User::addAddress, address, User::new).getAddressId();
 	}
 
 	@Override
 	public Address getAddress(AddressId id) {
-		return getOrCreate(id.getUser()).getAddress(id.getAddressId());
+		final User user = this.getUser(id.getUser());
+
+		if (user == null) {
+			return null;
+		}
+
+		return user.getAddress(id);
 	}
 
 	@Override
@@ -41,12 +52,21 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	public CardId addCard(String userID, Card card) {
-		return this.userRepository.update(userID, User::addCard, card, User::new).getId();
+		return this.userRepository.update(userID, User::addCard, card, User::new).getCardId();
 	}
 
 	@Override
 	public Card getCard(CardId id) {
-		return this.getOrCreate(id.getUser()).getCard(id.getCardId());
+		final User user = this.getUser(id.getUser());
+		if (user == null) {
+			return null;
+		}
+		final Card card = user.getCard(id);
+
+		if (card == null) {
+			throw new CardNotFoundException();
+		}
+		return card;
 	}
 
 	@Override
@@ -81,15 +101,22 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
-	public boolean authenticate(String username, String password) {
-		return this.userRepository.getMap().invoke(username, entry -> {
-			User u = entry.getValue(new User(entry.getKey()));
-			return u.authenticate(password);
-		});
+	public User register(User user) {
+		final User userToRegister = new User();
+		userToRegister.setFirstName(user.getFirstName());
+		userToRegister.setLastName(user.getLastName());
+		userToRegister.setEmail(user.getEmail());
+		userToRegister.setUsername(user.getUsername());
+		userToRegister.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
+		if (user.getAddresses() != null) {
+			userToRegister.setAddresses(user.getAddresses());
+		}
+		if (user.getCards() != null) {
+			userToRegister.setCards(user.getCards());
+		}
+
+		return this.userRepository.getMap().putIfAbsent(userToRegister.getUsername(), userToRegister);
 	}
 
-	@Override
-	public User register(User user) {
-		return this.userRepository.getMap().putIfAbsent(user.getUsername(), user);
-	}
 }
