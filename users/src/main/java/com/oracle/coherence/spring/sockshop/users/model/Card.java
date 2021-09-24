@@ -7,11 +7,16 @@
 package com.oracle.coherence.spring.sockshop.users.model;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.oracle.coherence.spring.sockshop.users.controller.CardController;
+import com.oracle.coherence.spring.sockshop.users.model.support.CardIdDeserializer;
+import com.oracle.coherence.spring.sockshop.users.model.support.CardIdSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
@@ -19,9 +24,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Links;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 /**
  * Representation of a credit card.
@@ -30,12 +35,16 @@ import org.springframework.hateoas.server.core.Relation;
 @NoArgsConstructor
 @Schema(description = "User credit card")
 @Relation(collectionRelation = "card", itemRelation = "card")
+@JsonPropertyOrder({ "longNum", "expires", "ccv", "id" })
 public class Card extends RepresentationModel<Card> implements Serializable {
 	/**
 	 * The card identifier.
 	 */
 	@Schema(description = "Card identifier")
-	private String cardId;
+	@JsonDeserialize(using = CardIdDeserializer.class)
+	@JsonSerialize(using = CardIdSerializer.class)
+	@JsonProperty("id")
+	private CardId cardId;
 
 	/**
 	 * The card number.
@@ -96,16 +105,13 @@ public class Card extends RepresentationModel<Card> implements Serializable {
 	/**
 	 * Set the card id.
 	 */
-	public Card setCardId(String id) {
+	public Card setCardId(CardId id) {
 		this.cardId = id;
 		return this;
 	}
 
-	/**
-	 * Return CardId for this card.
-	 */
-	public CardId getId() {
-		return new CardId(user.getUsername(), cardId);
+	public CardId getCardId() {
+		return cardId;
 	}
 
 	/**
@@ -131,10 +137,8 @@ public class Card extends RepresentationModel<Card> implements Serializable {
 	}
 
 	@Override
-	public Links getLinks() {
-		List<Link> links = com.oracle.coherence.spring.sockshop.users.model.Links.card(this.getId()).entrySet().stream()
-				.map(entry -> Link.of(entry.getValue().href, entry.getKey()))
-				.collect(Collectors.toList());
-		return Links.of(links);
+	public org.springframework.hateoas.Links getLinks() {
+		final Link self = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CardController.class).getCard(this.getCardId())).withSelfRel();
+		return org.springframework.hateoas.Links.of(self);
 	}
 }

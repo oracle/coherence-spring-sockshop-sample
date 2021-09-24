@@ -1,4 +1,4 @@
-# Coherence Spring Sock Shop 
+# Coherence Spring Sock Shop
 
 This project is an implementation of a stateful, microservices based application that
 uses [Oracle Coherence CE](https://coherence.community/) as a scalable embedded data
@@ -12,8 +12,8 @@ originally written and published under Apache 2.0 license by [Weaveworks](https:
 You can see a working demo of the original application [here](http://socks.weave.works/).
 
 This demo still uses the original front end implementation provided by Weaveworks,
-but all back end services have been re-implemented from scratch using Spring Boot 
-and Oracle Coherence, in order to showcase some features of the [Coherence Spring](https://github.com/coherence-community/coherence-spring) 
+but all back end services have been re-implemented from scratch using Spring Boot
+and Oracle Coherence, in order to showcase some features of the [Coherence Spring](https://github.com/coherence-community/coherence-spring)
 integration.
 
 We also provide the implementations of the same application that use Micronaut or Helidon
@@ -64,57 +64,41 @@ services, which can be accessed using the links above.
 
 ## Project Structure
 
-The main [Sock Shop](.) repository also contains Kubernetes deployment files for the whole application, 
-top-level POM file which allows you to easily build the whole project and import it 
+The main [Sock Shop](.) repository also contains Kubernetes deployment files for the whole application,
+top-level POM file which allows you to easily build the whole project and import it
 into your favorite IDE.
-
-## Pre-Requisites
-
-1. Install `helm`
-
-    You must have at least version `v2.14.3` of `helm`. See [here](https://helm.sh/docs/intro/install/)
-    for information on installing `helm` for your platform.
-    
-    > Note: The `helm` commands below are for helm 3.3.
-
-1. Add the following `helm` repositories
-
-    ```bash
-    $ helm repo add stable https://charts.helm.sh/stable
-    $ helm repo add coherence https://oracle.github.io/coherence-operator/charts
-    $ helm repo update
-    ```
 
 ## Quick Start
 
-Kubernetes scripts depend on Kustomize, so make sure that you have a newer 
-version of `kubectl` that supports it (at least 1.14 or above).
+Kubernetes scripts depend on [Kustomize](https://kustomize.io/), so make sure that you have a newer
+version of `kubectl` that supports it (at least `1.16` or above).
    
-The easiest way to try the demo is to use Kubernetes deployment scripts from this repo. 
+The easiest way to try the demo is to use Kubernetes deployment scripts from this repo. If you do, you can simply run
+the following commands from the `coherence-spring-sockshop` directory:
 
-If you do, you can simply run the following command from the `coherence-spring-sockshop` directory.
+* Install the Coherence Operator
 
-We create a namespace called `sockshop`.
+  Install the Coherence Operator using the instructions in the
+  [Coherence Operator Quick Start](https://oracle.github.io/coherence-operator/docs/latest/#/docs/about/03_quickstart)
+  documentation.
 
 * **Installing a Back-end**
+
+  We create a namespace called `sockshop`.
 
     ```bash
     $ kubectl create namespace sockshop
     namespace/sockshop created
-
-    $ helm install coherence-operator coherence/coherence-operator
-
-    $ kubectl apply -k k8s/coherence --namespace sockshop
     ```
 
-> Note: The above helm command is for helm version 3, use the following command
-> If you are using helm version 2:
-> ```bash
-> $ helm install coherence/coherence-operator --name coherence-operator
-> ```
+  Install the back-end into the `sockshop` namespace.
 
-This will merge all the files under the specified directory and create all Kubernetes 
-resources defined by them, such as deployment and service for each microservice.
+    ```bash
+    $ kubectl --namespace sockshop apply -k k8s/coherence 
+    ```
+
+  The `-k` parameter above will use `kubectl` with `kustomize` to merge all the files under the specified directory and
+  create all Kubernetes resources defined by them, such as deployments and services for each microservice.
 
 ### (Optional) Install the Original WeaveSocks Front End
 
@@ -164,14 +148,36 @@ $ kubectl delete -k k8s/coherence --namespace sockshop
 
 If you wish to scale the back-end you can issue the following command
 
-```bash
-# Scale the orders statefulset
-$ kubectl scale coherence --namespace sockshop orders --replicas=3 
+Scale only the orders microservice:
 
-# Scale all statefulsets 
-$ for pod in carts catalog orders payment shipping users
-    do kubectl scale coherence --namespace sockshop $pod --replicas=3
+```bash
+$ kubectl --namespace sockshop scale coherence orders --replicas=3
+```
+
+Or alternatively scale all the microservices:
+
+```bash
+$ for name in carts catalog orders payment shipping users
+    do kubectl --namespace sockshop scale coherence $name --replicas=3
 done
+```
+
+## Clean Local Docker/Kubernetes
+
+```bash
+kubectl delete --all pods --namespace=sockshop
+docker system prune -a
+```
+
+## (Optional) Kubernetes Dashboard
+
+It might be useful to get more visual insight into the Kubernetes deployment by using the
+[Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+
+For logging in you will need a token which you can generate with:
+
+```bash
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 ```
 
 ## Complete Application Deployment

@@ -47,7 +47,7 @@ class UserTests {
 		User user = new User("Test", "User", "user@weavesocks.com", "user", "pass");
 		Address address = user.addAddress(new Address("666", "Sock St", "Weave", "33633", "USA"));
 		assertThat(user.getAddresses().size(), is(1));
-		user.removeAddress(address.getAddressId());
+		user.removeAddress(address.getAddressId().toString());
 		assertThat(user.getAddresses().size(), is(0));
 	}
 
@@ -70,7 +70,7 @@ class UserTests {
 		User user = new User("Test", "User", "user@weavesocks.com", "user", "pass");
 		Card card = user.addCard(new Card("6854657645765476", "03/22", "456"));
 		assertThat(user.getCards().size(), is(1));
-		user.removeCard(card.getCardId());
+		user.removeCard(card.getCardId().toString());
 		assertThat(user.getCards().size(), is(0));
 	}
 }

@@ -14,14 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
+import org.springframework.util.Assert;
 
 import javax.persistence.Id;
 
@@ -30,7 +29,6 @@ import javax.persistence.Id;
  */
 @Data
 @Schema(description = "User data representing a customer")
-//@MappedEntity
 @Relation(collectionRelation = "customer", itemRelation = "customer")
 public class User extends RepresentationModel<User> implements Serializable {
     /**
@@ -62,7 +60,7 @@ public class User extends RepresentationModel<User> implements Serializable {
      * The password.
      */
     @Schema(description = "User password")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     /**
@@ -88,6 +86,10 @@ public class User extends RepresentationModel<User> implements Serializable {
      */
     public User(String username) {
         this.username = username;
+    }
+
+    public String getId() {
+        return this.getUsername();
     }
 
     /**
@@ -126,13 +128,11 @@ public class User extends RepresentationModel<User> implements Serializable {
      *
      * @return the address for the specified address ID
      */
-    public Address getAddress(String id) {
+    public Address getAddress(AddressId id) {
         return addresses.stream()
             .filter(address -> address.getAddressId().equals(id))
             .findFirst()
-            .orElse(new Address()
-                    .setAddressId(id)
-                    .setUser(this));
+            .orElse(null);
     }
 
     /**
@@ -144,7 +144,11 @@ public class User extends RepresentationModel<User> implements Serializable {
      */
     public Address addAddress(Address address) {
         if (address.getAddressId() == null) {
-            address.setAddressId(Integer.toString(addresses.size() + 1));
+            final AddressId addressId = new AddressId();
+            addressId.setAddressId(Integer.toString(addresses.size() + 1));
+            Assert.hasText("username", "Username must not be null or empty.");
+            addressId.setUser(this.username);
+            address.setAddressId(addressId);
         }
 
         addresses.add(address.setUser(this));
@@ -168,7 +172,7 @@ public class User extends RepresentationModel<User> implements Serializable {
      * @return the user
      */
     public User removeAddress(String id) {
-        addresses.remove(getAddress(id));
+        addresses.remove(getAddress(new AddressId(id)));
         return this;
     }
 
@@ -179,13 +183,11 @@ public class User extends RepresentationModel<User> implements Serializable {
      *
      * @return the card for the specified card ID
      */
-    public Card getCard(String id) {
+    public Card getCard(CardId id) {
         return cards.stream()
             .filter(card -> card.getCardId().equals(id))
             .findFirst()
-            .orElse(new Card()
-                .setCardId(id)
-                .setUser(this));
+            .orElse(null);
     }
 
     /**
@@ -196,12 +198,19 @@ public class User extends RepresentationModel<User> implements Serializable {
      * @return the added card
      */
     public Card addCard(Card card) {
+
         if (card.getCardId() == null) {
-            card.setCardId(card.last4());
+            final CardId cardId = new CardId();
+            cardId.setCardId(card.last4());
+            Assert.hasText(this.username, "Username must not be null or empty.");
+            cardId.setUser(this.username);
+            card.setCardId(cardId);
         }
+
         cards.add(card.setUser(this));
         return card;
     }
+
 
     /**
      * Set the cards.
@@ -220,19 +229,9 @@ public class User extends RepresentationModel<User> implements Serializable {
      * @return this user
      */
     public User removeCard(String id) {
-        cards.remove(getCard(id));
+        cards.remove(getCard(new CardId(id)));
         return this;
     }
-
-//    /**
-//     * Return {@code _links} attribute for this entity.
-//     *
-//     * @return {@code _links} attribute for this entity
-//     */
-//    @JsonProperty("_links")
-//    public Links getLinks() {
-//        return Links.customer(username);
-//    }
 
     @Override
     public org.springframework.hateoas.Links getLinks() {

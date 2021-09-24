@@ -14,7 +14,6 @@ import java.io.Serializable;
 /**
  * Composite key for the {@link Card class} when using JPA.
  */
-//@JsonbTypeAdapter(CardId.JsonAdapter.class)
 @Data
 public class CardId implements Serializable {
 	/**
@@ -55,15 +54,4 @@ public class CardId implements Serializable {
 		return user + ":" + cardId;
 	}
 
-//    public static class JsonAdapter implements JsonbAdapter<CardId, String> {
-//        @Override
-//        public String adaptToJson(CardId id) throws Exception {
-//            return id.toString();
-//        }
-//
-//        @Override
-//        public CardId adaptFromJson(String id) throws Exception {
-//            return new CardId(id);
-//        }
-//    }
 }

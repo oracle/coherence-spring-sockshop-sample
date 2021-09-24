@@ -9,15 +9,24 @@ package com.oracle.coherence.spring.sockshop.users.model;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.oracle.coherence.spring.sockshop.users.controller.AddressController;
+import com.oracle.coherence.spring.sockshop.users.model.support.AddressIdDeserializer;
+import com.oracle.coherence.spring.sockshop.users.model.support.AddressIdSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 /**
  * Representation of an address.
@@ -26,12 +35,16 @@ import org.springframework.hateoas.server.core.Relation;
 @NoArgsConstructor
 @Schema(description = "User address")
 @Relation(collectionRelation = "address", itemRelation = "address")
-public class Address implements Serializable {
+@JsonPropertyOrder({ "street", "number", "country", "city", "postcode", "id" })
+public class Address extends RepresentationModel<Address> implements Serializable {
 	/**
 	 * The address identifier.
 	 */
 	@Schema(description = "Address identifier")
-	private String addressId;
+	@JsonDeserialize(using = AddressIdDeserializer.class)
+	@JsonSerialize(using = AddressIdSerializer.class)
+	@JsonProperty("id")
+	private AddressId addressId;
 
 	/**
 	 * The street number.
@@ -103,28 +116,10 @@ public class Address implements Serializable {
 		return this;
 	}
 
-	/**
-	 * Set the address id.
-	 */
-	public Address setAddressId(String id) {
-		this.addressId = id;
-		return this;
+	@Override
+	public org.springframework.hateoas.Links getLinks() {
+		final Link self = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AddressController.class).getAddress(this.getAddressId())).withSelfRel();
+		return org.springframework.hateoas.Links.of(self);
 	}
 
-	/**
-	 * Return Address.Id for this address.
-	 */
-	public AddressId getId() {
-		return new AddressId(user.getUsername(), addressId);
-	}
-
-	/**
-	 * Return {@code _links} attribute for this entity.
-	 *
-	 * @return {@code _links} attribute for this entity
-	 */
-	@JsonProperty("_links")
-	public Links getLinks() {
-		return Links.address(getId());
-	}
 }

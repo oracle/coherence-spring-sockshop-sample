@@ -6,20 +6,19 @@
  */
 package com.oracle.coherence.spring.sockshop.users.controller.converters;
 
-import javax.inject.Singleton;
-import java.util.Optional;
+import com.oracle.coherence.spring.sockshop.users.model.AddressId;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
-@Singleton
-public class StringToAddressIdConverter { // implements TypeConverter<String, AddressId> {
-//    @Override
-//    public Optional<AddressId> convert(String input, Class<AddressId> targetType, ConversionContext context) {
-//        if (input != null) {
-//            try {
-//                return Optional.of(new AddressId(input));
-//            } catch (IllegalArgumentException e) {
-//                context.reject(e);
-//            }
-//        }
-//        return Optional.empty();
-//    }
+@Component
+public class StringToAddressIdConverter implements Converter<String, AddressId> {
+	@Override
+	public AddressId convert(String source) {
+		if (source != null) {
+			return new AddressId(source);
+		}
+		else {
+			return null;
+		}
+	}
 }

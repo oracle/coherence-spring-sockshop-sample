@@ -24,9 +24,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Integration tests for {@link com.oracle.coherence.spring.sockshop.users.controller.AddressController}.
@@ -66,18 +64,20 @@ public class AddressControllerTests {
 		when().
 			post("/addresses").
 		then().
-			statusCode(200).
-			body("id", containsString("foouser"));
+			log().body()
+				.statusCode(200)
+				.body("id", equalTo("foouser:1"));
 	}
 
 	@Test
 	public void testGetAddress() {
-		User u = new User("foo", "passfoo", "foo@weavesocks.com", "foouser", "pass");
-		AddressId addrId = u.addAddress(new Address("555", "woodbury St", "Westford", "01886", "USA")).getId();
-        userService.register(u);
+		final User user = new User("foo", "passfoo", "foo@weavesocks.com", "foouser", "pass");
+		final Address address = new Address("555", "woodbury St", "Westford", "01886", "USA");
+		final AddressId addressId = user.addAddress(address).getAddressId();
+        userService.register(user);
 
 		given().
-			  pathParam("id", addrId.toString()).
+			  pathParam("id", addressId.toString()).
 		when().
 			  get("/addresses/{id}").
 		then().
@@ -88,13 +88,18 @@ public class AddressControllerTests {
 
 	@Test
 	public void testDeleteAddress() {
-		User u = userService.getOrCreate("foouser");
-		u.setUsername("foouser");
-		AddressId addrId = u.addAddress(new Address("555", "woodbury St", "Westford", "01886", "USA")).getId();
-		userService.register(u);
+		User user = userService.getUser("foouser");
+
+		if (user == null) {
+			user = new User("foouser", "passfoo", "foo@weavesocks.com", "foouser", "not-a-secret");
+		}
+
+		final Address address = new Address("555", "woodbury St", "Westford", "01886", "USA");
+		final AddressId addressId = user.addAddress(address).getAddressId();
+		userService.register(user);
 
 		given().
-			pathParam("id", addrId.toString()).
+			pathParam("id", addressId.toString()).
 		when().
 			delete("/addresses/{id}").
 		then().

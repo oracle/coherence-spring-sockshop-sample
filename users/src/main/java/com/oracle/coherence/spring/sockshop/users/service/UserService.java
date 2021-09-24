@@ -103,17 +103,6 @@ public interface UserService {
 	User removeUser(String id);
 
 	/**
-	 * Authenticate a {@code User} with the specified username against
-	 * the specified password.
-	 *
-	 * @param username the username of the user to be authenticated
-	 * @param password the password to authenticate against
-	 *
-	 * @return true if password match
-	 */
-	boolean authenticate(String username, String password);
-
-	/**
 	 * Register the specified user.
 	 *
 	 * @param user the user to be registered

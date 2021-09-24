@@ -17,8 +17,11 @@ opentracing:
     udp-sender:
       host: jaeger-agent
       port: 5775
+    enabled: false
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+server:
+  port: 8080

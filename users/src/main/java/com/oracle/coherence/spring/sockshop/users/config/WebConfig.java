@@ -7,9 +7,10 @@
 package com.oracle.coherence.spring.sockshop.users.config;
 
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-public class WebConfig extends WebMvcConfigurerAdapter  {
+public class WebConfig implements WebMvcConfigurer {
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("swagger-ui.html")
@@ -18,4 +19,5 @@ public class WebConfig extends WebMvcConfigurerAdapter  {
 		registry.addResourceHandler("/webjars/**")
 				.addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
+
 }

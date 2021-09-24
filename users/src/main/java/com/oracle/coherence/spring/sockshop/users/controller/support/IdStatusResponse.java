@@ -6,7 +6,9 @@
  */
 package com.oracle.coherence.spring.sockshop.users.controller.support;
 
-public class IdStatusResponse {
+import org.springframework.hateoas.RepresentationModel;
+
+public class IdStatusResponse extends RepresentationModel<IdStatusResponse> {
 	private String id;
 
 	public IdStatusResponse(String id) {

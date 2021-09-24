@@ -10,7 +10,9 @@ import com.oracle.coherence.spring.sockshop.users.model.*;
 import com.oracle.coherence.spring.sockshop.users.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.inject.Inject;
 import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,6 +27,9 @@ public abstract class UserServiceTests {
 
 	protected abstract UserService getUserRepository();
 
+	@Inject
+	private PasswordEncoder passwordEncoder;
+
 	@BeforeEach
 	void setup() {
 		users = getUserRepository();
@@ -33,45 +38,41 @@ public abstract class UserServiceTests {
 
 	@Test
 	void testUserCreation() {
-		User u = users.getOrCreate("testuser");
-		u.setLastName("test");
-		users.register(u);
+		User user = users.getOrCreate("testuser");
+		user.setLastName("test");
+		user.setPassword("testpassword");
+
+		users.register(user);
 
 		assertThat(users.getUser("testuser").getLastName(), is("test"));
 	}
 
 	@Test
 	void testAddAddress() {
-		User u = users.getOrCreate("testuser");
-		users.register(u);
+		final User user = users.getOrCreate("testuser");
+		user.setPassword("testpassword");
+		users.register(user);
 
-		AddressId addressId = users.addAddress(u.getUsername(), new Address("555", "woodbury St", "Westford", "01886", "USA"));
+		AddressId addressId = users.addAddress(user.getUsername(), new Address("555", "woodbury St", "Westford", "01886", "USA"));
 		assertThat(users.getAddress(addressId).getCity(), is("Westford"));
 	}
 
 	@Test
 	void testAddCard() {
-		User u = users.getOrCreate("testuser");
-		users.register(u);
+		final User user = users.getOrCreate("testuser");
+		user.setPassword("testpassword");
+		users.register(user);
 
-		CardId cardId = users.addCard(u.getUsername(), new Card("1234123412341234", "12/19", "123"));
+		CardId cardId = users.addCard(user.getUsername(), new Card("1234123412341234", "12/19", "123"));
 		assertThat(users.getCard(cardId).getLongNum(), is("1234123412341234"));
 	}
 
 	@Test
-	void testUserAuthentication() {
-		User u1 = users.getOrCreate("testuser");
-		u1.setPassword("pass");
-		users.register(u1);
-
-		assertThat(users.authenticate("testuser", "wrong"), is(false));
-		assertThat(users.authenticate("testuser", "pass"), is(true));
-	}
-
-	@Test
 	void testUserDeletion() {
-		User u = users.getOrCreate("testuser");
-		users.register(u);
+		User user = users.getOrCreate("testuser");
+		user.setPassword("testpassword");
+
+		users.register(user);
 
 		assertThat(users.removeUser("testuser"), is(notNullValue()));
 		assertThat(users.getUser("testuser"), is(nullValue()));
