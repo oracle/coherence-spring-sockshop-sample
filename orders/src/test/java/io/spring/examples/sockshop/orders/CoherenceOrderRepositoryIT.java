@@ -6,6 +6,7 @@
  */
 package io.spring.examples.sockshop.orders;
 
+import io.spring.examples.sockshop.orders.model.Order;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

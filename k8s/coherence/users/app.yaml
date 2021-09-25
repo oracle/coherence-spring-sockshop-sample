@@ -12,7 +12,7 @@ spec:
 #  cluster: SockShop
   role: Users
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-users:21.06.1
+  image: ghcr.io/oracle/coherence-spring-sockshop-users:1.0.0-SNAPSHOT
   imagePullPolicy: IfNotPresent
   env:
     - name: TRACING_HOST
@@ -25,7 +25,10 @@ spec:
     main: com.oracle.coherence.spring.sockshop.users.UsersApplication
   jvm:
     memory:
-      heapSize: 1g
+      heapSize: 2g
+  coherence:
+    metrics:
+      enabled: true
   ports:
     - name: http
       port: 8080
@@ -35,3 +38,6 @@ spec:
       serviceMonitor:
         enabled: true
         path: /actuator/prometheus
+    - name: metrics
+      serviceMonitor:
+        enabled: true

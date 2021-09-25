@@ -4,10 +4,11 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
  */
-package io.spring.examples.sockshop.orders;
+package io.spring.examples.sockshop.orders.model;
 
 import java.io.Serializable;
 
+import io.spring.examples.sockshop.orders.model.Item;
 import lombok.Data;
 
 /**

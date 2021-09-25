@@ -7,6 +7,8 @@
 
 package io.spring.examples.sockshop.orders;
 
+import io.spring.examples.sockshop.orders.repository.OrderRepository;
+
 /**
  * Tests may need additional methods in repository implementations
  * in order to pre-load test data, clear the repository between the

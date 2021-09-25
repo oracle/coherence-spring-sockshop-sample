@@ -13,7 +13,7 @@
     <parent>
         <artifactId>sockshop-spring</artifactId>
         <groupId>io.spring.examples.sockshop</groupId>
-        <version>21.06.1</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>catalog</artifactId>
@@ -61,11 +61,6 @@
         <dependency>
             <groupId>com.oracle.coherence.ce</groupId>
             <artifactId>coherence</artifactId>
-            <version>${version.lib.coherence}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle.coherence.ce</groupId>
-            <artifactId>coherence-micrometer</artifactId>
             <version>${version.lib.coherence}</version>
         </dependency>
 
@@ -196,6 +191,7 @@
                                 <ports>
                                     <port>8080</port>
                                 </ports>
+                                <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                             </container>
                             <containerizingMode>packaged</containerizingMode>
                         </configuration>

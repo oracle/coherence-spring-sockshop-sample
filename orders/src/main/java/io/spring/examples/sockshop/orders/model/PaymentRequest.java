@@ -4,8 +4,11 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
  */
-package io.spring.examples.sockshop.orders;
+package io.spring.examples.sockshop.orders.model;
 
+import io.spring.examples.sockshop.orders.model.Address;
+import io.spring.examples.sockshop.orders.model.Card;
+import io.spring.examples.sockshop.orders.model.Customer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;

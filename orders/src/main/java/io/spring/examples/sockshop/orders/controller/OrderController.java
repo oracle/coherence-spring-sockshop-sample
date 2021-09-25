@@ -4,17 +4,26 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
  */
-package io.spring.examples.sockshop.orders;
+package io.spring.examples.sockshop.orders.controller;
 
 import io.micrometer.core.annotation.Timed;
+import io.spring.examples.sockshop.orders.controller.support.NewOrderRequest;
+import io.spring.examples.sockshop.orders.model.*;
+import io.spring.examples.sockshop.orders.repository.OrderRepository;
+import io.spring.examples.sockshop.orders.service.CartsClient;
+import io.spring.examples.sockshop.orders.service.OrderProcessor;
+import io.spring.examples.sockshop.orders.service.UsersClient;
+import io.spring.examples.sockshop.orders.service.support.OrderException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,10 +34,9 @@ import java.util.Map;
  * Implementation of the Orders Service REST API.
  */
 @Log
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @RequestMapping("/orders")
 @RestController
-public class OrderResource implements OrderApi {
+public class OrderController {
     /**
      * Order repository to use.
      */
@@ -47,8 +55,15 @@ public class OrderResource implements OrderApi {
     @Autowired
     protected UsersClient usersService;
 
-    @Override
-    public ResponseEntity<Map<String, Map<String, Object>>> getOrdersForCustomer(String customerId) {
+    @GetMapping(value = "/search/customerId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Return the orders for the specified customer")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "if orders exist"),
+            @ApiResponse(responseCode = "404", description = "if orders do not exist")
+    })
+    public ResponseEntity<Map<String, Map<String, Object>>> getOrdersForCustomer(
+            @Parameter(description = "Customer identifier")
+            @RequestParam("custId") String customerId) {
         Collection<? extends Order> customerOrders = orders.findOrdersByCustomer(customerId);
         if (customerOrders.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -61,17 +76,29 @@ public class OrderResource implements OrderApi {
         return ResponseEntity.ok(map);
     }
 
-    @Override
-    public ResponseEntity<Order> getOrder(String orderId) {
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Return the order for the specified order")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "if the order exist"),
+            @ApiResponse(responseCode = "404", description = "if the order doesn't exist")
+    })
+    public ResponseEntity<Order> getOrder(
+            @Parameter(description = "Order identifier")
+            @PathVariable("id") String orderId) {
         Order order = orders.get(orderId);
         return order == null
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(order);
     }
 
-    @Override
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Place a new order for the specified order request")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "if the request is successfully processed"),
+            @ApiResponse(responseCode = "406", description = "if the payment is not authorized")
+    })
     @Timed("order.new")
-    public ResponseEntity<Order> newOrder(NewOrderRequest request) {
+    public ResponseEntity<Order> newOrder(@Parameter(description = "Order request") @RequestBody NewOrderRequest request) {
         log.info("Processing new order: " + request);
 
         if (request.address == null || request.customer == null || request.card == null || request.items == null) {
@@ -90,9 +117,9 @@ public class OrderResource implements OrderApi {
         }
 
         List<Item> items    = cartsService.cart(itemsPath.substring(7, itemsPath.length() - 6));
-        Address    address  = usersService.address(addressPath.substring(11));
-        Card       card     = usersService.card(cardPath.substring(7));
-        Customer   customer = usersService.customer(customerPath.substring(11));
+        Address address  = usersService.address(addressPath.substring(11));
+        Card card     = usersService.card(cardPath.substring(7));
+        Customer customer = usersService.customer(customerPath.substring(11));
 
         Order order = Order.builder()
                 .customer(customer)

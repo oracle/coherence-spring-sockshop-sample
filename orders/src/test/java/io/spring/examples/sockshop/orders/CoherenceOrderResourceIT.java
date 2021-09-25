@@ -10,6 +10,9 @@ import com.oracle.bedrock.testsupport.deferred.Eventually;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
+import io.spring.examples.sockshop.orders.controller.OrderController;
+import io.spring.examples.sockshop.orders.controller.support.NewOrderRequest;
+import io.spring.examples.sockshop.orders.model.Order;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +33,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Integration tests for {@link OrderResource},
+ * Integration tests for {@link OrderController},
  * using Coherence for persistence.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

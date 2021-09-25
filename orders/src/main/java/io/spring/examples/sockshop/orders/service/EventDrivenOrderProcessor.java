@@ -4,17 +4,22 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
  */
-package io.spring.examples.sockshop.orders;
+package io.spring.examples.sockshop.orders.service;
 
 import com.oracle.coherence.spring.annotation.event.Inserted;
 import com.oracle.coherence.spring.annotation.event.MapName;
 import com.oracle.coherence.spring.annotation.event.Updated;
 import com.oracle.coherence.spring.event.CoherenceEventListener;
 import com.tangosol.net.events.partition.cache.EntryEvent;
+import io.spring.examples.sockshop.orders.model.PaymentRequest;
+import io.spring.examples.sockshop.orders.model.ShippingRequest;
+import io.spring.examples.sockshop.orders.model.Order;
+import io.spring.examples.sockshop.orders.model.Payment;
+import io.spring.examples.sockshop.orders.model.Shipment;
+import io.spring.examples.sockshop.orders.repository.OrderRepository;
+import io.spring.examples.sockshop.orders.service.support.PaymentDeclinedException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +30,6 @@ import org.springframework.stereotype.Component;
  * order status.
  */
 @Log
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 public class EventDrivenOrderProcessor implements OrderProcessor {
     /**
@@ -121,15 +125,6 @@ public class EventDrivenOrderProcessor implements OrderProcessor {
     }
 
     // ---- helper methods --------------------------------------------------
-
-    /**
-     * An exception that is thrown if the payment is declined.
-     */
-    public static class PaymentDeclinedException extends OrderException {
-        public PaymentDeclinedException(String s) {
-            super(s);
-        }
-    }
 
     @Async
     @CoherenceEventListener
