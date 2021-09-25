@@ -25,6 +25,6 @@ public class SwaggerConfig {
 						.license(new License().name("Universal Permissive License v 1.0").url("https://oss.oracle.com/licenses/upl")))
 				.externalDocs(new ExternalDocumentation()
 						.description("Spring Sock Shop GitHub Repo")
-						.url("https://github.com/coherence-community/coherence-spring-sockshop-sample"));
+						.url("https://github.com/oracle/coherence-spring-sockshop-sample"));
 	}
 }

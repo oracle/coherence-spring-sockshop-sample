@@ -4,11 +4,13 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
  */
-package io.spring.examples.sockshop.orders;
+package io.spring.examples.sockshop.orders.repository;
 
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
 import com.tangosol.util.Filters;
+import io.spring.examples.sockshop.orders.model.Order;
+import io.spring.examples.sockshop.orders.repository.OrderRepository;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,6 @@ import java.util.Collections;
  * An implementation of {@link OrderRepository}
  * that that uses Coherence as a backend data store.
  */
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 public class CoherenceOrderRepository implements OrderRepository {
     protected NamedMap<String, Order> orders;

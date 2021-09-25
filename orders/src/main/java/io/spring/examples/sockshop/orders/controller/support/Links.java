@@ -4,12 +4,13 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
  */
-package io.spring.examples.sockshop.orders;
+package io.spring.examples.sockshop.orders.controller.support;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import io.spring.examples.sockshop.orders.model.Order;
 import lombok.Data;
 
 /**

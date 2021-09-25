@@ -7,6 +7,9 @@
 
 package io.spring.examples.sockshop.orders;
 
+import io.spring.examples.sockshop.orders.model.Payment;
+import io.spring.examples.sockshop.orders.model.PaymentRequest;
+import io.spring.examples.sockshop.orders.service.PaymentClient;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;

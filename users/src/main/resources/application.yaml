@@ -4,13 +4,8 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
 #
-logging:
-  level:
-    root: warn
-    "Coherence": info
-    org.springframework.security: debug
-    org.springframework.web: info
-    com.oracle.coherence.spring: info
+server:
+  port: 8080
 opentracing:
   jaeger:
     service-name: Users
@@ -23,5 +18,16 @@ management:
     web:
       exposure:
         include: "*"
-server:
-  port: 8080
+spring:
+  jackson:
+    default-property-inclusion: non_null
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
+logging:
+  level:
+    root: warn
+    "Coherence": info
+    org.springframework.security: debug
+    org.springframework.web: info
+    com.oracle.coherence.spring: info

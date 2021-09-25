@@ -137,6 +137,12 @@ You should be able to access the home page for the application by pointing your 
 You should then be able to browse product catalog, add products to shopping cart, register as a new user, place an order,
 browse order history, etc.
 
+By default, 3 users are already available:
+
+- username `Eve_Berger` with password `eve`
+- username `user` with password `password`
+- username `user1` with password `password`
+
 Once you are finished, you can clean up the environment by executing the following:
 
 ```bash
@@ -186,7 +192,7 @@ The Quick Start shows how you can run the application locally, but that may not
 be enough if you want to experiment by scaling individual services, look at tracing data in Jaeger,
 monitor services via Prometheus and Grafana, or make API calls directly via Swagger UI.
 
-To do all of the above, you need to deploy the services into a managed Kubernetes cluster
+To do all the above, you need to deploy the services into a managed Kubernetes cluster
 in the cloud, by following the same set of steps described above (except for port forwarding,
 which is not necessary), and performing a few additional steps.
 

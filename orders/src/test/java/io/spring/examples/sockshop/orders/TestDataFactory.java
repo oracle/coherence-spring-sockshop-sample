@@ -7,6 +7,8 @@
 
 package io.spring.examples.sockshop.orders;
 
+import io.spring.examples.sockshop.orders.model.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

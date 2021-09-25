@@ -33,12 +33,12 @@ public class UserController {
 	private UserService users;
 
 	//@NewSpan
-	@GetMapping("/login")
 	@Operation(summary = "Basic user authentication")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if user is successfully authenticated"),
 			@ApiResponse(responseCode = "401", description = "if authentication fails")
 	})
+	@GetMapping("/login")
 	public WrappedUser login(@AuthenticationPrincipal org.springframework.security.core.userdetails.User securityUser) {
 		User userFromCoherence = this.users.getUser(securityUser.getUsername());
 		final WrappedUser user = new WrappedUser();
@@ -55,7 +55,10 @@ public class UserController {
 			@ApiResponse(responseCode = "200", description = "if user is successfully registered"),
 			@ApiResponse(responseCode = "409", description = "if the user is already registered")
 	})
-	public IdStatusResponse register(@RequestBody @Parameter(description = "The user to be registered") com.oracle.coherence.spring.sockshop.users.model.User user) {
+	public IdStatusResponse register(
+			@RequestBody
+			@Parameter(description = "The user to be registered")
+			com.oracle.coherence.spring.sockshop.users.model.User user) {
 		com.oracle.coherence.spring.sockshop.users.model.User prev = users.register(user);
 		if (prev != null) {
 			throw new UserAlreadyExistsException();

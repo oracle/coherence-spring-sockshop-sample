@@ -7,6 +7,10 @@
 
 package io.spring.examples.sockshop.orders;
 
+import io.spring.examples.sockshop.orders.model.Address;
+import io.spring.examples.sockshop.orders.model.Card;
+import io.spring.examples.sockshop.orders.model.Customer;
+import io.spring.examples.sockshop.orders.service.UsersClient;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;

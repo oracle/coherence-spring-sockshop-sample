@@ -4,6 +4,8 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
 #
+server:
+  port: ${port:8080}
 logging:
   level:
     root: warn
@@ -16,6 +18,7 @@ opentracing:
     udp-sender:
       host: jaeger-agent
       port: 5775
+    enabled: true
 management:
   endpoints:
     web:

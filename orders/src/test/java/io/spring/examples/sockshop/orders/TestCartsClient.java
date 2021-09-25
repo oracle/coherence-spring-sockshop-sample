@@ -7,6 +7,8 @@
 
 package io.spring.examples.sockshop.orders;
 
+import io.spring.examples.sockshop.orders.model.Item;
+import io.spring.examples.sockshop.orders.service.CartsClient;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;

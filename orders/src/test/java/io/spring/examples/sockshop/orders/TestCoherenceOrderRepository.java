@@ -9,10 +9,11 @@ package io.spring.examples.sockshop.orders;
 
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
+import io.spring.examples.sockshop.orders.model.Order;
+import io.spring.examples.sockshop.orders.repository.CoherenceOrderRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Priority;
 import javax.inject.Inject;
 
 @Component
