@@ -9,11 +9,10 @@ kind: Coherence
 metadata:
   name: shipping
 spec:
-#  cluster: SockShop
+  cluster: SockShop
   role: Shipping
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-shipping:1.0.0-SNAPSHOT
-  imagePullPolicy: IfNotPresent
+  image: ghcr.io/oracle/coherence-spring-sockshop-shipping:latest
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"

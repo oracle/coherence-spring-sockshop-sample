@@ -1,4 +1,4 @@
-name: Java CI
+name: CI Build
 
 on:
   workflow_dispatch:
@@ -10,9 +10,6 @@ on:
   pull_request:
     branches:
       - master
-  release:
-    types:
-      - created
 
 jobs:
   build:
@@ -39,11 +36,11 @@ jobs:
         REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo $REGISTRY_PASSWORD | docker login ghcr.io -u $REGISTRY_USER --password-stdin
-        mvn package --file pom.xml -Pcontainer -DskipTests
-        docker push ghcr.io/oracle/coherence-spring-sockshop-carts:21.06.1
-        docker push ghcr.io/oracle/coherence-spring-sockshop-catalog:21.06.1
-        docker push ghcr.io/oracle/coherence-spring-sockshop-orders:21.06.1
-        docker push ghcr.io/oracle/coherence-spring-sockshop-payment:21.06.1
-        docker push ghcr.io/oracle/coherence-spring-sockshop-shipping:21.06.1
-        docker push ghcr.io/oracle/coherence-spring-sockshop-users:21.06.1
+        mvn -B package --file pom.xml -Pcontainer -DskipTests
+        docker push ghcr.io/oracle/coherence-spring-sockshop-carts:latest
+        docker push ghcr.io/oracle/coherence-spring-sockshop-catalog:latest
+        docker push ghcr.io/oracle/coherence-spring-sockshop-orders:latest
+        docker push ghcr.io/oracle/coherence-spring-sockshop-payment:latest
+        docker push ghcr.io/oracle/coherence-spring-sockshop-shipping:latest
+        docker push ghcr.io/oracle/coherence-spring-sockshop-users:latest
       if: github.event_name == 'push'

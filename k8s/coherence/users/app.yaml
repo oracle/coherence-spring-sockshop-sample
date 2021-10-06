@@ -9,11 +9,10 @@ kind: Coherence
 metadata:
   name: users
 spec:
-#  cluster: SockShop
+  cluster: SockShop
   role: Users
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-users:1.0.0-SNAPSHOT
-  imagePullPolicy: IfNotPresent
+  image: ghcr.io/oracle/coherence-spring-sockshop-users:latest
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"

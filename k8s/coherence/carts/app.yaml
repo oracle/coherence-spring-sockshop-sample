@@ -9,11 +9,10 @@ kind: Coherence
 metadata:
   name: carts
 spec:
-#  cluster: SockShop
+  cluster: SockShop
   role: Carts
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-carts:1.0.0-SNAPSHOT
-  imagePullPolicy: IfNotPresent
+  image: ghcr.io/oracle/coherence-spring-sockshop-carts:latest
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"

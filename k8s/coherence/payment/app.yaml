@@ -9,11 +9,10 @@ kind: Coherence
 metadata:
   name: payment
 spec:
-#  cluster: SockShop
+  cluster: SockShop
   role: Payment
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-payment:1.0.0-SNAPSHOT
-  imagePullPolicy: IfNotPresent
+  image: ghcr.io/oracle/coherence-spring-sockshop-payment:latest
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"
