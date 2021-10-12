@@ -1,10 +1,10 @@
 # Product Catalog Service
 
 The Product Catalog Service contains service implementation, including the
-[domain model](./src/main/java/io/spring/examples/sockshop/catalog/Sock.java),
-[REST API](./src/main/java/io/spring/examples/sockshop/catalog/CatalogResource.java), as well as the
-[data repository abstraction](./src/main/java/io/spring/examples/sockshop/catalog/CatalogRepository.java)
-and its [Coherence](https://coherence.java.net/) [implementation](src/main/java/io/spring/examples/sockshop/catalog/CoherenceCatalogRepository.java).
+[domain model](src/main/java/com/oracle/coherence/examples/sockshop/spring/catalog/Sock.java),
+[REST API](src/main/java/com/oracle/coherence/examples/sockshop/spring/catalog/CatalogResource.java), as well as the
+[data repository abstraction](src/main/java/com/oracle/coherence/examples/sockshop/spring/catalog/CatalogRepository.java)
+and its [Coherence](https://coherence.community/) [implementation](src/main/java/com/oracle/coherence/examples/sockshop/spring/catalog/CoherenceCatalogRepository.java).
 
 ## API
 
