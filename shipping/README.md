@@ -4,7 +4,7 @@ The Shipping Service contains service implementation, including the
 [domain model](src/main/java/com/oracle/coherence/examples/sockshop/spring/shipping/Shipment.java),
 [REST API](src/main/java/com/oracle/coherence/examples/sockshop/spring/shipping/ShippingResource.java), as well as the
 [data repository abstraction](src/main/java/com/oracle/coherence/examples/sockshop/spring/shipping/ShipmentRepository.java)
-and its [Coherence](https://coherence.java.net/) [implementation](src/main/java/com/oracle/coherence/examples/sockshop/spring/shipping/CoherenceShipmentRepository.java).
+and its [Coherence](https://coherence.community/) [implementation](src/main/java/com/oracle/coherence/examples/sockshop/spring/shipping/CoherenceShipmentRepository.java).
 
 ## API
 

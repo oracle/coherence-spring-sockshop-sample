@@ -1,10 +1,10 @@
 # Orders Service
 
 The Orders Service contains service implementation, including the
-[domain model](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/Order.java),
-[REST API](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/OrderResource.java), as well as the
-[data repository abstraction](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/OrderRepository.java)
-and its [Coherence](https://coherence.java.net/) [backend](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/CoherenceOrderRepository.java).
+[domain model](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/model/Order.java),
+[REST API](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/controller/OrderController.java), as well as the
+[data repository abstraction](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/repository/OrderRepository.java)
+and its [Coherence](https://coherence.community/) [backend](src/main/java/com/oracle/coherence/examples/sockshop/spring/orders/repository/CoherenceOrderRepository.java).
 
 ## API
 

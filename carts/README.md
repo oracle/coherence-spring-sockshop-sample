@@ -4,7 +4,7 @@ The Shopping Cart Service contains the service implementation, including the
 [domain model](src/main/java/com/oracle/coherence/examples/sockshop/spring/carts/Cart.java),
 [REST API](src/main/java/com/oracle/coherence/examples/sockshop/spring/carts/CartResource.java), as well as the
 [data repository abstraction](src/main/java/com/oracle/coherence/examples/sockshop/spring/carts/CartRepository.java)
-and its [Coherence](https://coherence.java.net/) [implementation](src/main/java/com/oracle/coherence/examples/sockshop/spring/carts/CoherenceCartRepository.java).
+and its [Coherence](https://coherence.community/) [implementation](src/main/java/com/oracle/coherence/examples/sockshop/spring/carts/CoherenceCartRepository.java).
 
 ## API
 

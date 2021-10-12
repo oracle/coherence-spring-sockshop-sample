@@ -4,7 +4,7 @@ The Payment Service contains service implementation, including the
 [domain model](src/main/java/com/oracle/coherence/examples/sockshop/spring/payment/Authorization.java),
 [REST API](src/main/java/com/oracle/coherence/examples/sockshop/spring/payment/PaymentResource.java), as well as the
 [data repository abstraction](src/main/java/com/oracle/coherence/examples/sockshop/spring/payment/PaymentRepository.java)
-and its [Coherence](https://coherence.java.net/) [backend](src/main/java/com/oracle/coherence/examples/sockshop/spring/payment/CoherencePaymentRepository.java).
+and its [Coherence](https://coherence.community/) [backend](src/main/java/com/oracle/coherence/examples/sockshop/spring/payment/CoherencePaymentRepository.java).
 
 ## API
 
