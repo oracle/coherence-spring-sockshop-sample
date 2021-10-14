@@ -36,9 +36,11 @@
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
         <version.lib.spring-boot>2.5.5</version.lib.spring-boot>
-        <version.lib.spring-cloud>2020.0.3</version.lib.spring-cloud>
+        <version.lib.spring-cloud>2020.0.4</version.lib.spring-cloud>
+        <version.lib.spring-cloud-starter-feign>1.4.7.RELEASE</version.lib.spring-cloud-starter-feign>
         <version.lib.springdoc-openapi>1.5.7</version.lib.springdoc-openapi>
         <version.lib.springfox>3.0.0</version.lib.springfox>
+
         <version.plugin.jib>3.1.4</version.plugin.jib>
         <version.plugin.failsafe>2.22.2</version.plugin.failsafe>
         <version.plugin.surefire>2.22.2</version.plugin.surefire>
@@ -73,6 +75,30 @@
     </dependencyManagement>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-plugin-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${maven.minimum.version}</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>${java.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
