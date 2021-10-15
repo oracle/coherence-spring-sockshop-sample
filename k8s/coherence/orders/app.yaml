@@ -20,8 +20,10 @@ spec:
       value: "const"
     - name: JAEGER_SAMPLER_PARAM
       value: "1"
+    - name: COHERENCE_SERVICE_NAME
+      value: "Orders"
   application:
-    main: io.spring.examples.sockshop.orders.OrdersApp
+    main: com.oracle.coherence.examples.sockshop.spring.orders.OrdersApp
   jvm:
     memory:
       heapSize: 2g
