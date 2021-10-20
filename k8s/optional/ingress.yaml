@@ -4,69 +4,105 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
 #
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sockshop-ingress
 spec:
   rules:
-  - host: ${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+  - host: ${SOCKSHOP_BACKEND:=coherence}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
     http:
       paths:
-      - backend:
-          serviceName: front-end
-          servicePort: 80
-  - host: jaeger.${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+        - pathType: ImplementationSpecific
+          backend:
+            service:
+              name: front-end
+              port:
+                number: 80
+  - host: jaeger.${SOCKSHOP_BACKEND:=coherence}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
     http:
       paths:
-      - backend:
-          serviceName: jaeger-query
-          servicePort: 16686
-  - host: api.${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+        - pathType: ImplementationSpecific
+          backend:
+            service:
+              name: jaeger-query
+              port:
+                number: 16686
+  - host: api.${SOCKSHOP_BACKEND:=coherence}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
     http:
       paths:
         - path: /carts
+          pathType: ImplementationSpecific
           backend:
-            serviceName: carts
-            servicePort: 80
+            service:
+              name: carts
+              port:
+                number: 80
         - path: /catalogue
+          pathType: ImplementationSpecific
           backend:
-            serviceName: catalogue
-            servicePort: 80
+            service:
+              name: catalogue
+              port:
+                number: 80
         - path: /orders
+          pathType: ImplementationSpecific
           backend:
-            serviceName: orders
-            servicePort: 80
+            service:
+              name: orders
+              port:
+                number: 80
         - path: /paymentAuth
+          pathType: ImplementationSpecific
           backend:
-            serviceName: payment
-            servicePort: 80
+            service:
+              name: payment-http
+              port:
+                number: 80
         - path: /shipping
+          pathType: ImplementationSpecific
           backend:
-            serviceName: shipping
-            servicePort: 80
+            service:
+              name: shipping-http
+              port:
+                number: 80
         - path: /login
+          pathType: ImplementationSpecific
           backend:
-            serviceName: user
-            servicePort: 80
+            service:
+              name: user
+              port:
+                number: 80
         - path: /register
+          pathType: ImplementationSpecific
           backend:
-            serviceName: user
-            servicePort: 80
+            service:
+              name: user
+              port:
+                number: 80
         - path: /customers
+          pathType: ImplementationSpecific
           backend:
-            serviceName: user
-            servicePort: 80
+            service:
+              name: user
+              port:
+                number: 80
         - path: /addresses
+          pathType: ImplementationSpecific
           backend:
-            serviceName: user
-            servicePort: 80
+            service:
+              name: user
+              port:
+                number: 80
         - path: /cards
+          pathType: ImplementationSpecific
           backend:
-            serviceName: user
-            servicePort: 80
+            service:
+              name: user
+              port:
+                number: 80
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -74,34 +110,55 @@ metadata:
   name: mp-ingress
 spec:
   rules:
-  - host: mp.${SOCKSHOP_BACKEND:=core}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
+  - host: mp.${SOCKSHOP_BACKEND:=coherence}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
     http:
       paths:
         - path: /swagger(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: swagger
-            servicePort: 80
+            service:
+              name: swagger
+              port:
+                number: 80
         - path: /carts(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: carts
-            servicePort: 80
+            service:
+              name: carts
+              port:
+                number: 80
         - path: /catalogue(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: catalogue
-            servicePort: 80
+            service:
+              name: catalogue
+              port:
+                number: 80
         - path: /orders(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: orders
-            servicePort: 80
+            service:
+              name: orders
+              port:
+                number: 80
         - path: /payments(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: payment
-            servicePort: 80
+            service:
+              name: payment-http
+              port:
+                number: 80
         - path: /shipping(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: shipping
-            servicePort: 80
+            service:
+              name: shipping-http
+              port:
+                number: 80
         - path: /users(/|$)(.*)
+          pathType: ImplementationSpecific
           backend:
-            serviceName: user
-            servicePort: 80
+            service:
+              name: user
+              port:
+                number: 80

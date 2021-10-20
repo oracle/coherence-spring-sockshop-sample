@@ -25,76 +25,39 @@ which is not necessary), and performing a few additional steps.
 
 ### Install Prometheus and Grafana
 
-The following will install [Prometheus Operator](https://github.com/coreos/prometheus-operator/) into the
-`monitoring` namespace using `helm`.
+Install the Prometheus Operator, as documented in the Prometheus Operator [Quick Start](https://prometheus-operator.dev/docs/prologue/quick-start/) page.
 
-1. Create the `monitoring` namespace
+Prometheus can then be accessed as documented in the
+[Access Prometheus section of the Quick Start](https://prometheus-operator.dev/docs/prologue/quick-start/#access-prometheus) page.
 
-   If you wish to install Prometheus or Jaegar Operator you must create the `monitoring` namespace using the following:
+**IMPORTANT**
+If installing Prometheus into a RBAC enabled k8s cluster you may need to create the required RBAC resources
+as described in the [Prometheus RBAC](https://prometheus-operator.dev/docs/operator/rbac/) documentation.
 
-    ```bash
-    $ kubectl create namespace monitoring
-    ```
+**IMPORTANT**
+If you installed the Sock Shop back-end into K8s before you installed Prometheus Operator, you must
+run the following to delete and re-add the deployments for Prometheus to pick up the Pods. This is because the Coherence Operator will not have been able to create Prometheus `ServiceMonitor` resources before Prometheus was installed.
 
-1. Create Prometheus pre-requisites
-
-    ```bash
-    $ kubectl apply -f k8s/optional/prometheus-rbac.yaml
-    ```
-
-1. Create Config Maps
-
-    ```bash
-    $ kubectl --namespace monitoring create configmap sockshop-grafana-dashboards --from-file=k8s/optional/grafana-dashboards/
-
-    $ kubectl --namespace monitoring label configmap sockshop-grafana-dashboards grafana_dashboard=1
-
-    $ kubectl --namespace monitoring create -f k8s/optional/grafana-datasource-config.yaml
-
-    $ kubectl --namespace monitoring label configmap sockshop-grafana-datasource grafana_datasource=1
-
-    $ kubectl --namespace monitoring create -f https://oracle.github.io/coherence-operator/dashboards/3.1.5/coherence-grafana-micrometer-dashboards.yaml
-
-    $ kubectl --namespace monitoring label configmap coherence-grafana-dashboards grafana_dashboard=1
-    ```
-
-1. Install Prometheus Operator
-
-   > Note: If you have already installed Prometheus Operator before on this Kuberenetes Cluster
-   > then set `--set prometheusOperator.createCustomResource=false`.
-
-    ```bash
-    $ helm install --namespace monitoring --version 8.13.9 \
-        --set grafana.enabled=true \
-        --set prometheusOperator.createCustomResource=true \
-        --set grafana.adminPassword=<SET_YOUR_ADMIN_PASSWORD> \
-        --values k8s/optional/prometheus-values.yaml prometheus stable/prometheus-operator
-    ````
-
-   For helm version 2 use the following:
-
-    ```bash
-    $ helm install --namespace monitoring --version 8.13.9 \
-        --set grafana.enabled=true --name prometheus \
-        --set prometheusOperator.createCustomResource=true \
-        --set grafana.adminPassword=<SET_YOUR_ADMIN_PASSWORD> \
-        --values k8s/optional/prometheus-values.yaml stable/prometheus-operator 
-    ```
-
-   **IMPORTANT**
-
-   If you installed back-end before you installed Prometheus Operator, you must
-   run the following to delete and re-add the deployments for Prometheus to pickup the Pods.
-
-   ```bash 
+   ```bash
    $ kubectl delete -k k8s/coherence --namespace sockshop
 
    $ kubectl apply -k k8s/coherence --namespace sockshop
    ```
 
+#### Import the Grafana Dashboards
+
+A set of Grafana dashboards can be downloaded from the Coherence Operator GitHub repository and imported into Grafana.
+Full instructions for importing dashboards into Grafana can be found in the
+[Coherence Operator documentation](https://oracle.github.io/coherence-operator/docs/latest/#/metrics/030_importing).
+
+There is an additional Sock Shop specific Grafana dashboard located in the project source 
+`k8s/optional/grafana-dashboards/sockshop-dashboard.json` This file can be manually imported into Grafana using the
+instructions in the [Add a Datasource](https://grafana.com/docs/grafana/latest/datasources/add-a-data-source/) section
+of the Grafana documentation.
+
 ### Expose Application via a Load Balancer
 
-> Note: This is assuming you have deployed one of the back-ends via the instructions in
+> Note: This is assuming you have deployed the back-ends via the instructions in
 > the previous section.
 
 1. Create the Load Balancer
@@ -109,7 +72,7 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
 
    Once you have been assigned an external IP address, continue to the next step.
 
-1. Setup Domains
+2. Setup Domains
 
    You must have access to a top level domain for which you can create sub-domains to
    allow access to the application via a Load Balancer (LB).
@@ -118,9 +81,18 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
    should create a single wildcard DNS entry `*.sockshop.mycompany.com` to
    point to your external load balancer IP address.
 
-1. Create the ingress
+   **Tip:** You can also run Ingress just on `localhost`. However, in that case you must update you `hosts` file with
+   the used urls.
+   ```
+   127.0.0.1       sockshop.mycompany.com
+   127.0.0.1       coherence.sockshop.mycompany.com
+   127.0.0.1       jaeger.coherence.sockshop.mycompany.com
+   127.0.0.1       mp.coherence.sockshop.mycompany.com
+   127.0.0.1       grafana.sockshop.mycompany.com
+   127.0.0.1       prometheus.sockshop.mycompany.com
+   ```
 
-   Each time you use a different back-end you will need to create a new ingress.
+4. Create the ingress
 
    In your terminal, export (or SET for Windows) your top level domain
    and the backend you are using.
@@ -134,17 +106,16 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
 
     $ kubectl get ingress --namespace sockshop
 
-    NAME               HOSTS                                                                                            ADDRESS           PORTS   AGE
-    mp-ingress         mp.core.sockshop.mycompany.com                                                                   XXX.XXX.XXX.XXX   80      12d
-    sockshop-ingress   core.sockshop.mycompany.com,jaeger.core.sockshop.mycompany.com,api.core.sockshop.mycompany.com   XXX.XXX.XXX.XXX   80      12d
+    NAME               HOSTS                                                                                                           ADDRESS           PORTS   AGE
+    mp-ingress         mp.coherence.sockshop.mycompany.com                                                                             XXX.XXX.XXX.XXX   80      12d
+    sockshop-ingress   coherence.sockshop.mycompany.com,jaeger.coherence.sockshop.mycompany.com,api.coherence.sockshop.mycompany.com   XXX.XXX.XXX.XXX   80      12d
     ```
-
-1. Create the ingress for Grafana and Prometheus
+5. Create the ingress for Grafana and Prometheus
 
    Ensuring you have the `SOCKSHOP_DOMAIN` environment variable set and issue the following:
 
     ```bash
-    $ envsubst -i k8s/optional/ingress-grafana.yaml | kubectl apply --namespace monitoring -f - 
+    $ envsubst -i k8s/optional/ingress-grafana.yaml | kubectl apply --namespace monitoring -f -
 
     $ kubectl get ingress --namespace monitoring
 
@@ -154,12 +125,12 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
 
    The following URLs can be used to access Grafana and Prometheus. Please use the `admin` user password that was setup
    in the section `Install Prometheus Operator` above when using the URLs below:
-    * http://grafana.sockshop.mycompany.com/
-    * http://prometheus.sockshop.mycompany.com/
+   * http://grafana.sockshop.mycompany.com/
+   * http://prometheus.sockshop.mycompany.com/
 
-1. Access the application
+6. Access the application
 
-   Access the application via the endpoint http://core.sockshop.mycompany.com/
+   Access the application via the endpoint http://coherence.sockshop.mycompany.com/
 
 ### Install the Jaeger Operator
 
@@ -172,15 +143,22 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
     $ kubectl create -f k8s/optional/jaeger-operator.yaml
     ```
 
-1. Deploy All-in-One Jaeger Instance
+2. Deploy All-in-One Jaeger Instance
 
     ```bash
     $ kubectl create -f k8s/optional/jaeger.yaml --namespace sockshop
     ```
 
-1. Exercise the Application and access Jaeger
+3. Enable Jaeger tracing in `application.yaml` files and rebuild and redeploy services
+    ```
+   tracing:
+      jaeger:
+         enabled: false
+   ```
 
-   Cessing the Jaeger UI at http://jaeger.core.sockshop.mycompany.com/,
+4. Exercise the Application and access Jaeger
+
+   Accessing the Jaeger UI at http://jaeger.coherence.sockshop.mycompany.com/,
    you should see the trace information similar to the images below, allowing you
    to see how long each individual operation in the call tree took.
 
@@ -196,13 +174,23 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
     $ kubectl create -f k8s/optional/swagger.yaml --namespace sockshop
     ```
 
-   Access the Swagger UI at http://mp.core.sockshop.mycompany.com/swagger/.
+   Access the Swagger UI at http://mp.coherence.sockshop.mycompany.com/swagger/.
 
-   Enter /carts/v3/api-docs into the Explore field at the top of the screen and click on Explore button. 
-   You should see the screen similar to the following, showing you all the endpoints for the Carts 
+   Enter /carts/swagger/carts-1.0.yml into the Explore field at the top of the screen and click on Explore button.
+   You should see the screen similar to the following, showing you all the endpoints for the Carts
    service (and their payloads), and allowing you to make API requests to it directly from your browser.
 
    ![Swagger UI](./images/swagger.png)
+
+### Complete 🍻
+
+Once you are done, you should have the following URLs available:
+
+- Sock Shop - http://coherence.sockshop.mycompany.com/
+- Prometheus - http://prometheus.sockshop.mycompany.com/
+- Grafana - http://grafana.sockshop.mycompany.com/
+- Jaeger - http://jaeger.coherence.sockshop.mycompany.com/
+- Swagger - http://mp.coherence.sockshop.mycompany.com/swagger/
 
 ### Cleanup
 
@@ -210,13 +198,13 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
 
    To cleanup the ingress for your deployment, execute the following:
 
-    ```bash 
+    ```bash
     $ export SOCKSHOP_DOMAIN=sockshop.mycompany.com
 
     $ envsubst -i k8s/optional/ingress.yaml| kubectl delete -f - --namespace sockshop
     ```
 
-1. Cleanup the ingress for Grafana and Prometheus
+2. Cleanup the ingress for Grafana and Prometheus
 
    If you installed Prometheus Operator, execute the following:
 
@@ -224,7 +212,7 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
     $ envsubst -i k8s/optional/ingress-grafana.yaml | kubectl delete --namespace monitoring -f -
     ```
 
-1. Remove the deployed services
+3. Remove the deployed services
 
    To cleanup the deployed services, execute the following:
 
@@ -233,7 +221,7 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
     $ kubectl delete -k k8s/coherence --namespace sockshop
     ```
 
-1. Remove the Load Balancer
+4. Remove the Load Balancer
 
    If you wish to remove your load balancer, execute the following:
 
@@ -241,10 +229,10 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
     $ kubectl delete -f k8s/optional/ingress-controller.yaml
     ```
 
-1. Remove Jaeger
+5. Remove Jaeger
 
     ```bash
-    $ kubectl delete -f k8s/optional/jaeger-operator.yaml 
+    $ kubectl delete -f k8s/optional/jaeger-operator.yaml
     ```
 
    Execute the following:
@@ -253,7 +241,7 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
     $ kubectl delete -f k8s/optional/jaeger.yaml --namespace sockshop
     ```
 
-1. Remove Swagger
+6. Remove Swagger
 
    Execute the following:
 
@@ -261,57 +249,6 @@ The following will install [Prometheus Operator](https://github.com/coreos/prome
    $ kubectl delete -f k8s/optional/swagger.yaml --namespace sockshop
     ```
 
-1. Remove Prometheus and Grafana
+7. Remove Prometheus and Grafana
 
-   To remove the Prometheus Operator, execute the following:
-
-    ```bash
-    $ helm delete prometheus --namespace monitoring
-
-    $ kubectl --namespace monitoring delete configmap sockshop-grafana-dashboards
-
-    $ kubectl --namespace monitoring delete configmap coherence-grafana-dashboards
-
-    $ kubectl --namespace monitoring delete configmap sockshop-grafana-datasource
-
-    $ kubectl --namespace monitoring delete -f k8s/optional/grafana-datasource-config.yaml
-
-    $ kubectl delete -f k8s/optional/prometheus-rbac.yaml
-    ```
-
-   For helm version 2 use the following:
-
-    ```bash
-    $ helm delete prometheus --purge
-    ```
-
-   > Note: You can optionally delete the Prometheus Operator Custom Resource Definitions
-   > (CRD's) if you are not going to install Prometheus Operator again.
-
-   ```bash
-   $ kubectl delete crd alertmanagers.monitoring.coreos.com 
-   $ kubectl delete crd podmonitors.monitoring.coreos.com
-   $ kubectl delete crd prometheuses.monitoring.coreos.com
-   $ kubectl delete crd prometheusrules.monitoring.coreos.com 
-   $ kubectl delete crd prometheusrules.monitoring.coreos.com 
-   $ kubectl delete crd servicemonitors.monitoring.coreos.com 
-   $ kubectl delete crd thanosrulers.monitoring.coreos.com 
-   ```
-
-   A shorthand way of doing this if you are running Linux/Mac is:
-   ```bash
-   $ kubectl get crds --namespace monitoring | grep monitoring.coreos.com | awk '{print $1}' | xargs kubectl delete crd
-   ```
-
-1. Remove the Coherence Operator
-
-    ```bash
-    $ helm delete coherence-operator --namespace sockshop
-    ```
-
-   For helm version 2 use the following:
-
-    ```bash
-    $ helm delete coherence-operator --purge
-    ```
-
+   To remove the Prometheus Operator follow the instructions in the [Remove kube-prometheus](https://prometheus-operator.dev/docs/prologue/quick-start/#remove-kube-prometheus) section of the Prometheus Operator Quick Start.
