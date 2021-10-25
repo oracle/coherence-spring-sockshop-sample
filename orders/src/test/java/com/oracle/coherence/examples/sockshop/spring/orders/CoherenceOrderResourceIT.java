@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import java.net.URI;
 import java.time.LocalDate;
 
+import static com.oracle.coherence.examples.sockshop.spring.orders.TestDataFactory.order;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -74,7 +75,7 @@ public class CoherenceOrderResourceIT {
 
     @Test
     protected void testGetOrder() {
-        Order order = TestDataFactory.order("homer", 1);
+        Order order = order("homer", 1);
         orders.saveOrder(order);
         Order saved = get("/orders/{orderId}", order.getOrderId()).as(Order.class, ObjectMapperType.JACKSON_2);
 
@@ -83,9 +84,9 @@ public class CoherenceOrderResourceIT {
 
     @Test
     protected void testFindOrdersByCustomerId() {
-        orders.saveOrder(TestDataFactory.order("homer", 1));
-        orders.saveOrder(TestDataFactory.order("homer", 2));
-        orders.saveOrder(TestDataFactory.order("marge", 5));
+        orders.saveOrder(order("homer", 1));
+        orders.saveOrder(order("homer", 2));
+        orders.saveOrder(order("marge", 5));
 
         given().
                 queryParam("custId", "homer").

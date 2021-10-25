@@ -35,7 +35,7 @@
         <version.lib.lombok>1.18.18</version.lib.lombok>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
-        <version.lib.spring-boot>2.5.5</version.lib.spring-boot>
+        <version.lib.spring-boot>2.5.6</version.lib.spring-boot>
         <version.lib.spring-cloud>2020.0.4</version.lib.spring-cloud>
         <version.lib.spring-cloud-starter-feign>1.4.7.RELEASE</version.lib.spring-cloud-starter-feign>
         <version.lib.springdoc-openapi>1.5.7</version.lib.springdoc-openapi>
@@ -97,6 +97,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.plugin.surefire}</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
