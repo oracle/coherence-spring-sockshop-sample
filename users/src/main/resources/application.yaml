@@ -5,22 +5,25 @@
 # https://oss.oracle.com/licenses/upl.
 #
 server:
-  port: 8080
-opentracing:
-  jaeger:
-    service-name: Users
-    udp-sender:
-      host: jaeger-agent
-      port: 5775
-    enabled: false
+  port: ${port:8080}
+spring:
+  application:
+    name: Users
+  sleuth:
+    propagation:
+      type: B3,W3C
+    opentracing:
+      enabled: true
+  zipkin:
+#    base-url: http://jaeger-agent:9411
+    base-url: http://localhost:9411
+  jackson:
+    default-property-inclusion: non_null
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-spring:
-  jackson:
-    default-property-inclusion: non_null
 springdoc:
   swagger-ui:
     path: "/swagger-ui.html"

@@ -4,20 +4,26 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
 #
-logging:
-  level:
-    root: warn
-    "Coherence": info
-    org.springframework.web: info
-    com.oracle.coherence.spring: info
-opentracing:
-  jaeger:
-    service-name: Payment
-    udp-sender:
-      host: jaeger-agent
-      port: 5775
+server:
+  port: ${port:8082}
+spring:
+  application:
+    name: Payment
+  sleuth:
+    propagation:
+      type: B3,W3C
+    opentracing:
+      enabled: true
+  zipkin:
+    base-url: http://jaeger-agent:9411
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+logging:
+  level:
+    root: warn
+    "Coherence": info
+    org.springframework: debug
+    com.oracle.coherence.spring: debug

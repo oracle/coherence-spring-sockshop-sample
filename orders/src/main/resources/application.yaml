@@ -5,22 +5,29 @@
 # https://oss.oracle.com/licenses/upl.
 #
 server:
-  port: ${port:8080}
-logging:
-  level:
-    root: warn
-    "Coherence": info
-    org.springframework.web: info
-    com.oracle.coherence.spring: info
-opentracing:
-  jaeger:
-    service-name: Orders
-    udp-sender:
-      host: jaeger-agent
-      port: 5775
-    enabled: true
+  port: ${port:8083}
+spring:
+  application:
+    name: Orders
+  sleuth:
+    propagation:
+      type: B3,W3C
+    opentracing:
+      enabled: true
+#  zipkin:
+#    base-url: http://jaeger-agent:9411
+  zipkin:
+    base-url: http://localhost:9411
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+logging:
+  level:
+    root: warn
+    org.springframework: debug
+    "Coherence": info
+    org.springframework.web: debug
+    com.oracle.coherence.spring: debug
+    com.oracle.coherence.examples.sockshop.spring: debug
