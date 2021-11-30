@@ -35,7 +35,7 @@ public class CardId implements Serializable {
 	public CardId(String id) {
 		String[] parts = id.split(":");
 		if (parts.length != 2) {
-			throw new IllegalArgumentException("Card Id is in the wrong format");
+			throw new IllegalArgumentException(String.format("Card Id '%s' is in the wrong format", id));
 		}
 		user = parts[0];
 		cardId = parts[1];

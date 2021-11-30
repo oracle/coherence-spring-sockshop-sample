@@ -15,8 +15,8 @@ spring:
     opentracing:
       enabled: true
   zipkin:
-#    base-url: http://jaeger-agent:9411
-    base-url: http://localhost:9411
+    base-url: http://jaeger-agent:9411
+    enabled: false
   jackson:
     default-property-inclusion: non_null
 management:
@@ -31,6 +31,6 @@ logging:
   level:
     root: warn
     "Coherence": info
-    org.springframework.security: debug
+    org.springframework.security: info
     org.springframework.web: info
     com.oracle.coherence.spring: info

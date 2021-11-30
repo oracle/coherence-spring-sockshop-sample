@@ -6,6 +6,7 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.catalog;
 
+import com.oracle.coherence.examples.sockshop.spring.catalog.model.Sock;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceCache;
 import com.tangosol.net.NamedCache;
 import org.junit.jupiter.api.MethodOrderer;

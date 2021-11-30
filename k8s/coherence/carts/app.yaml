@@ -24,6 +24,9 @@ spec:
       value: "Carts"
   application:
     main: com.oracle.coherence.examples.sockshop.spring.carts.CartsApp
+    args:
+      - "--port=8080"
+      - "--spring.zipkin.enabled=false"
   jvm:
     memory:
       heapSize: 2g

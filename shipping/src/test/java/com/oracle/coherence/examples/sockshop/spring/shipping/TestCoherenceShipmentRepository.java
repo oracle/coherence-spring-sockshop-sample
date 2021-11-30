@@ -6,6 +6,8 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.shipping;
 
+import com.oracle.coherence.examples.sockshop.spring.shipping.model.Shipment;
+import com.oracle.coherence.examples.sockshop.spring.shipping.repository.CoherenceShipmentRepository;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
 import org.springframework.context.annotation.Primary;

@@ -16,6 +16,7 @@ spring:
       enabled: true
   zipkin:
     base-url: http://jaeger-agent:9411
+    enabled: false
 management:
   endpoints:
     web:

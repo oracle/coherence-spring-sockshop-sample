@@ -8,6 +8,8 @@ package com.oracle.coherence.examples.sockshop.spring.shipping;
 
 import java.time.LocalDate;
 
+import com.oracle.coherence.examples.sockshop.spring.shipping.model.Shipment;
+import com.oracle.coherence.examples.sockshop.spring.shipping.repository.ShipmentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

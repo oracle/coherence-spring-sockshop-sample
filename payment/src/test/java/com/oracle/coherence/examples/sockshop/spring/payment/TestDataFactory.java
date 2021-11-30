@@ -6,14 +6,17 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.payment;
 
+import com.oracle.coherence.examples.sockshop.spring.payment.controller.PaymentRequest;
+import com.oracle.coherence.examples.sockshop.spring.payment.model.*;
+
 import java.time.LocalDateTime;
 
 /**
  * Helper methods to create test data.
  */
-class TestDataFactory {
+public class TestDataFactory {
 
-    static PaymentRequest paymentRequest(String orderId, float amount) {
+    public static PaymentRequest paymentRequest(String orderId, float amount) {
         return PaymentRequest.builder()
                 .orderId(orderId)
                 .customer(customer())
@@ -23,14 +26,14 @@ class TestDataFactory {
                 .build();
     }
 
-    static Customer customer() {
+    public static Customer customer() {
         return Customer.builder()
                 .firstName("Homer")
                 .lastName("Simpson")
                 .build();
     }
 
-    static Address address() {
+    public static Address address() {
         return Address.builder()
                 .number("123")
                 .street("Main St")
@@ -40,7 +43,7 @@ class TestDataFactory {
                 .build();
     }
 
-    static Card card() {
+    public static Card card() {
         return Card.builder()
                 .longNum("************1234")
                 .expires("10/2025")
@@ -48,7 +51,7 @@ class TestDataFactory {
                 .build();
     }
 
-    static Authorization auth(String orderId, LocalDateTime time, boolean fAuthorized, String message) {
+    public static Authorization auth(String orderId, LocalDateTime time, boolean fAuthorized, String message) {
         return Authorization.builder()
                 .orderId(orderId)
                 .time(time)
@@ -57,7 +60,7 @@ class TestDataFactory {
                 .build();
     }
 
-    static Authorization auth(String orderId, LocalDateTime time, Err error) {
+    public static Authorization auth(String orderId, LocalDateTime time, Err error) {
         return Authorization.builder()
                 .orderId(orderId)
                 .time(time)

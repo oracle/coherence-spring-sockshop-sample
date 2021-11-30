@@ -14,10 +14,9 @@ spring:
       type: B3,W3C
     opentracing:
       enabled: true
-#  zipkin:
-#    base-url: http://jaeger-agent:9411
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://jaeger-agent:9411
+    enabled: false
 management:
   endpoints:
     web:
@@ -26,8 +25,8 @@ management:
 logging:
   level:
     root: warn
-    org.springframework: debug
     "Coherence": info
-    org.springframework.web: debug
-    com.oracle.coherence.spring: debug
-    com.oracle.coherence.examples.sockshop.spring: debug
+    org.springframework: info
+    org.springframework.web: info
+    com.oracle.coherence.spring: info
+    com.oracle.coherence.examples.sockshop.spring: info

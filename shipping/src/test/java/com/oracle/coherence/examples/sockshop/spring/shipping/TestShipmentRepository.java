@@ -6,6 +6,8 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.shipping;
 
+import com.oracle.coherence.examples.sockshop.spring.shipping.repository.ShipmentRepository;
+
 /**
  * Tests may need additional methods in repository implementations
  * in order to pre-load test data, clear the repository between the

@@ -6,6 +6,10 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.shipping;
 
+import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingRequest;
+import com.oracle.coherence.examples.sockshop.spring.shipping.model.Address;
+import com.oracle.coherence.examples.sockshop.spring.shipping.model.Shipment;
+
 import java.time.LocalDate;
 
 /**

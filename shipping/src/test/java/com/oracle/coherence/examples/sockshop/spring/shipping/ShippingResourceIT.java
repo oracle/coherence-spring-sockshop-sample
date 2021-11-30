@@ -8,6 +8,7 @@ package com.oracle.coherence.examples.sockshop.spring.shipping;
 
 import java.time.LocalDate;
 
+import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingResource;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 

@@ -103,6 +103,7 @@ public class AddressControllerTests {
 		when().
 			delete("/addresses/{id}").
 		then().
-			statusCode(200);
+			statusCode(200)
+				.body("status", is(true));
 	}
 }

@@ -6,6 +6,8 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.shipping;
 
+import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingResource;
+
 /**
  * Integration tests for {@link ShippingResource},
  * using Coherence for persistence.

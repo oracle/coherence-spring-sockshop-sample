@@ -6,6 +6,7 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.catalog;
 
+import com.oracle.coherence.examples.sockshop.spring.catalog.controller.CatalogResource;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

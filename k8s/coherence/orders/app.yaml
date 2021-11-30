@@ -24,6 +24,9 @@ spec:
       value: "Orders"
   application:
     main: com.oracle.coherence.examples.sockshop.spring.orders.OrdersApp
+    args:
+      - "--port=8080"
+      - "--spring.zipkin.enabled=false"
   jvm:
     memory:
       heapSize: 2g

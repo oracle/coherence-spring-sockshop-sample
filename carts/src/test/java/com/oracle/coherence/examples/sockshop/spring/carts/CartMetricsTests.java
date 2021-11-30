@@ -6,6 +6,7 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.carts;
 
+import com.oracle.coherence.examples.sockshop.spring.carts.model.Item;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

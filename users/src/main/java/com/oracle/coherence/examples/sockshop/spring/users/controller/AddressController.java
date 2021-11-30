@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.MediaTypes;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 		path = "/addresses",
 		consumes = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE},
 		produces = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE})
+@Slf4j
 public class AddressController {
 
 	@Autowired
@@ -89,6 +91,7 @@ public class AddressController {
 			booleanStatusResponse = new BooleanStatusResponse(true);
 		}
 		catch (RuntimeException e) {
+			log.error("Error deleting address", e);
 			booleanStatusResponse = new BooleanStatusResponse(false);
 		}
 		return booleanStatusResponse;

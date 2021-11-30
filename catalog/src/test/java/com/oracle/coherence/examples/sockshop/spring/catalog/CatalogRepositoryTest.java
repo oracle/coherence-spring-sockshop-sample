@@ -6,6 +6,8 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.catalog;
 
+import com.oracle.coherence.examples.sockshop.spring.catalog.model.Sock;
+import com.oracle.coherence.examples.sockshop.spring.catalog.repository.CatalogRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

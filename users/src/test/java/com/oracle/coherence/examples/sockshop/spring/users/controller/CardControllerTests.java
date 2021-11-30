@@ -36,7 +36,6 @@ public class CardControllerTests {
 	@Autowired
 	private ServletWebServerApplicationContext webServerApplicationConext;
 
-
 	@Autowired
 	ApplicationContext context;
 
@@ -46,7 +45,7 @@ public class CardControllerTests {
 	void setup() {
 		// Configure RestAssured to run tests against our application
 		RestAssured.baseURI = "http://localhost";
-		RestAssured.port = webServerApplicationConext.getWebServer().getPort();
+		RestAssured.port = this.webServerApplicationConext.getWebServer().getPort();
 		userService = getUserService();
 		userService.removeUser("foouser");
 		userService.removeUser("baruser");
@@ -102,9 +101,10 @@ public class CardControllerTests {
 		given().
 				pathParam("id", cardId.toString()).
 				when().
-				get("/cards/{id}").
+				delete("/cards/{id}").
 				then().
-				statusCode(HttpStatus.OK.value());
+				statusCode(HttpStatus.OK.value())
+				.body("status", is(true));;
 	}
 
 	@Test

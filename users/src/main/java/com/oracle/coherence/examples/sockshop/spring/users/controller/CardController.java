@@ -17,7 +17,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
@@ -36,6 +38,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 		path = "/cards",
 		consumes = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE},
 		produces = { MediaTypes.HAL_JSON_VALUE, MediaType.ALL_VALUE})
+@Slf4j
 public class CardController {
 
 	@Autowired
@@ -81,7 +84,7 @@ public class CardController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if card is successfully deleted")
 	})
-	//@NewSpan
+	@NewSpan
 	public BooleanStatusResponse deleteCard(@Parameter(description = "Card identifier") @PathVariable("id")CardId id) {
 		BooleanStatusResponse booleanStatusResponse;
 		try {
@@ -89,6 +92,7 @@ public class CardController {
 			booleanStatusResponse = new BooleanStatusResponse(true);
 		}
 		catch (RuntimeException e) {
+			log.error("Error deleting card", e);
 			booleanStatusResponse = new BooleanStatusResponse(false);
 		}
 		return booleanStatusResponse;

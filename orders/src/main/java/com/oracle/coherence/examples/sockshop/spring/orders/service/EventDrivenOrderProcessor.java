@@ -19,6 +19,7 @@ import com.oracle.coherence.examples.sockshop.spring.orders.model.Order;
 import com.oracle.coherence.examples.sockshop.spring.orders.model.Payment;
 import com.oracle.coherence.examples.sockshop.spring.orders.model.Shipment;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
  * to process payment and ship the order asynchronously, based on the
  * order status.
  */
-@Log
+@Slf4j
 @Component
 public class EventDrivenOrderProcessor implements OrderProcessor {
     /**

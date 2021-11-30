@@ -24,6 +24,9 @@ spec:
       value: "Users"
   application:
     main: com.oracle.coherence.examples.sockshop.spring.users.UsersApplication
+    args:
+      - "--port=8080"
+      - "--spring.zipkin.enabled=false"
   jvm:
     memory:
       heapSize: 2g

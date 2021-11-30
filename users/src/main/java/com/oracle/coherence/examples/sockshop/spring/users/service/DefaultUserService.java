@@ -51,7 +51,7 @@ public class DefaultUserService implements UserService {
 	@Override
 	public void removeAddress(AddressId id) {
 		String userID = id.getUser();
-		this.userRepository.update(userID, User::removeAddress, id.getAddressId(), User::new);
+		this.userRepository.update(userID, User::removeAddress, id.toString(), User::new);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class DefaultUserService implements UserService {
 	@Override
 	public void removeCard(CardId id) {
 		String userId = id.getUser();
-		this.userRepository.update(userId, User::removeCard, id.getCardId(), User::new);
+		this.userRepository.update(userId, User::removeCard, id.toString(), User::new);
 	}
 
 	@Override

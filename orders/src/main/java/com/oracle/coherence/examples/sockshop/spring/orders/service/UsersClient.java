@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+
 @FeignClient(value = "user", url = "http://user/", primary = false)
 public interface UsersClient {
    @GetMapping(value = "/addresses/{addressId}", consumes = MediaType.APPLICATION_JSON_VALUE)
