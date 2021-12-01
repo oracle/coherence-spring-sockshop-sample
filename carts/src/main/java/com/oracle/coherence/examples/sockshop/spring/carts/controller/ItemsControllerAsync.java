@@ -8,11 +8,17 @@ package com.oracle.coherence.examples.sockshop.spring.carts.controller;
 
 import com.oracle.coherence.examples.sockshop.spring.carts.repository.CartRepositoryAsync;
 import com.oracle.coherence.examples.sockshop.spring.carts.model.Item;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -22,19 +28,43 @@ import java.util.concurrent.CompletionStage;
  */
 @RestController
 @RequestMapping("/carts-async/{customerId}/items")
-public class ItemsControllerAsync implements ItemsApiAsync {
+public class ItemsControllerAsync {
 
-	@Autowired
-    private CartRepositoryAsync carts;
+	private final CartRepositoryAsync carts;
+
+    public ItemsControllerAsync(CartRepositoryAsync carts) {
+        this.carts = carts;
+    }
 
 
-    @Override
-    public CompletionStage<List<Item>> getItems(String cartId) {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Return the list of products in the customer's shopping cart")
+    @ApiResponse(
+            responseCode = "200",
+            description = "The list of products in the customer's shopping cart",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    array = @ArraySchema(schema = @Schema(implementation = Item.class))
+            ))
+    public CompletionStage<List<Item>> getItems(
+            @Parameter(name = "customerId", description = "Customer identifier")
+            @PathVariable("customerId") String cartId) {
         return carts.getItems(cartId);
     }
 
-    @Override
-    public CompletionStage<ResponseEntity<Item>> addItem(String cartId, Item item) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Add item to the shopping cart",
+            description = "This operation will add item to the shopping cart if it "
+                    + "doesn't already exist, or increment quantity by the specified "
+                    + "number of items if it does")
+    @ApiResponse(responseCode = "201",
+            description = "Added item",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = Item.class)))
+    public CompletionStage<ResponseEntity<Item>> addItem(
+            @Parameter(name = "customerId", description = "Customer identifier")
+            @PathVariable("customerId") String cartId,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Item to add to the cart")
+            @RequestBody Item item) {
         if (item.getQuantity() == 0) {
             item.setQuantity(1);
         }
@@ -43,8 +73,21 @@ public class ItemsControllerAsync implements ItemsApiAsync {
                     .thenApply(result -> ResponseEntity.status(HttpStatus.CREATED).body(result));
     }
 
-    @Override
-    public CompletionStage<ResponseEntity<Item>> getItem(String cartId, String itemId) {
+    @GetMapping(value = "{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Return specified item from the shopping cart")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",
+                    description = "If specified item exists in the cart",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Item.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "If specified item does not exist in the cart")
+    })
+    public CompletionStage<ResponseEntity<Item>> getItem(
+            @Parameter(name = "customerId", description = "Customer identifier")
+            @PathVariable("customerId") String cartId,
+            @Parameter(name = "itemId", description = "Item identifier")
+            @PathVariable("itemId") String itemId) {
         return carts.getItem(cartId, itemId)
                     .thenApply(item ->
                             item == null
@@ -52,14 +95,29 @@ public class ItemsControllerAsync implements ItemsApiAsync {
                             : ResponseEntity.ok(item));
     }
 
-    @Override
-    public CompletionStage<ResponseEntity<Void>> deleteItem(String cartId, String itemId) {
+    @DeleteMapping("{itemId}")
+    @Operation(summary = "Remove specified item from the shopping cart, if it exists")
+    @ApiResponse(responseCode = "202", description = "Regardless of whether the specified item exists in the cart")
+    public CompletionStage<ResponseEntity<Void>> deleteItem(
+            @Parameter(name = "customerId", description = "Customer identifier")
+            @PathVariable("customerId") String cartId,
+            @Parameter(name = "itemId", description = "Item identifier")
+            @PathVariable("itemId") String itemId) {
         return carts.deleteItem(cartId, itemId)
                 .thenApply(ignore -> ResponseEntity.accepted().build());
     }
 
-    @Override
-    public CompletionStage<ResponseEntity<Void>> updateItem(String cartId, Item item) {
+    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update item in a shopping cart",
+            description = "This operation will add item to the shopping cart if it "
+                    + "doesn't already exist, or replace it with the specified item "
+                    + "if it does")
+    @ApiResponse(responseCode = "202", description = "Regardless of whether the specified item exists in the cart")
+    public CompletionStage<ResponseEntity<Void>> updateItem(
+            @Parameter(name = "customerId", description = "Customer identifier")
+            @PathVariable("customerId") String cartId,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Item to update")
+            @RequestBody Item item) {
         return carts.updateItem(cartId, item)
                 .thenApply(ignore -> ResponseEntity.accepted().build());
     }
