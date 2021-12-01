@@ -9,7 +9,6 @@ package com.oracle.coherence.examples.sockshop.spring.catalog.controller;
 import com.oracle.coherence.examples.sockshop.spring.catalog.repository.CatalogRepository;
 import com.oracle.coherence.examples.sockshop.spring.catalog.model.Sock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 import java.util.logging.Logger;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
-
 /**
  * Implementation of the Catalog Service {@code /catalogue} API.
  */
-@Scope(SCOPE_SINGLETON)
 @RequestMapping("/catalogue")
 @RestController
 public class CatalogResource implements CatalogApi {

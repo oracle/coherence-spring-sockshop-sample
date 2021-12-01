@@ -11,7 +11,6 @@ import com.oracle.coherence.examples.sockshop.spring.payment.model.Authorization
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +23,6 @@ import static com.tangosol.util.Filters.equal;
  * An implementation of {@link PaymentRepository}
  * that that uses Coherence as a backend data store.
  */
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 public class CoherencePaymentRepository implements PaymentRepository {
     protected final NamedMap<AuthorizationId, Authorization> payments;

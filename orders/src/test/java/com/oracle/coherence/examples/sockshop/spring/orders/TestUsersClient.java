@@ -13,10 +13,8 @@ import com.oracle.coherence.examples.sockshop.spring.orders.model.Customer;
 import com.oracle.coherence.examples.sockshop.spring.orders.service.UsersClient;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 @Primary
 public class TestUsersClient implements UsersClient {

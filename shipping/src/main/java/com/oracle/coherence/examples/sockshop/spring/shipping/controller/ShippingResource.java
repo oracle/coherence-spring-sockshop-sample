@@ -11,7 +11,6 @@ import com.oracle.coherence.examples.sockshop.spring.shipping.repository.Shipmen
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +19,6 @@ import java.time.LocalDate;
 /**
  * Implementation of the Shipping Service REST and gRPC API.
  */
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @RequestMapping("/shipping")
 @RestController
 public class ShippingResource implements ShippingApi {

@@ -13,7 +13,6 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -25,7 +24,6 @@ import java.time.LocalDateTime;
  * to the {@code payment.limit} configuration property (100 by default),
  * and declines all requests above that amount.
  */
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 public class DefaultPaymentService implements PaymentService {
     @Autowired

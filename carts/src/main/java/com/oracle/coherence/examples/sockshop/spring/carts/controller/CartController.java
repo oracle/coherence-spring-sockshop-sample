@@ -9,21 +9,16 @@ package com.oracle.coherence.examples.sockshop.spring.carts.controller;
 import com.oracle.coherence.examples.sockshop.spring.carts.model.Cart;
 import com.oracle.coherence.examples.sockshop.spring.carts.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
-
 /**
  * Implementation of the Cart Service REST API.
  */
-@Scope(SCOPE_SINGLETON)
 @RestController
 @RequestMapping("/carts")
-public class CartResource implements CartApi {
+public class CartController implements CartApi {
 
 	@Autowired
     private CartRepository carts;

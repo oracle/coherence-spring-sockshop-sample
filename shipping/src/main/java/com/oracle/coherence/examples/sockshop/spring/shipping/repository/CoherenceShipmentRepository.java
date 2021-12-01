@@ -10,7 +10,6 @@ import com.oracle.coherence.examples.sockshop.spring.shipping.model.Shipment;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -20,7 +19,6 @@ import java.util.Map;
  * An implementation of {@link ShipmentRepository}
  * that that uses Coherence as a backend data store.
  */
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 public class CoherenceShipmentRepository implements ShipmentRepository {
     protected Map<String, Shipment> shipments;

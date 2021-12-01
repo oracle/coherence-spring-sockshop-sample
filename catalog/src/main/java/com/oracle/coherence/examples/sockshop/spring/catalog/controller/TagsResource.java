@@ -8,18 +8,14 @@ package com.oracle.coherence.examples.sockshop.spring.catalog.controller;
 
 import com.oracle.coherence.examples.sockshop.spring.catalog.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
-
 /**
  * Implementation of the Catalog Service {@code /tags} API.
  */
-@Scope(SCOPE_SINGLETON)
 @RequestMapping("/tags")
 @RestController
 public class TagsResource implements TagApi {

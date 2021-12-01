@@ -11,18 +11,14 @@ import com.oracle.coherence.examples.sockshop.spring.carts.model.Item;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 /**
  * An implementation of {@link CartRepository}
  * that that uses Coherence as a backend data store.
  */
-@Scope(SCOPE_SINGLETON)
 @Component
 public class CoherenceCartRepository implements CartRepository {
     protected final NamedMap<String, Cart> carts;

@@ -11,7 +11,6 @@ import com.oracle.coherence.examples.sockshop.spring.carts.model.Item;
 import com.tangosol.net.AsyncNamedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.Name;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,13 +18,10 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
-
 /**
  * An implementation of {@link CartRepository} that that uses Coherence as a backend data
  * store.
  */
-@Scope(SCOPE_SINGLETON)
 @Component
 public class CoherenceCartRepositoryAsync implements CartRepositoryAsync {
     protected final AsyncNamedMap<String, Cart> carts;

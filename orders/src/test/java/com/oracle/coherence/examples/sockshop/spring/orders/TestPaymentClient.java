@@ -12,12 +12,10 @@ import com.oracle.coherence.examples.sockshop.spring.orders.model.PaymentRequest
 import com.oracle.coherence.examples.sockshop.spring.orders.service.PaymentClient;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import static com.oracle.coherence.examples.sockshop.spring.orders.TestDataFactory.payment;
 
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 @Primary
 public class TestPaymentClient implements PaymentClient {

@@ -18,7 +18,6 @@ import java.util.List;
 
 import static com.oracle.coherence.examples.sockshop.spring.orders.TestDataFactory.items;
 
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Component
 @Primary
 public class TestCartsClient implements CartsClient {

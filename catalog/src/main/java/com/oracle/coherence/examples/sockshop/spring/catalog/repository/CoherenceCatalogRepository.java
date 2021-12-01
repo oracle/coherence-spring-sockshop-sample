@@ -18,7 +18,6 @@ import com.tangosol.util.comparator.ExtractorComparator;
 import com.tangosol.util.extractor.UniversalExtractor;
 import com.tangosol.util.filter.AlwaysFilter;
 import com.tangosol.util.filter.LimitFilter;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -33,13 +32,10 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
-
 /**
  * An implementation of {@link CatalogRepository}
  * that that uses Coherence as a backend data store.
  */
-@Scope(SCOPE_SINGLETON)
 @Repository
 public class CoherenceCatalogRepository implements CatalogRepository {
     private static final Logger LOGGER = Logger.getLogger(CoherenceCatalogRepository.class.getName());

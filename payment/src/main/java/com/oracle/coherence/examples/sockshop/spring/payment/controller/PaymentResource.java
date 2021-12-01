@@ -12,7 +12,6 @@ import com.oracle.coherence.examples.sockshop.spring.payment.service.PaymentServ
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,6 @@ import java.util.Collection;
 /**
  * Implementation of the Payment Service REST API.
  */
-@Scope(BeanDefinition.SCOPE_SINGLETON)
 @RequestMapping("/payments")
 @RestController
 public class PaymentResource implements PaymentApi {

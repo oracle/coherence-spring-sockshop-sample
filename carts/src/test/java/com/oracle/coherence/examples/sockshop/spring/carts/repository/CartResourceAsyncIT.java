@@ -7,16 +7,16 @@
 package com.oracle.coherence.examples.sockshop.spring.carts.repository;
 
 
-import com.oracle.coherence.examples.sockshop.spring.carts.controller.CartResourceIT;
-import com.oracle.coherence.examples.sockshop.spring.carts.controller.CartResourceAsync;
+import com.oracle.coherence.examples.sockshop.spring.carts.controller.CartControllerIT;
+import com.oracle.coherence.examples.sockshop.spring.carts.controller.CartControllerAsync;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Integration tests for {@link CartResourceAsync}.
+ * Integration tests for {@link CartControllerAsync}.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CartResourceAsyncIT extends CartResourceIT {
+public class CartResourceAsyncIT extends CartControllerIT {
 
     protected String getBasePath() {
         return "/carts-async";

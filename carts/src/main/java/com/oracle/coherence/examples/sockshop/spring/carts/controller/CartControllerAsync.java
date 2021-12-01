@@ -9,22 +9,18 @@ package com.oracle.coherence.examples.sockshop.spring.carts.controller;
 import com.oracle.coherence.examples.sockshop.spring.carts.model.Cart;
 import com.oracle.coherence.examples.sockshop.spring.carts.repository.CartRepositoryAsync;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.CompletionStage;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
-
 /**
  * Implementation of the Cart Service REST API.
  */
-@Scope(SCOPE_SINGLETON)
 @RequestMapping("/carts-async")
 @RestController
-public class CartResourceAsync implements CartApiAsync {
+public class CartControllerAsync implements CartApiAsync {
 
     @Autowired
     private CartRepositoryAsync carts;

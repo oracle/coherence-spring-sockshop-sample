@@ -22,7 +22,7 @@ import java.util.concurrent.CompletionStage;
  */
 @RestController
 @RequestMapping("/carts-async/{customerId}/items")
-public class ItemsResourceAsync implements ItemsApiAsync {
+public class ItemsControllerAsync implements ItemsApiAsync {
 
 	@Autowired
     private CartRepositoryAsync carts;

@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.*;
  * Integration tests for {@link CartRepository}.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CartResourceIT {
+public class CartControllerIT {
 
     protected CartRepository carts;
 
