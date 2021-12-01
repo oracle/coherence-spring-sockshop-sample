@@ -26,9 +26,10 @@ import java.util.List;
  * Implementation of Items sub-resource REST API.
  */
 @RestController
-@RequestMapping(path="/carts/{customerId}/items",
-                consumes = MediaType.APPLICATION_JSON_VALUE,
-                produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/carts/{customerId}/items"
+//                consumes = MediaType.APPLICATION_JSON_VALUE,
+//                produces = MediaType.APPLICATION_JSON_VALUE)
+)
 public class ItemsController {
 
 	private final CartRepository carts;

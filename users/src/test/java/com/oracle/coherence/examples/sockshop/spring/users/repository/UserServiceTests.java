@@ -32,7 +32,7 @@ public abstract class UserServiceTests {
 	protected abstract UserService getUserRepository();
 
 	@Inject
-	private final PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@BeforeEach
 	void setup() {

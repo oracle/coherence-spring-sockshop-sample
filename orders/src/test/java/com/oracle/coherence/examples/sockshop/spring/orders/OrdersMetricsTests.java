@@ -7,8 +7,11 @@
 package com.oracle.coherence.examples.sockshop.spring.orders;
 
 import java.net.URI;
+import java.util.List;
 
 import com.oracle.coherence.examples.sockshop.spring.orders.controller.support.NewOrderRequest;
+import com.oracle.coherence.examples.sockshop.spring.test.config.TestSpanConfig;
+import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -17,9 +20,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.sleuth.exporter.FinishedSpan;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration test to ensure Coherence metrics are properly exposed when
@@ -36,6 +43,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Import(TestSpanConfig.class)
 public class OrdersMetricsTests {
 
 	public static final int COHERENCE_METRICS_PORT = 9612;
@@ -44,6 +52,9 @@ public class OrdersMetricsTests {
 
 	@Autowired
 	protected WebTestClient webTestClient;
+
+	@Autowired
+	private CustomSpanFilter spanHandler;
 
 	@Test
 	@Order(1)
@@ -79,5 +90,15 @@ public class OrdersMetricsTests {
 					.jsonPath("$.length()").isEqualTo(1)
 					.jsonPath("$[0].tags.name").isEqualTo("orders")
 					.jsonPath("$[0].value").isEqualTo(1);
+	}
+
+	@Test
+	@Order(3)
+	void verifySpringCloudSleuthTraces() {
+		final List<FinishedSpan> spans = this.spanHandler.getSpans();
+		assertThat(spans)
+				.hasSize(4)
+				.extracting(FinishedSpan::getName)
+				.containsExactlyInAnyOrder("on-order-created", "on-order-created", "on-order-created", "POST /orders");
 	}
 }

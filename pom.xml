@@ -52,6 +52,7 @@
         <module>orders</module>
         <module>payment</module>
         <module>shipping</module>
+        <module>sockshop-test</module>
     </modules>
 
     <dependencyManagement>

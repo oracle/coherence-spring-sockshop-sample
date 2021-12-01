@@ -7,6 +7,8 @@
 package com.oracle.coherence.examples.sockshop.spring.catalog;
 
 import com.oracle.coherence.examples.sockshop.spring.catalog.model.Sock;
+import com.oracle.coherence.examples.sockshop.spring.test.config.TestSpanConfig;
+import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceCache;
 import com.tangosol.net.NamedCache;
 import org.junit.jupiter.api.MethodOrderer;
@@ -17,9 +19,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.sleuth.exporter.FinishedSpan;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,6 +44,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Import(TestSpanConfig.class)
 public class CatalogMetricsTests {
 
 	@CoherenceCache
@@ -48,6 +55,9 @@ public class CatalogMetricsTests {
 
 	@Autowired
 	protected WebTestClient webTestClient;
+
+	@Autowired
+	private CustomSpanFilter spanHandler;
 
 	@Test
 	@Order(1)
@@ -71,5 +81,13 @@ public class CatalogMetricsTests {
 					.jsonPath("$.length()").isEqualTo(1)
 					.jsonPath("$[0].tags.name").isEqualTo("socks")
 					.jsonPath("$[0].value").isEqualTo(11);
+	}
+
+	@Test
+	@Order(3)
+	void verifySpringCloudSleuthTraces() {
+		final List<FinishedSpan> spans = this.spanHandler.getSpans();
+		assertThat(spans)
+				.hasSize(0);
 	}
 }

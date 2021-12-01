@@ -1,13 +1,17 @@
-package com.oracle.coherence.examples.sockshop.spring.users;
+/*
+ * Copyright (c) 2021 Oracle and/or its affiliates.
+ *
+ * Licensed under the Universal Permissive License v 1.0 as shown at
+ * https://oss.oracle.com/licenses/upl.
+ */
+package com.oracle.coherence.examples.sockshop.spring.test.config;
 
+import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.sleuth.exporter.FinishedSpan;
 import org.springframework.cloud.sleuth.exporter.SpanFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Test Configuration for Spring Cloud Sleuth related tracing tests. Registers a custom {@link SpanFilter} to
@@ -24,18 +28,4 @@ public class TestSpanConfig {
 		return new CustomSpanFilter();
 	}
 
-	public class CustomSpanFilter implements SpanFilter {
-		private List<FinishedSpan> spans = new ArrayList<>();
-
-		@Override
-		public boolean isExportable(FinishedSpan span) {
-			spans.add(span);
-			log.info(span.toString());
-			return true;
-		}
-
-		public List<FinishedSpan> getSpans() {
-			return spans;
-		}
-	}
 }

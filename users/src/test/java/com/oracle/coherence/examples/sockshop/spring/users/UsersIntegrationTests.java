@@ -6,6 +6,8 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.users;
 
+import com.oracle.coherence.examples.sockshop.spring.test.config.TestSpanConfig;
+import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
 import com.oracle.coherence.examples.sockshop.spring.users.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
@@ -62,7 +64,7 @@ public class UsersIntegrationTests {
 	protected WebTestClient webTestClient;
 
 	@Autowired
-	TestSpanConfig.CustomSpanFilter spanHandler;
+	private CustomSpanFilter spanHandler;
 
 	@Test
 	@Order(1)
@@ -107,7 +109,6 @@ public class UsersIntegrationTests {
 	@Order(4)
 	void verifySpringCloudSleuthTraces() {
 		final List<FinishedSpan> spans = this.spanHandler.getSpans();
-		spans.get(0).getTags();
 		assertThat(spans)
 				.hasSize(2)
 				.extracting(FinishedSpan::getName)

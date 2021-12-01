@@ -7,7 +7,10 @@
 package com.oracle.coherence.examples.sockshop.spring.shipping;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.oracle.coherence.examples.sockshop.spring.test.config.TestSpanConfig;
+import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -16,11 +19,14 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.sleuth.exporter.FinishedSpan;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static com.oracle.coherence.examples.sockshop.spring.shipping.TestDataFactory.shippingRequest;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration test to ensure Coherence metrics are properly exposed when
@@ -37,6 +43,7 @@ import static com.oracle.coherence.examples.sockshop.spring.shipping.TestDataFac
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Import(TestSpanConfig.class)
 public class ShippingMetricsTests {
 
 	public static final int COHERENCE_METRICS_PORT = 9612;
@@ -45,6 +52,9 @@ public class ShippingMetricsTests {
 
 	@Autowired
 	protected WebTestClient webTestClient;
+
+	@Autowired
+	private CustomSpanFilter spanHandler;
 
 	@Test
 	@Order(1)
@@ -72,5 +82,15 @@ public class ShippingMetricsTests {
 					.jsonPath("$.length()").isEqualTo(1)
 					.jsonPath("$[0].tags.name").isEqualTo("shipments")
 					.jsonPath("$[0].value").isEqualTo(1);
+	}
+
+	@Test
+	@Order(3)
+	void verifySpringCloudSleuthTraces() {
+		final List<FinishedSpan> spans = this.spanHandler.getSpans();
+		assertThat(spans)
+				.hasSize(1)
+				.extracting(FinishedSpan::getName)
+				.containsExactlyInAnyOrder("POST /shipping");
 	}
 }
