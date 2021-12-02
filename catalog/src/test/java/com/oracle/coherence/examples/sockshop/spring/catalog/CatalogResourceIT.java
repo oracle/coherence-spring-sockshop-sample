@@ -6,7 +6,7 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.catalog;
 
-import com.oracle.coherence.examples.sockshop.spring.catalog.controller.CatalogResource;
+import com.oracle.coherence.examples.sockshop.spring.catalog.controller.CatalogController;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Integration tests for {@link CatalogResource}.
+ * Integration tests for {@link CatalogController}.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CatalogResourceIT {

@@ -8,7 +8,7 @@ package com.oracle.coherence.examples.sockshop.spring.shipping;
 
 import java.time.LocalDate;
 
-import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingResource;
+import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingController;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Integration tests for {@link ShippingResource}.
+ * Integration tests for {@link ShippingController}.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ShippingResourceIT {

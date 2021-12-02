@@ -9,7 +9,7 @@ package com.oracle.coherence.examples.sockshop.spring.payment.controller;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Integration tests for {@link PaymentResource},
+ * Integration tests for {@link PaymentController},
  * using Coherence for persistence.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

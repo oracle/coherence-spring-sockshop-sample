@@ -7,7 +7,8 @@
 package com.oracle.coherence.examples.sockshop.spring.catalog.controller;
 
 import com.oracle.coherence.examples.sockshop.spring.catalog.repository.CatalogRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +19,16 @@ import java.util.Set;
  */
 @RequestMapping("/tags")
 @RestController
-public class TagsResource implements TagApi {
+public class TagsController {
 
-    @Autowired
-    private CatalogRepository catalog;
+    private final CatalogRepository catalog;
 
-    @Override
+    public TagsController(CatalogRepository catalog) {
+        this.catalog = catalog;
+    }
+
+    @GetMapping
+    @Operation(summary = "Return all tags")
     public Tags getTags() {
         return new Tags(catalog.getTags());
     }

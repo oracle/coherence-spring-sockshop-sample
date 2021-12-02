@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Integration tests for {@link PaymentResource}.
+ * Integration tests for {@link PaymentController}.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PaymentResourceIT {

@@ -20,13 +20,14 @@ public class CustomSpanFilter implements SpanFilter {
 	private volatile List<FinishedSpan> spans = new CopyOnWriteArrayList<>();
 
 	@Override
-	public boolean isExportable(FinishedSpan span) {
+	public synchronized boolean isExportable(FinishedSpan span) {
 		spans.add(span);
-		log.info(span.toString());
+		log.info(">>>>>>>>>>" + span.toString());
 		return true;
 	}
 
 	public List<FinishedSpan> getSpans() {
 		return spans;
 	}
+
 }

@@ -6,10 +6,10 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.shipping;
 
-import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingResource;
+import com.oracle.coherence.examples.sockshop.spring.shipping.controller.ShippingController;
 
 /**
- * Integration tests for {@link ShippingResource},
+ * Integration tests for {@link ShippingController},
  * using Coherence for persistence.
  */
 public class CoherenceShippingResourceIT extends ShippingResourceIT {
