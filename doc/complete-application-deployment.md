@@ -39,9 +39,9 @@ If you installed the Sock Shop back-end into K8s before you installed Prometheus
 run the following to delete and re-add the deployments for Prometheus to pick up the Pods. This is because the Coherence Operator will not have been able to create Prometheus `ServiceMonitor` resources before Prometheus was installed.
 
    ```bash
-   $ kubectl delete -k k8s/coherence --namespace sockshop
+   kubectl delete -k k8s/coherence --namespace sockshop
 
-   $ kubectl apply -k k8s/coherence --namespace sockshop
+   kubectl apply -k k8s/coherence --namespace sockshop
    ```
 
 #### Import the Grafana Dashboards
@@ -63,14 +63,23 @@ of the Grafana documentation.
 1. Create the Load Balancer
 
     ```bash
-    $ kubectl apply -f k8s/optional/ingress-controller.yaml
+    kubectl apply -f k8s/optional/ingress-controller.yaml
+    ```
 
-    $ kubectl get services --namespace ingress-nginx
+    You can get the status of the Load Balancer using:
+
+    ```bash
+    kubectl get services --namespace ingress-nginx
+    ```
+
+    The command should return a result similar to the following:
+
+    ```bash
     NAME            TYPE           CLUSTER-IP       EXTERNAL-IP       PORT(S)                      AGE
     ingress-nginx   LoadBalancer   AAA.BBB.CCC.DDD   WWW.XXX.YYY.ZZZ  80:31475/TCP,443:30578/TCP   17s
     ```
 
-   Once you have been assigned an external IP address, continue to the next step.
+    Once you have been assigned an external IP address, continue to the next step.
 
 2. Setup Domains
 
@@ -92,7 +101,7 @@ of the Grafana documentation.
    127.0.0.1       prometheus.sockshop.mycompany.com
    ```
 
-4. Create the ingress
+3. Create the ingress
 
    In your terminal, export (or SET for Windows) your top level domain
    and the backend you are using.
@@ -100,24 +109,24 @@ of the Grafana documentation.
    For example for domain `sockshop.mycompany.com` use the following
 
     ```bash
-    $ export SOCKSHOP_DOMAIN=sockshop.mycompany.com
+    export SOCKSHOP_DOMAIN=sockshop.mycompany.com
 
-    $ envsubst -i k8s/optional/ingress.yaml | kubectl apply --namespace sockshop -f -
+    envsubst -i k8s/optional/ingress.yaml | kubectl apply --namespace sockshop -f -
 
-    $ kubectl get ingress --namespace sockshop
+    kubectl get ingress --namespace sockshop
 
     NAME               HOSTS                                                                                                           ADDRESS           PORTS   AGE
     mp-ingress         mp.coherence.sockshop.mycompany.com                                                                             XXX.XXX.XXX.XXX   80      12d
     sockshop-ingress   coherence.sockshop.mycompany.com,jaeger.coherence.sockshop.mycompany.com,api.coherence.sockshop.mycompany.com   XXX.XXX.XXX.XXX   80      12d
     ```
-5. Create the ingress for Grafana and Prometheus
+4. Create the ingress for Grafana and Prometheus
 
    Ensuring you have the `SOCKSHOP_DOMAIN` environment variable set and issue the following:
 
     ```bash
-    $ envsubst -i k8s/optional/ingress-grafana.yaml | kubectl apply --namespace monitoring -f -
+    envsubst -i k8s/optional/ingress-grafana.yaml | kubectl apply --namespace monitoring -f -
 
-    $ kubectl get ingress --namespace monitoring
+    kubectl get ingress --namespace monitoring
 
     NAME              HOSTS                                                             ADDRESS          PORTS   AGE
     grafana-ingress   grafana.sockshop.mycompany.com,prometheus.sockshop.mycompany.com  XXX.YYY.XXX.YYY  80      12s
@@ -128,7 +137,7 @@ of the Grafana documentation.
    * http://grafana.sockshop.mycompany.com/
    * http://prometheus.sockshop.mycompany.com/
 
-6. Access the application
+5. Access the application
 
    Access the application via the endpoint http://coherence.sockshop.mycompany.com/
 
@@ -136,25 +145,37 @@ of the Grafana documentation.
 
 1. Install the Jaeger Operator
 
-   The command below will create `monitoring` namespace and install Jaeger Operator into it.
-   You only need to do this once, regardless of the number of backends you want to deploy.
+
+   If you have not done, yet, create the `monitoring` namespace:
+
+   ```bash
+   kubectl create namespace monitoring
+   ```
+
+   The command below will install the Jaeger Operator. You only need to do this once, regardless of the number of
+   backends you want to deploy.
 
     ```bash
-    $ kubectl create -f k8s/optional/jaeger-operator.yaml
+    kubectl create -f k8s/optional/jaeger-operator.yaml
     ```
 
 2. Deploy All-in-One Jaeger Instance
 
     ```bash
-    $ kubectl create -f k8s/optional/jaeger.yaml --namespace sockshop
+    kubectl create -f k8s/optional/jaeger.yaml --namespace sockshop
     ```
 
 3. Enable Jaeger tracing in `application.yaml` files and rebuild and redeploy services
+
+    Set `spring.zipkin.enabled` to `true`, e.g.:
+
+    ```yaml
+    application:
+      main: com.oracle.coherence.examples.sockshop.spring.carts.CartsApp
+      args:
+        - "--port=8080"
+        - "--spring.zipkin.enabled=true"
     ```
-   tracing:
-      jaeger:
-         enabled: false
-   ```
 
 4. Exercise the Application and access Jaeger
 
@@ -171,7 +192,7 @@ of the Grafana documentation.
 1. Deploy Swagger UI
 
     ```bash
-    $ kubectl create -f k8s/optional/swagger.yaml --namespace sockshop
+    kubectl create -f k8s/optional/swagger.yaml --namespace sockshop
     ```
 
    Access the Swagger UI at http://mp.coherence.sockshop.mycompany.com/swagger/.
@@ -199,9 +220,9 @@ Once you are done, you should have the following URLs available:
    To cleanup the ingress for your deployment, execute the following:
 
     ```bash
-    $ export SOCKSHOP_DOMAIN=sockshop.mycompany.com
+    export SOCKSHOP_DOMAIN=sockshop.mycompany.com
 
-    $ envsubst -i k8s/optional/ingress.yaml| kubectl delete -f - --namespace sockshop
+    envsubst -i k8s/optional/ingress.yaml| kubectl delete -f - --namespace sockshop
     ```
 
 2. Cleanup the ingress for Grafana and Prometheus
@@ -209,16 +230,16 @@ Once you are done, you should have the following URLs available:
    If you installed Prometheus Operator, execute the following:
 
     ```bash
-    $ envsubst -i k8s/optional/ingress-grafana.yaml | kubectl delete --namespace monitoring -f -
+    envsubst -i k8s/optional/ingress-grafana.yaml | kubectl delete --namespace monitoring -f -
     ```
 
 3. Remove the deployed services
 
-   To cleanup the deployed services, execute the following:
+   To clean up the deployed services, execute the following:
 
     ```bash
-    $ export SOCKSHOP_DOMAIN=sockshop.mycompany.com
-    $ kubectl delete -k k8s/coherence --namespace sockshop
+    export SOCKSHOP_DOMAIN=sockshop.mycompany.com
+    kubectl delete -k k8s/coherence --namespace sockshop
     ```
 
 4. Remove the Load Balancer
@@ -226,19 +247,19 @@ Once you are done, you should have the following URLs available:
    If you wish to remove your load balancer, execute the following:
 
     ```bash
-    $ kubectl delete -f k8s/optional/ingress-controller.yaml
+    kubectl delete -f k8s/optional/ingress-controller.yaml
     ```
 
 5. Remove Jaeger
 
     ```bash
-    $ kubectl delete -f k8s/optional/jaeger-operator.yaml
+    kubectl delete -f k8s/optional/jaeger-operator.yaml
     ```
 
    Execute the following:
 
     ```bash
-    $ kubectl delete -f k8s/optional/jaeger.yaml --namespace sockshop
+    kubectl delete -f k8s/optional/jaeger.yaml --namespace sockshop
     ```
 
 6. Remove Swagger
@@ -246,7 +267,7 @@ Once you are done, you should have the following URLs available:
    Execute the following:
 
     ```bash
-   $ kubectl delete -f k8s/optional/swagger.yaml --namespace sockshop
+   kubectl delete -f k8s/optional/swagger.yaml --namespace sockshop
     ```
 
 7. Remove Prometheus and Grafana

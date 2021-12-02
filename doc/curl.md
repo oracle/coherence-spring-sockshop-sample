@@ -12,7 +12,7 @@ deployed to a Kubernetes cluster as described in the [Complete Application Deplo
 
 ### Credit Card
 
-```
+```bash
 curl -X POST http://mp.coherence.sockshop.mycompany.com/users/cards \
 -H "Content-type: application/json" \
 -d '{"longNum": "99999999", "expires": "44/44",  "ccv": "abcd", "userID": "user"}'
@@ -20,13 +20,13 @@ curl -X POST http://mp.coherence.sockshop.mycompany.com/users/cards \
 
 #### Delete Credit Card
 
-```
+```bash
 curl -X DELETE http://mp.coherence.sockshop.mycompany.com/users/cards/user:9999
 ```
 
 #### Get Credit Card
 
-```
+```bash
 curl -X GET http://mp.coherence.sockshop.mycompany.com/users/cards/user:99999
 ```
 
@@ -34,7 +34,7 @@ curl -X GET http://mp.coherence.sockshop.mycompany.com/users/cards/user:99999
 
 #### Add Address for User
 
-```
+```bash
 curl -u user:password -X POST http://mp.coherence.sockshop.mycompany.com/users/addresses \
 -H "Content-type: application/json" \
 -d '{
@@ -49,12 +49,12 @@ curl -u user:password -X POST http://mp.coherence.sockshop.mycompany.com/users/a
 
 #### Get Addresses for User
 
-```
+```bash
 curl -u user:password -X GET http://mp.coherence.sockshop.mycompany.com/users/addresses
 ```
 
 #### Delete Address for User
 
-```
+```bash
 curl -u user:password -X DELETE http://mp.coherence.sockshop.mycompany.com/users/addresses/user:1
 ```

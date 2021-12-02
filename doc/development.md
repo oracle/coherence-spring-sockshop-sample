@@ -12,14 +12,14 @@ locally, and (optionally) push new container images to the repository of your ch
 
 
 ```bash
-$ git clone git@github.com:coherence-community/coherence-sockshop-spring.git
+git clone git@github.com:coherence-community/coherence-sockshop-spring.git
 ```
 
 Once you have the code locally, you can update it to the latest version by running the
 following command:
 
 ```bash
-$ git pull
+git pull
 ```
 
 ### Building the Code
@@ -43,7 +43,7 @@ If you only want to build container images locally, make sure you have Docker Da
 running and execute the following:
 
 ```bash
-$ mvn package -Pcontainer -DskipTests
+mvn package -Pcontainer -DskipTests
 ```
 
 You can then tag images any way you want and push them to a container repo of your choice
@@ -53,7 +53,7 @@ On the other hand, if you cannot or do not want to run Docker locally, you can p
 directly to the remote repository:
 
 ```bash
-$ mvn package -Pcontainer -DskipTests -Dcontainer.repo=<your_container_repo> -Djib.goal=build
+mvn package -Pcontainer -DskipTests -Dcontainer.repo=<your_container_repo> -Djib.goal=build
 ```
 
 > **Note:** You should replace `<your_container_repo>` in the command above with the name of the

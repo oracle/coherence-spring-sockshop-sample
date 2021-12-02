@@ -8,7 +8,7 @@ Please do the following in order to release this Sock Shop implementation:
 
 #### 1. Set the version in all the POMs to the desired release version (in this example I'll use 1.0.0)
 ```bash
-$ mvn versions:set -DnewVersion=1.0.0 -DprocessAllModules=true -DoldVersion='*'
+mvn versions:set -DnewVersion=1.0.0 -DprocessAllModules=true -DoldVersion='*'
 ```
 
 #### 2. Replace `:latest` with `:<version>` in all YAML files under `k8s/coherence`
@@ -16,14 +16,14 @@ $ mvn versions:set -DnewVersion=1.0.0 -DprocessAllModules=true -DoldVersion='*'
 
 #### 3. Commit the changes to `master` branch and push them
 ```bash
-$ git commit -a -m "Set version to 1.0.0 for the release"
-$ git push
+git commit -a -m "Set version to 1.0.0 for the release"
+git push
 ```
     
 #### 4. Bring `release` branch in sync with the `master` branch
 
 ```bash
-$ git push origin master:release
+git push origin master:release
 ```
 
 #### 5. Create and publish release on GitHub
@@ -39,7 +39,7 @@ If anything went wrong, see the "If Something Goes Wrong" section below.
 #### 6. Set the version in all the POMs to next development version 
 
 ```bash
-$ mvn versions:set -DnewVersion=1.0.1-SNAPSHOT -DprocessAllModules=true -DoldVersion='*'
+mvn versions:set -DnewVersion=1.0.1-SNAPSHOT -DprocessAllModules=true -DoldVersion='*'
 ```
 
 #### 7. Replace `:<version>` with `:latest` in all YAML files under `k8s/coherence`
@@ -47,8 +47,8 @@ $ mvn versions:set -DnewVersion=1.0.1-SNAPSHOT -DprocessAllModules=true -DoldVer
 
 #### 8. Commit the changes to `master` branch and push them
 ```bash
-$ git commit -a -m "Set version to 1.0.1-SNAPSHOT"
-$ git push
+git commit -a -m "Set version to 1.0.1-SNAPSHOT"
+git push
 ```
 
 ### If Something Goes Wrong
@@ -62,7 +62,7 @@ To undo the release:
 #### 2. Delete the tag from the repo
 
 ```bash
-$ git push --delete origin v1.0.0
+git push --delete origin v1.0.0
 ```
 
 Fix the problem, then you can "rinse and repeat" from the beginning.

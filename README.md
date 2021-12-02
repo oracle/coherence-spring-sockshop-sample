@@ -100,6 +100,12 @@ the following commands from the `coherence-spring-sockshop` directory:
   The `-k` parameter above will use `kubectl` with `kustomize` to merge all the files under the specified directory and
   create all Kubernetes resources defined by them, such as deployments and services for each microservice.
 
+TIP: You can see the state of the pods using:
+
+```bash
+kubectl --namespace sockshop get pods
+```
+
 ### (Optional) Install the Original WeaveSocks Front End
 
 > Warning: The original WeaveSocks Front End has a few bugs, as well as some security issues, 
