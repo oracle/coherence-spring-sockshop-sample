@@ -61,7 +61,6 @@ import org.springframework.web.client.RestTemplate;
 		DataSourceTransactionManagerAutoConfiguration.class,
 		HibernateJpaAutoConfiguration.class
 })
-@EnableCoherence
 @EnableCoherenceRepositories
 public class UsersApp implements ApplicationRunner {
 

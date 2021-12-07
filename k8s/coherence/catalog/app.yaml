@@ -27,6 +27,7 @@ spec:
     args:
       - "--port=8080"
       - "--spring.zipkin.enabled=false"
+      - "--coherence.server.startup-timeout=5m"
   jvm:
     memory:
       heapSize: 2g

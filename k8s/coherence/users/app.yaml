@@ -12,7 +12,8 @@ spec:
   cluster: SockShop
   role: Users
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-users:latest
+  image: ghcr.io/oracle/coherence-spring-sockshop-users:1.0.1-SNAPSHOT
+  imagePullPolicy: Never
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"
@@ -23,10 +24,11 @@ spec:
     - name: COHERENCE_SERVICE_NAME
       value: "Users"
   application:
-    main: com.oracle.coherence.examples.sockshop.spring.users.UsersApplication
+    main: com.oracle.coherence.examples.sockshop.spring.users.UsersApp
     args:
       - "--port=8080"
       - "--spring.zipkin.enabled=false"
+      - "--coherence.server.startup-timeout=5m"
   jvm:
     memory:
       heapSize: 2g

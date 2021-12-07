@@ -38,7 +38,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 				description = "Additional Documentation",
 				url = "https://github.com/coherence-community/coherence-sockshop-spring/tree/main/carts"))
 @SpringBootApplication
-@EnableCoherence
 public class CartsApp {
 	public static void main(String[] args) {
 		SpringApplication.run(CartsApp.class, args);
