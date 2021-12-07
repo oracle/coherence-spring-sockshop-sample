@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static com.oracle.coherence.examples.sockshop.spring.orders.TestDataFactory.order;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +22,7 @@ import static org.hamcrest.Matchers.is;
  * Tests for Coherence repository implementation.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext
 class CoherenceOrderRepositoryIT {
     @Autowired
     private TestOrderRepository orders;

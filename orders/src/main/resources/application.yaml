@@ -13,7 +13,7 @@ spring:
     propagation:
       type: B3,W3C
     opentracing:
-      enabled: true
+      enabled:
   zipkin:
     base-url: http://jaeger-agent:9411
     enabled: false

@@ -11,6 +11,7 @@ import com.oracle.coherence.examples.sockshop.spring.test.config.TestSpanConfig;
 import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceCache;
 import com.tangosol.net.NamedCache;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -38,13 +40,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		properties = {
-				"coherence.metrics.http.enabled=true"
+				"coherence.metrics.http.enabled=true",
+				"spring.zipkin.enabled=true",
+				"spring.sleuth.sampler.probability=1.0"
 		}
 )
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Import(TestSpanConfig.class)
+@Slf4j
 public class CatalogMetricsTests {
 
 	@CoherenceCache
@@ -87,6 +92,7 @@ public class CatalogMetricsTests {
 	@Order(3)
 	void verifySpringCloudSleuthTraces() {
 		final List<FinishedSpan> spans = this.spanHandler.getSpans();
+		log.info("\n" + StringUtils.collectionToDelimitedString(spans, "\n"));
 		assertThat(spans)
 				.hasSize(0);
 	}

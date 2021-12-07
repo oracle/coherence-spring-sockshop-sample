@@ -28,6 +28,7 @@
         <container.version>${project.version}</container.version>
         <jib.goal>dockerBuild</jib.goal>
 
+        <version.lib.awaitility>4.1.1</version.lib.awaitility>
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
         <version.lib.coherence>21.06.2</version.lib.coherence>
         <version.lib.coherence-spring>3.0.0</version.lib.coherence-spring>

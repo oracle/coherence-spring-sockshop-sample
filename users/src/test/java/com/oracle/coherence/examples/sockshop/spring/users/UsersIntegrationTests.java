@@ -23,10 +23,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * Integration test to ensure that
@@ -45,7 +47,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		properties = {
-				"coherence.metrics.http.enabled=true"
+				"coherence.metrics.http.enabled=true",
+				"spring.zipkin.enabled=true",
+				"spring.sleuth.sampler.probability=1.0"
 		}
 )
 @Import(TestSpanConfig.class)
@@ -108,10 +112,15 @@ public class UsersIntegrationTests {
 	@Test
 	@Order(4)
 	void verifySpringCloudSleuthTraces() {
+		await().untilAsserted(() ->
+				assertThat(this.spanHandler.getSpans())
+						.hasSize(2));
+
 		final List<FinishedSpan> spans = this.spanHandler.getSpans();
+		log.info("\n" + StringUtils.collectionToDelimitedString(spans, "\n"));
 		assertThat(spans)
 				.hasSize(2)
 				.extracting(FinishedSpan::getName)
-						.containsExactlyInAnyOrder("POST /register", "GET /customers");
+				.containsExactlyInAnyOrder("POST /register", "GET /customers");
 	}
 }

@@ -9,6 +9,7 @@ package com.oracle.coherence.examples.sockshop.spring.carts;
 import com.oracle.coherence.examples.sockshop.spring.carts.model.Item;
 import com.oracle.coherence.examples.sockshop.spring.test.config.TestSpanConfig;
 import com.oracle.coherence.examples.sockshop.spring.test.tracing.CustomSpanFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * Integration test to ensure Coherence metrics are properly exposed when
@@ -36,13 +39,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		properties = {
-				"coherence.metrics.http.enabled=true"
+				"coherence.metrics.http.enabled=true",
+				"spring.zipkin.enabled=true",
+				"spring.sleuth.sampler.probability=1.0"
 		}
 )
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Import(TestSpanConfig.class)
+@Slf4j
 public class CartMetricsTests {
 
 	public static final int COHERENCE_METRICS_PORT = 9612;
@@ -85,7 +91,12 @@ public class CartMetricsTests {
 	@Test
 	@Order(3)
 	void verifySpringCloudSleuthTraces() {
+		await().untilAsserted(() ->
+				assertThat(this.spanHandler.getSpans())
+						.hasSize(1));
+
 		final List<FinishedSpan> spans = this.spanHandler.getSpans();
+		log.info("\n" + StringUtils.collectionToDelimitedString(spans, "\n"));
 		assertThat(spans)
 				.hasSize(1)
 				.extracting(FinishedSpan::getName)

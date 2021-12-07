@@ -6,24 +6,19 @@
  */
 package com.oracle.coherence.examples.sockshop.spring.test.tracing;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.sleuth.exporter.FinishedSpan;
 import org.springframework.cloud.sleuth.exporter.SpanFilter;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Slf4j
 public class CustomSpanFilter implements SpanFilter {
 	private volatile List<FinishedSpan> spans = new CopyOnWriteArrayList<>();
 
 	@Override
 	public synchronized boolean isExportable(FinishedSpan span) {
 		spans.add(span);
-		log.info(">>>>>>>>>>" + span.toString());
-		return true;
+		return false;
 	}
 
 	public List<FinishedSpan> getSpans() {
