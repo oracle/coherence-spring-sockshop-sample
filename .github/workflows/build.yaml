@@ -29,14 +29,14 @@ jobs:
     - name: Build with Maven
       env:
         MAVEN_OPTS: -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
-      run: mvn -B install --file pom.xml
+      run: mvn -B install --file pom.xml -s .mvn/settings.xml
     - name: Push container images
       env:
         REGISTRY_USER: ${{ github.actor }}
         REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo $REGISTRY_PASSWORD | docker login ghcr.io -u $REGISTRY_USER --password-stdin
-        mvn -B package --file pom.xml -Pcontainer -DskipTests
+        mvn -B package --file pom.xml -Pcontainer -DskipTests -s .mvn/settings.xml
         docker push ghcr.io/oracle/coherence-spring-sockshop-carts:latest
         docker push ghcr.io/oracle/coherence-spring-sockshop-catalog:latest
         docker push ghcr.io/oracle/coherence-spring-sockshop-orders:latest
