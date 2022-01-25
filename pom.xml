@@ -30,12 +30,12 @@
 
         <version.lib.awaitility>4.1.1</version.lib.awaitility>
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
-        <version.lib.coherence>21.12</version.lib.coherence>
-        <version.lib.coherence-spring>3.0.0</version.lib.coherence-spring>
+        <version.lib.coherence>21.12.1</version.lib.coherence>
+        <version.lib.coherence-spring>3.1.0</version.lib.coherence-spring>
         <version.lib.junit>5.7.2</version.lib.junit>
         <version.lib.lombok>1.18.18</version.lib.lombok>
         <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
-        <version.lib.spring-boot>2.5.6</version.lib.spring-boot>
+        <version.lib.spring-boot>2.5.9</version.lib.spring-boot>
         <version.lib.spring-cloud>2020.0.4</version.lib.spring-cloud>
         <version.lib.spring-cloud-starter-feign>1.4.7.RELEASE</version.lib.spring-cloud-starter-feign>
         <version.lib.springdoc-openapi>1.5.7</version.lib.springdoc-openapi>
