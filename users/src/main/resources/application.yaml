@@ -34,3 +34,4 @@ logging:
     org.springframework.security: info
     org.springframework.web: info
     com.oracle.coherence.spring: info
+    org.apache.http: info # set to debug to see logging of http payloads
