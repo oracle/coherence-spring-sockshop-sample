@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 
@@ -46,13 +47,11 @@ public class CustomerController {
 	@Autowired
 	private UserService userService;
 
-
 	@GetMapping
 	@Operation(summary = "Return all customers; or empty collection if no customer found")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	//@NewSpan
 	public CollectionModel<User> getAllCustomers() {
 		final Collection<User> users = this.userService.getAllUsers();
 		for (final User user : users) {
@@ -71,7 +70,6 @@ public class CustomerController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	//@NewSpan
 	public User getCustomer(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		return userService.getOrCreate(id);
@@ -82,20 +80,17 @@ public class CustomerController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the delete is successful")
 	})
-	//@NewSpan
 	public BooleanStatusResponse deleteCustomer(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		User prev = this.userService.removeUser(id);
 		return new BooleanStatusResponse(prev != null);
 	}
 
-	//
 	@GetMapping("/{id}/cards")
 	@Operation(summary = "Return all cards for the specified customer identifier")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	//@NewSpan
 	public CollectionModel<Object> getCustomerCards(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		final User user = this.userService.getUser(id);
@@ -115,7 +110,6 @@ public class CustomerController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	//@NewSpan
 	public Object getCustomerAddresses(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		final User user = this.userService.getUser(id);

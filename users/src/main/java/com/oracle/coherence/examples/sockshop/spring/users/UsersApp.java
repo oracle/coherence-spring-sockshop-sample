@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -7,7 +7,6 @@
 package com.oracle.coherence.examples.sockshop.spring.users;
 
 import com.oracle.coherence.examples.sockshop.spring.users.model.User;
-import com.oracle.coherence.spring.configuration.annotation.EnableCoherence;
 import com.oracle.coherence.spring.data.config.EnableCoherenceRepositories;
 import com.oracle.coherence.examples.sockshop.spring.users.service.UserService;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
@@ -29,7 +28,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.sleuth.zipkin2.ZipkinRestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.client.RestTemplate;
 
@@ -88,8 +89,13 @@ public class UsersApp implements ApplicationRunner {
 	}
 
 	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		// Do any additional configuration here
-		return builder.build();
+	public ZipkinRestTemplateCustomizer zipkinRestTemplateCustomizer() {
+		return new ZipkinRestTemplateCustomizer() {
+			@Override
+			public RestTemplate customizeTemplate(RestTemplate restTemplate) {
+				restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+				return restTemplate;
+			}
+		};
 	}
 }
