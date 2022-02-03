@@ -32,7 +32,6 @@ as the application framework, in case one of those is your framework of choice.
 * [Development](./doc/development.md)
 * [License](#license)
 
-
 ## Architecture
 
 The application consists of 6 back end services (rewritten from the ground up on top of

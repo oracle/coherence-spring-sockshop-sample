@@ -14,6 +14,7 @@ spring:
       type: B3,W3C
     opentracing:
       enabled: true
+    supports-join: false
   zipkin:
     base-url: http://jaeger-agent:9411
     enabled: false
@@ -26,5 +27,6 @@ logging:
   level:
     root: warn
     "Coherence": info
-    org.springframework: debug
-    com.oracle.coherence.spring: debug
+    org.springframework.web: info
+    com.oracle.coherence.spring: info
+    org.apache.http: debug
