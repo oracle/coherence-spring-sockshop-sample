@@ -165,7 +165,7 @@ of the Grafana documentation.
     kubectl create -f k8s/optional/jaeger.yaml --namespace sockshop
     ```
 
-3. Enable Jaeger tracing in `application.yaml` files and rebuild and redeploy services
+3. Enable Jaeger tracing in the `app.yaml` files and rebuild and redeploy services
 
     Set `spring.zipkin.enabled` to `true`, e.g.:
 
@@ -217,7 +217,7 @@ Once you are done, you should have the following URLs available:
 
 1. Cleanup the ingress for applications
 
-   To cleanup the ingress for your deployment, execute the following:
+   To clean up the ingress for your deployment, execute the following:
 
     ```bash
     export SOCKSHOP_DOMAIN=sockshop.mycompany.com

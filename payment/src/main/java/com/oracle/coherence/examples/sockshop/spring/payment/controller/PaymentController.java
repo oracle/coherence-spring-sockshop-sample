@@ -12,6 +12,7 @@ import com.oracle.coherence.examples.sockshop.spring.payment.service.PaymentServ
 import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import java.util.Collection;
 /**
  * Implementation of the Payment Service REST API.
  */
+@Slf4j
 @RequestMapping("/payments")
 @RestController
 public class PaymentController {
@@ -60,6 +62,7 @@ public class PaymentController {
     public Authorization authorize(
             @Parameter(description = "Payment request")
             @RequestBody PaymentRequest paymentRequest) {
+        log.info("Authorizing payment request for order id {}.", paymentRequest.getOrderId());
         meterRegistry.counter("payments.authorize", "controller", "payments").increment();
         String firstName = paymentRequest.getCustomer().getFirstName();
         String lastName  = paymentRequest.getCustomer().getLastName();

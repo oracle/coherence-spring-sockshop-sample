@@ -14,6 +14,10 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.sleuth.zipkin2.ZipkinRestTemplateCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -48,6 +52,17 @@ public class PaymentApp {
 						.allowedOrigins("*")
 						.allowedMethods("*")
 						.allowedHeaders("Content-Type, *");
+			}
+		};
+	}
+
+	@Bean
+	public ZipkinRestTemplateCustomizer zipkinRestTemplateCustomizer() {
+		return new ZipkinRestTemplateCustomizer() {
+			@Override
+			public RestTemplate customizeTemplate(RestTemplate restTemplate) {
+				restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+				return restTemplate;
 			}
 		};
 	}
