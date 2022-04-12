@@ -193,7 +193,7 @@
                         <version>${version.plugin.jib}</version>
                         <configuration>
                             <from>
-                                <image>gcr.io/distroless/java@sha256:9d4092ba5e1c9dc4d1490fdead1dd7ea5c64e635b729fee11a6af55f51b337f8</image>
+                                <image>gcr.io/distroless/java11-debian11</image>
                             </from>
                             <to>
                                 <image>${container.repo}-${project.artifactId}</image>
