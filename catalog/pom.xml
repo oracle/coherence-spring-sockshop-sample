@@ -180,9 +180,7 @@
                         <version>${version.plugin.jib}</version>
                         <configuration>
                             <from>
-                                <image>
-                                    gcr.io/distroless/java11-debian11
-                                </image>
+                                <image>gcr.io/distroless/java11</image>
                             </from>
                             <to>
                                 <image>${container.repo}-${project.artifactId}</image>
