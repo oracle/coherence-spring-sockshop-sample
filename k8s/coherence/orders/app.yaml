@@ -12,7 +12,7 @@ spec:
   cluster: SockShop
   role: Orders
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-orders:latest
+  image: ghcr.io/oracle/coherence-spring-sockshop-orders:1.0.2
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"
