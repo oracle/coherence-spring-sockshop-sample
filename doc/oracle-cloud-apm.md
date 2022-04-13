@@ -89,5 +89,5 @@ Rebuild and redeploy the Sock Shop services. Now order some socks and afterwards
 There, select you `Compartment` and your `APM Domain` and then click on the run button, and you should see the traces
 that were emitted from the Sock Shop application.
 
-![Jaeger Search](./images/oracle-apm.png)
+![Oracle Cloud APM](./images/oracle-apm.png)
 
