@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -20,7 +20,7 @@ public class SwaggerConfig {
 	public OpenAPI api() {
 		return new OpenAPI()
 				.info(new Info().title("Spring Sock Shop API")
-						.description("Spring shop sample application")
+						.description("Spring Sock Shop sample application")
 						.version("v1.0")
 						.license(new License().name("Universal Permissive License v 1.0").url("https://oss.oracle.com/licenses/upl")))
 				.externalDocs(new ExternalDocumentation()

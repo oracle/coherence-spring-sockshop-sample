@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2021 Oracle and/or its affiliates.
+  Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 
   Licensed under the Universal Permissive License v 1.0 as shown at
   https://oss.oracle.com/licenses/upl.
@@ -30,16 +30,15 @@
 
         <version.lib.awaitility>4.1.1</version.lib.awaitility>
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
-        <version.lib.coherence>21.12.1</version.lib.coherence>
-        <version.lib.coherence-spring>3.1.0</version.lib.coherence-spring>
+        <version.lib.coherence>21.12.4</version.lib.coherence>
+        <version.lib.coherence-spring>3.2.0</version.lib.coherence-spring>
         <version.lib.junit>5.7.2</version.lib.junit>
         <version.lib.lombok>1.18.18</version.lib.lombok>
         <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
-        <version.lib.spring-boot>2.5.9</version.lib.spring-boot>
-        <version.lib.spring-cloud>2020.0.4</version.lib.spring-cloud>
+        <version.lib.spring-boot>2.6.7</version.lib.spring-boot>
+        <version.lib.spring-cloud>2021.0.2</version.lib.spring-cloud>
         <version.lib.spring-cloud-starter-feign>1.4.7.RELEASE</version.lib.spring-cloud-starter-feign>
         <version.lib.springdoc-openapi>1.5.7</version.lib.springdoc-openapi>
-        <version.lib.springfox>3.0.0</version.lib.springfox>
 
         <version.plugin.jib>3.1.4</version.plugin.jib>
         <version.plugin.failsafe>2.22.2</version.plugin.failsafe>
