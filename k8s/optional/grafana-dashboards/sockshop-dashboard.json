@@ -3,7 +3,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,7 +21,7 @@
   "panels": [
     {
       "content": "\n# Sockshop Dashboard for namespace: $Namespace\n\n\n\nPlease select the namespace above to view details for for that namespace.\n\n\n",
-      "datasource": null,
+      "datasource": "prometheus",
       "gridPos": {
         "h": 4,
         "w": 24,
@@ -45,7 +45,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 0,
       "format": "none",
       "gauge": {
@@ -131,7 +131,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 3,
       "description": "",
       "format": "none",
@@ -219,7 +219,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 2,
       "description": "",
       "format": "s",
@@ -307,7 +307,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 0,
       "format": "none",
       "gauge": {
@@ -394,7 +394,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 0,
       "format": "none",
       "gauge": {
@@ -472,7 +472,7 @@
       "valueName": "current"
     },
     {
-      "datasource": null,
+      "datasource": "prometheus",
       "description": "",
       "gridPos": {
         "h": 7,
@@ -534,7 +534,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 0,
       "description": "",
       "fill": 1,
@@ -628,7 +628,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 0,
       "description": "",
       "fill": 1,
@@ -732,7 +732,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "prometheus",
       "gridPos": {
         "h": 9,
         "w": 12,
@@ -807,7 +807,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "prometheus",
       "decimals": 0,
       "description": "",
       "fill": 1,
@@ -905,7 +905,7 @@
         "allValue": null,
         "current": {
         },
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "definition": "label_values(order_new_seconds_count, namespace)",
         "hide": 0,
         "includeAll": false,
