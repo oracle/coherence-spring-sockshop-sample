@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021 Oracle and/or its affiliates.
+# Copyright (c) 2020,2022 Oracle and/or its affiliates.
 #
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
@@ -9,6 +9,7 @@ kind: Ingress
 metadata:
   name: sockshop-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - host: ${SOCKSHOP_BACKEND:=coherence}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
     http:
@@ -109,6 +110,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$$2
   name: mp-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - host: mp.${SOCKSHOP_BACKEND:=coherence}.${SOCKSHOP_DOMAIN:=sockshop.spring.io}
     http:
