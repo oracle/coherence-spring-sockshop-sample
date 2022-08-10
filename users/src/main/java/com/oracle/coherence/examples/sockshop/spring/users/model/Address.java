@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.oracle.coherence.examples.sockshop.spring.users.controller.AddressController;
 import com.oracle.coherence.examples.sockshop.spring.users.model.support.AddressIdDeserializer;
 import com.oracle.coherence.examples.sockshop.spring.users.model.support.AddressIdSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,10 +22,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 /**
  * Representation of an address.
@@ -36,7 +32,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 @Schema(description = "User address")
 @Relation(collectionRelation = "address", itemRelation = "address")
 @JsonPropertyOrder({ "street", "number", "country", "city", "postcode", "id" })
-public class Address extends RepresentationModel<Address> implements Serializable {
+public class Address implements Serializable {
 	/**
 	 * The address identifier.
 	 */
@@ -115,11 +111,4 @@ public class Address extends RepresentationModel<Address> implements Serializabl
 		this.user = user;
 		return this;
 	}
-
-	@Override
-	public org.springframework.hateoas.Links getLinks() {
-		final Link self = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AddressController.class).getAddress(this.getAddressId())).withSelfRel();
-		return org.springframework.hateoas.Links.of(self);
-	}
-
 }

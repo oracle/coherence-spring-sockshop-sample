@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -7,9 +7,8 @@
 package com.oracle.coherence.examples.sockshop.spring.users.controller;
 
 import com.oracle.coherence.examples.sockshop.spring.users.controller.resource.RootResource;
-import com.oracle.coherence.examples.sockshop.spring.users.model.User;
 
-import org.springframework.hateoas.RepresentationModel;
+import com.oracle.coherence.examples.sockshop.spring.users.model.CustomUserEntityModel;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -42,7 +41,7 @@ public class RootController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public RootResource root(final HttpServletRequest request, final HttpServletResponse response) {
 		final RootResource rootResource = new RootResource(1);
-		RepresentationModel<User> userLogin = WebMvcLinkBuilder.methodOn(UserController.class).login(null);
+		final CustomUserEntityModel userLogin = WebMvcLinkBuilder.methodOn(UserController.class).login(null);
 		rootResource.add(WebMvcLinkBuilder.linkTo(userLogin).withRel("user/login"));
 		return rootResource;
 	}

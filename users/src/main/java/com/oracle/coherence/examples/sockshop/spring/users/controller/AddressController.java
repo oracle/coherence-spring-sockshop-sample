@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,6 +34,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(
@@ -73,11 +77,12 @@ public class AddressController {
 	@GetMapping("/{id}")
 	@Operation(summary = "Return addresses for the specified identifier")
 //	@NewSpan
-	public Address getAddress(@Parameter(description = "Address identifier")
+	public EntityModel<Address> getAddress(@Parameter(description = "Address identifier")
 					   @PathVariable("id") AddressId id) {
 		final Address address = this.userService.getAddress(id);
 		if (address != null) {
-			return address;
+			final AddressController addressController = methodOn(AddressController.class);
+			return EntityModel.of(address).add(linkTo(addressController.getAddress(id)).withSelfRel());
 		}
 		else {
 			throw new AddressNotFoundException();

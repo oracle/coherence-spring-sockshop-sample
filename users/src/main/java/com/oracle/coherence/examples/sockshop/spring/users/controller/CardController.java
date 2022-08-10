@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.core.EmbeddedWrapper;
@@ -80,9 +81,10 @@ public class CardController {
 	@GetMapping("/{id}")
 	@Operation(summary = "Return card for the specified identifier")
 	//@NewSpan
-	public Card getCard(@Parameter(description = "Card identifier") @PathVariable("id") CardId id) {
-		final Card card = this.userService.getCard(id);
-		return card.mask();
+	public EntityModel<Card> getCard(@Parameter(description = "Card identifier") @PathVariable("id") CardId id) {
+		final Card card = this.userService.getCard(id).mask();
+		final CardController cardController = methodOn(CardController.class);
+		return EntityModel.of(card).add(linkTo(cardController.getCard(id)).withSelfRel());
 	}
 
 	@DeleteMapping("/{id}")

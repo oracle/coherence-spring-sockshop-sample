@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -80,10 +80,17 @@ public class AddressControllerTests {
 			  pathParam("id", addressId.toString()).
 		when().
 			  get("/addresses/{id}").
-		then().
-			statusCode(HttpStatus.OK.value()).
-			body("number", is("555"),
-					"city", is("Westford"));
+		then()
+				.log()
+				.body()
+				.statusCode(HttpStatus.OK.value())
+				.body("street", is("woodbury St"))
+				.body("number", is("555"))
+				.body("country", is("USA"))
+				.body("city", is("Westford"))
+				.body("postcode", is("01886"))
+				.body("id", is("foouser:1"))
+				.body("$", hasKey("_links"));
 	}
 
 	@Test
@@ -102,8 +109,10 @@ public class AddressControllerTests {
 			pathParam("id", addressId.toString()).
 		when().
 			delete("/addresses/{id}").
-		then().
-			statusCode(200)
+		then()
+			.log()
+			.body()
+			.statusCode(200)
 				.body("status", is(true));
 	}
 }
