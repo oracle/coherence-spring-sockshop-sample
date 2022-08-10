@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -11,14 +11,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 import org.springframework.util.Assert;
 
@@ -30,7 +27,7 @@ import javax.persistence.Id;
 @Data
 @Schema(description = "User data representing a customer")
 @Relation(collectionRelation = "customer", itemRelation = "customer")
-public class User extends RepresentationModel<User> implements Serializable {
+public class User implements Serializable {
     /**
      * User identifier.
      */
@@ -233,22 +230,4 @@ public class User extends RepresentationModel<User> implements Serializable {
         return this;
     }
 
-    @Override
-    public org.springframework.hateoas.Links getLinks() {
-        List<Link> links = Links.customer(username).entrySet().stream()
-                .map(entry -> Link.of(entry.getValue().href, entry.getKey()))
-                .collect(Collectors.toList());
-        return org.springframework.hateoas.Links.of(links);
-    }
-
-    /**
-     * Authenticate the user against the specified password.
-     *
-     * @param password the password
-     *
-     * @return true if the specified password match the user's password
-     */
-    public Boolean authenticate(String password) {
-        return password.equals(this.password);
-    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -23,8 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Integration tests for {@link CardController}.
@@ -82,10 +81,13 @@ public class CardControllerTests {
 				pathParam("id", cardId.toString()).
 				when().
 				get("/cards/{id}").
-				then().
-				statusCode(HttpStatus.OK.value()).
-				body("longNum", containsString("3691"),
-						"ccv", is("789"));
+				then().log().body()
+				.statusCode(HttpStatus.OK.value())
+				.body("longNum", containsString("3691"))
+				.body("expires", is("01/21"))
+				.body("ccv", is("789"))
+				.body("id", is("cardUser:3691"))
+				.body("$", hasKey("_links"));
 	}
 
 	@Test
@@ -111,7 +113,10 @@ public class CardControllerTests {
 	public void testGetAllCards() {
 		when().
 				get("/cards").
-				then().
-				statusCode(HttpStatus.OK.value());
+				then()
+				.log()
+				.body().statusCode(HttpStatus.OK.value())
+				.body("_embedded.card.size()", is(0))
+				.body("$", hasKey("_links"));
 	}
 }

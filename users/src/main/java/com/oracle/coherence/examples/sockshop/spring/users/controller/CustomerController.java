@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -17,9 +17,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.sleuth.SpanName;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.core.EmbeddedWrappers;
 import org.springframework.http.MediaType;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -52,17 +54,18 @@ public class CustomerController {
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	public CollectionModel<User> getAllCustomers() {
-		final Collection<User> users = this.userService.getAllUsers();
-		for (final User user : users) {
-			final Link selfLink = linkTo(methodOn(CustomerController.class)
-					.getCustomer(user.getUsername())).withSelfRel();
-			user.add(selfLink);
-		}
+	public CollectionModel<EntityModel<User>> getAllCustomers() {
+		final CustomerController controller = methodOn(CustomerController.class);
+
+		final Collection<EntityModel<User>> users = this.userService.getAllUsers()
+				.stream().map(user -> {
+					final Link selfLink = linkTo(controller.getCustomer(user.getId())).withSelfRel();
+					return EntityModel.of(user).add(selfLink);
+				}).collect(Collectors.toList());
+
 		final Link link = linkTo(methodOn(CustomerController.class)
 				.getAllCustomers()).withSelfRel();
-		final CollectionModel<User> result = CollectionModel.of(users, link);
-		return result;
+		return CollectionModel.of(users, link);
 	}
 
 	@GetMapping("/{id}")
@@ -70,9 +73,17 @@ public class CustomerController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if the retrieval is successful")
 	})
-	public User getCustomer(
+	public EntityModel<User> getCustomer(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
-		return userService.getOrCreate(id);
+		final CustomerController controller = methodOn(CustomerController.class);
+
+		final Link selfLink = linkTo(controller.getCustomer(id)).withSelfRel();
+		final Link customerLink = linkTo(controller.getCustomer(id)).withRel("customer");
+		final Link addressesLink = linkTo(controller.getCustomerAddresses(id)).withRel("addresses");
+		final Link cardsLink = linkTo(controller.getCustomerCards(id)).withRel("cards");
+
+		return EntityModel.of(userService.getOrCreate(id))
+				.add(selfLink, customerLink, addressesLink, cardsLink);
 	}
 
 	@DeleteMapping("/{id}")
@@ -82,7 +93,7 @@ public class CustomerController {
 	})
 	public BooleanStatusResponse deleteCustomer(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
-		User prev = this.userService.removeUser(id);
+		final User prev = this.userService.removeUser(id);
 		return new BooleanStatusResponse(prev != null);
 	}
 
@@ -94,15 +105,20 @@ public class CustomerController {
 	public CollectionModel<Object> getCustomerCards(
 			@Parameter(description = "Customer identifier") @PathVariable("id") String id) {
 		final User user = this.userService.getUser(id);
-		final Link link = linkTo(methodOn(CustomerController.class)
+
+		final CustomerController controller = methodOn(CustomerController.class);
+		final Link link = linkTo(controller
 				.getCustomerCards(user.getUsername())).withSelfRel();
 
-		List<Card> cards = user.getCards();
-		Iterable<Object> content = (cards != null && !cards.isEmpty())
+		final CardController cardController = methodOn(CardController.class);
+
+		final List<EntityModel<Card>> cards = user.getCards()
+				.stream().map(card -> EntityModel.of(card).add(linkTo(cardController.getCard(card.getCardId())).withSelfRel()))
+				.collect(Collectors.toList());
+		final Iterable<Object> content = (cards != null && !cards.isEmpty())
 				? new ArrayList<>(cards)
 				: Collections.singletonList(new EmbeddedWrappers(false).emptyCollectionOf(Card.class));
-		CollectionModel<Object> result = CollectionModel.of(content, link);
-		return result;
+		return CollectionModel.of(content, link);
 	}
 
 	@GetMapping("/{id}/addresses")
@@ -115,11 +131,15 @@ public class CustomerController {
 		final User user = this.userService.getUser(id);
 		final Link link = linkTo(methodOn(CustomerController.class)
 				.getCustomerAddresses(user.getUsername())).withSelfRel();
-		List<Address> addresses = user.getAddresses();
-		Iterable<Object> content = (addresses != null && !addresses.isEmpty())
+
+		final AddressController addressController = methodOn(AddressController.class);
+
+		final List<EntityModel<Address>> addresses = user.getAddresses()
+				.stream().map(address -> EntityModel.of(address).add(linkTo(addressController.getAddress(address.getAddressId())).withSelfRel()))
+				.collect(Collectors.toList());
+		final Iterable<Object> content = (addresses != null && !addresses.isEmpty())
 				? new ArrayList<>(addresses)
 				: Collections.singletonList(new EmbeddedWrappers(false).emptyCollectionOf(Address.class));
-		CollectionModel<Object> result = CollectionModel.of(content, link);
-		return result;
+		return CollectionModel.of(content, link);
 	}
 }
