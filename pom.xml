@@ -13,7 +13,7 @@
     <groupId>com.oracle.coherence.examples.sockshop.spring</groupId>
     <artifactId>sockshop-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.3</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,7 +30,7 @@
 
         <version.lib.awaitility>4.1.1</version.lib.awaitility>
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
-        <version.lib.coherence>22.06.1</version.lib.coherence>
+        <version.lib.coherence>22.06.2</version.lib.coherence>
         <version.lib.coherence-spring>3.3.0</version.lib.coherence-spring>
         <version.lib.junit>5.7.2</version.lib.junit>
         <version.lib.lombok>1.18.18</version.lib.lombok>
