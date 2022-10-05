@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>com.oracle.coherence.examples.sockshop.spring</groupId>
 		<artifactId>sockshop-parent</artifactId>
-		<version>1.2.3</version>
+		<version>1.2.4-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -79,11 +79,6 @@
 		<dependency>
 			<groupId>com.oracle.coherence.ce</groupId>
 			<artifactId>coherence</artifactId>
-			<version>${version.lib.coherence}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.coherence.ce</groupId>
-			<artifactId>coherence-metrics</artifactId>
 			<version>${version.lib.coherence}</version>
 		</dependency>
 		<dependency>
