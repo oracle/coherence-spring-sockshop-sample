@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -19,7 +19,7 @@ import lombok.Data;
 import org.springframework.hateoas.server.core.Relation;
 import org.springframework.util.Assert;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 
 /**
  * User data model.
