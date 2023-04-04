@@ -199,7 +199,7 @@
                         <version>${version.plugin.jib}</version>
                         <configuration>
                             <from>
-                                <image>gcr.io/distroless/java11</image>
+                                <image>gcr.io/distroless/java17</image>
                             </from>
                             <to>
                                 <image>${container.repo}-${project.artifactId}</image>
