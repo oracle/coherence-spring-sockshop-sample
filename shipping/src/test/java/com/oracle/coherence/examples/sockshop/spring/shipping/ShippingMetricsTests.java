@@ -18,9 +18,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.sleuth.exporter.FinishedSpan;
+import io.micrometer.tracing.exporter.FinishedSpan;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
@@ -40,11 +41,11 @@ import static org.awaitility.Awaitility.await;
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		properties = {
-				"coherence.metrics.http.enabled=true",
-				"spring.zipkin.enabled=true",
-				"spring.sleuth.sampler.probability=1.0"
+				"management.tracing.sampling.probability=1.0",
+				"coherence.metrics.http.enabled=true"
 		}
 )
+@AutoConfigureObservability
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -92,16 +93,19 @@ public class ShippingMetricsTests {
 
 	@Test
 	@Order(3)
-	void verifySpringCloudSleuthTraces() {
+	void verifyMicrometerTraces() {
 		await().untilAsserted(() ->
 				assertThat(this.spanHandler.getSpans())
 						.hasSize(1));
 
 		final List<FinishedSpan> spans = this.spanHandler.getSpans();
 		log.info("\n" + StringUtils.collectionToDelimitedString(spans, "\n"));
+
 		assertThat(spans)
-				.hasSize(1)
-				.extracting(FinishedSpan::getName)
-				.containsExactlyInAnyOrder("POST /shipping");
+				.extracting(finishedSpan -> finishedSpan.getTags().get("method"))
+				.containsExactlyInAnyOrder("POST");
+		assertThat(spans)
+				.extracting(finishedSpan -> finishedSpan.getTags().get("uri"))
+				.containsExactlyInAnyOrder("/shipping");
 	}
 }

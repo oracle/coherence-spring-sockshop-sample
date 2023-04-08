@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -19,9 +19,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.sleuth.exporter.FinishedSpan;
+import io.micrometer.tracing.exporter.FinishedSpan;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
@@ -38,13 +39,15 @@ import static org.awaitility.Awaitility.await;
  * @author Gunnar Hillert
  */
 @SpringBootTest(
-		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+
+		webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
 		properties = {
+				"management.tracing.sampling.probability=1.0",
 				"coherence.metrics.http.enabled=true",
-				"spring.zipkin.enabled=true",
-				"spring.sleuth.sampler.probability=1.0"
+				"management.endpoints.web.exposure.include=*",
 		}
 )
+@AutoConfigureObservability
 @AutoConfigureWebTestClient
 @DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -100,16 +103,20 @@ public class OrdersMetricsTests {
 
 	@Test
 	@Order(3)
-	void verifySpringCloudSleuthTraces() {
+	void verifyMicrometerTraces() {
 		await().untilAsserted(() ->
 				assertThat(this.spanHandler.getSpans())
-						.hasSize(4));
+						.hasSize(1));
 
 		final List<FinishedSpan> spans = this.spanHandler.getSpans();
 		log.info("\n" + StringUtils.collectionToDelimitedString(spans, "\n"));
+
 		assertThat(spans)
-				.hasSize(4)
-				.extracting(FinishedSpan::getName)
-				.containsExactlyInAnyOrder("on-order-created", "POST /orders", "on-order-created", "on-order-created");
+				.extracting(finishedSpan -> finishedSpan.getTags().get("method"))
+				.containsExactlyInAnyOrder("POST");
+		assertThat(spans)
+				.extracting(finishedSpan -> finishedSpan.getTags().get("uri"))
+				.containsExactlyInAnyOrder("/orders");
+
 	}
 }

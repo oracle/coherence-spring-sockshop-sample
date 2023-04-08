@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+  Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 
   Licensed under the Universal Permissive License v 1.0 as shown at
   https://oss.oracle.com/licenses/upl.
@@ -20,9 +20,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.minimum.version>3.6.0</maven.minimum.version>
 
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <java.version>11</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
 
         <container.repo>ghcr.io/oracle/coherence-spring-sockshop</container.repo>
         <container.version>${project.version}</container.version>
@@ -30,14 +30,13 @@
 
         <version.lib.awaitility>4.1.1</version.lib.awaitility>
         <version.lib.bedrock>5.0.16</version.lib.bedrock>
-        <version.lib.coherence>22.06.3-SNAPSHOT</version.lib.coherence>
-        <version.lib.coherence-spring>3.3.0</version.lib.coherence-spring>
+        <version.lib.coherence>23.03</version.lib.coherence>
+        <version.lib.coherence-spring>4.0.0-SNAPSHOT</version.lib.coherence-spring>
         <version.lib.junit>5.7.2</version.lib.junit>
         <version.lib.lombok>1.18.18</version.lib.lombok>
-        <version.lib.rest-assured>4.3.3</version.lib.rest-assured>
-        <version.lib.spring-boot>2.7.1</version.lib.spring-boot>
-        <version.lib.spring-cloud>2021.0.3</version.lib.spring-cloud>
-        <version.lib.spring-cloud-starter-feign>1.4.7.RELEASE</version.lib.spring-cloud-starter-feign>
+        <version.lib.rest-assured>5.3.0</version.lib.rest-assured>
+        <version.lib.spring-boot>3.0.5</version.lib.spring-boot>
+        <version.lib.spring-cloud>2022.0.2</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>1.6.9</version.lib.springdoc-openapi>
 
         <version.plugin.jib>3.1.4</version.plugin.jib>

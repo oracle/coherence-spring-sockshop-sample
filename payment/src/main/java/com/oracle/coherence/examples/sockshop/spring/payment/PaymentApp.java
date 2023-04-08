@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -13,11 +13,10 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinRestTemplateBuilderCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.sleuth.zipkin2.ZipkinRestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -57,13 +56,7 @@ public class PaymentApp {
 	}
 
 	@Bean
-	public ZipkinRestTemplateCustomizer zipkinRestTemplateCustomizer() {
-		return new ZipkinRestTemplateCustomizer() {
-			@Override
-			public RestTemplate customizeTemplate(RestTemplate restTemplate) {
-				restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-				return restTemplate;
-			}
-		};
+	public ZipkinRestTemplateBuilderCustomizer zipkinRestTemplateCustomizer() {
+		return restTemplateBuilder -> restTemplateBuilder.requestFactory(HttpComponentsClientHttpRequestFactory.class);
 	}
 }

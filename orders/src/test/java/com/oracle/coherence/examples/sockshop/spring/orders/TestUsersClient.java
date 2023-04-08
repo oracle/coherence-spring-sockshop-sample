@@ -11,7 +11,6 @@ import com.oracle.coherence.examples.sockshop.spring.orders.model.Address;
 import com.oracle.coherence.examples.sockshop.spring.orders.model.Card;
 import com.oracle.coherence.examples.sockshop.spring.orders.model.Customer;
 import com.oracle.coherence.examples.sockshop.spring.orders.service.UsersClient;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

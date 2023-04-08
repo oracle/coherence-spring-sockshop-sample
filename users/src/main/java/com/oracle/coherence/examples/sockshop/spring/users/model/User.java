@@ -19,7 +19,7 @@ import lombok.Data;
 import org.springframework.hateoas.server.core.Relation;
 import org.springframework.util.Assert;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 
 /**
  * User data model.

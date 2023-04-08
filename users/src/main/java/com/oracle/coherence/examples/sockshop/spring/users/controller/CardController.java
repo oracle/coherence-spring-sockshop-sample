@@ -11,6 +11,7 @@ import com.oracle.coherence.examples.sockshop.spring.users.model.Card;
 import com.oracle.coherence.examples.sockshop.spring.users.model.CardId;
 import com.oracle.coherence.examples.sockshop.spring.users.controller.support.BooleanStatusResponse;
 import com.oracle.coherence.examples.sockshop.spring.users.service.UserService;
+import io.micrometer.observation.annotation.Observed;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,7 +20,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -92,7 +92,7 @@ public class CardController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "if card is successfully deleted")
 	})
-	@NewSpan
+	@Observed
 	public BooleanStatusResponse deleteCard(@Parameter(description = "Card identifier") @PathVariable("id")CardId id) {
 		BooleanStatusResponse booleanStatusResponse;
 		try {

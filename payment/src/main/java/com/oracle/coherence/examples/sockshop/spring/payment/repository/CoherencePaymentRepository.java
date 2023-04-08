@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -10,11 +10,10 @@ import com.oracle.coherence.examples.sockshop.spring.payment.model.Authorization
 import com.oracle.coherence.examples.sockshop.spring.payment.model.AuthorizationId;
 import com.oracle.coherence.spring.configuration.annotation.CoherenceMap;
 import com.tangosol.net.NamedMap;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 import java.util.Collection;
 
 import static com.tangosol.util.Filters.equal;

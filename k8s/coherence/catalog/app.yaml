@@ -26,7 +26,7 @@ spec:
     main: com.oracle.coherence.examples.sockshop.spring.catalog.CatalogApp
     args:
       - "--port=8080"
-      - "--spring.zipkin.enabled=false"
+      - "--management.tracing.enabled=false"
       - "--coherence.server.startup-timeout=5m"
   jvm:
     memory:

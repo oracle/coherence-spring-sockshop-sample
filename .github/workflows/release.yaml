@@ -8,11 +8,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.5.0
     - name: Set up JDK
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v3.11.0
       with:
-        java-version: '11'
+        java-version: '17'
     - name: Build
       env:
         MAVEN_OPTS: -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
@@ -22,7 +22,7 @@ jobs:
         REGISTRY_USER: ${{ github.actor }}
         REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        VERSION=${GITHUB_REF:11}
+        VERSION=${GITHUB_REF:17}
         echo $VERSION
         echo $REGISTRY_PASSWORD | docker login ghcr.io -u $REGISTRY_USER --password-stdin
         mvn -B package --file pom.xml -Pcontainer -DskipTests

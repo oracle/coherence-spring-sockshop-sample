@@ -10,7 +10,6 @@ package com.oracle.coherence.examples.sockshop.spring.orders;
 import com.oracle.coherence.examples.sockshop.spring.orders.model.Shipment;
 import com.oracle.coherence.examples.sockshop.spring.orders.model.ShippingRequest;
 import com.oracle.coherence.examples.sockshop.spring.orders.service.ShippingClient;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

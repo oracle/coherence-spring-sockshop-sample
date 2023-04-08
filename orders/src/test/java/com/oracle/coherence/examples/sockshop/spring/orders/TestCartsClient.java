@@ -9,9 +9,7 @@ package com.oracle.coherence.examples.sockshop.spring.orders;
 
 import com.oracle.coherence.examples.sockshop.spring.orders.model.Item;
 import com.oracle.coherence.examples.sockshop.spring.orders.service.CartsClient;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

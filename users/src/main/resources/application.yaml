@@ -9,18 +9,17 @@ server:
 spring:
   application:
     name: Users
-  sleuth:
-    propagation:
-      type: B3,W3C
-    opentracing:
-      enabled: true
-    supports-join: false
-  zipkin:
-    base-url: http://jaeger-agent:9411
-    enabled: false
   jackson:
     default-property-inclusion: non_null
 management:
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://jaeger-agent:9411/api/v2/spans
+      # endpoint: http://127.0.0.1:9411/api/v2/spans # Zipkin & Jaeger
   endpoints:
     web:
       exposure:

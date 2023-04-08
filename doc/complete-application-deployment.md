@@ -167,14 +167,14 @@ of the Grafana documentation.
 
 3. Enable Jaeger tracing in the `app.yaml` files and rebuild and redeploy services
 
-    Set `spring.zipkin.enabled` to `true`, e.g.:
+    Set `management.tracing.enabled` to `true`, e.g.:
 
     ```yaml
     application:
       main: com.oracle.coherence.examples.sockshop.spring.carts.CartsApp
       args:
         - "--port=8080"
-        - "--spring.zipkin.enabled=true"
+        - "--management.tracing.enabled=true"
     ```
 
 4. Exercise the Application and access Jaeger

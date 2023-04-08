@@ -65,9 +65,8 @@ URL into the parts `base-url` and the `api-path`.
 
 We need to specify the following properties and set:
 
-- `spring.zipkin.enabled` to `true`
-- `spring.zipkin.base-url` to `https://[redacted].apm-agt.us-ashburn-1.oci.oraclecloud.com`
-- `spring.zipkin.api-path` to `/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=[private key]`
+- `management.tracing.enabled` to `true`
+- `management.zipkin.tracing.endpoint` to `https://[redacted].apm-agt.us-ashburn-1.oci.oraclecloud.com/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=[private key]`
 
 Your `app.yaml` file should look like this:
 
@@ -76,9 +75,8 @@ application:
   main: com.oracle.coherence.examples.sockshop.spring.carts.CartsApp
   args:
     - "--port=8080"
-    - "--spring.zipkin.enabled=true"
-    - "--spring.zipkin.base-url=https://[redacted].apm-agt.us-ashburn-1.oci.oraclecloud.com"
-    - "--spring.zipkin.api-path=/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=[private key]"
+    - "--management.tracing.enabled=true"
+    - "--management.zipkin.tracing.endpoint=https://[redacted].apm-agt.us-ashburn-1.oci.oraclecloud.com/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=[private key]"
     - "--coherence.server.startup-timeout=5m"
 ```
 
