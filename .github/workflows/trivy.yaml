@@ -17,8 +17,7 @@ jobs:
       image: ghcr.io/aquasecurity/trivy:latest
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
-        - /home/runner/work/coherence-spring-sockshop-sample/coherence-spring-sockshop-sample:/repo
-
+        - /__w/coherence-spring-sockshop-sample/coherence-spring-sockshop-sample:/repo
     steps:
       - uses: actions/checkout@v3
       - name: env
