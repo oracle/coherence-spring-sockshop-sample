@@ -17,12 +17,14 @@ jobs:
       image: ghcr.io/aquasecurity/trivy:latest
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
-        - /__w/coherence-spring-sockshop-sample/coherence-spring-sockshop-sample:/repo
+        - /home/runner/work/coherence-spring-sockshop-sample/coherence-spring-sockshop-sample:/repo
     steps:
       - uses: actions/checkout@v3
       - name: env
         run: echo $GITHUB_WORKSPACE
       - name: env-2
         run: ls /__w/coherence-spring-sockshop-sample/coherence-spring-sockshop-sample
+      - name: env-3
+        run: ls /repo
       - name: Trivy Scan
         run: trivy fs --exit-code 1 /repo⏎
