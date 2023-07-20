@@ -36,9 +36,10 @@
         <version.lib.junit>5.9.3</version.lib.junit>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.rest-assured>5.3.1</version.lib.rest-assured>
+        <version.lib.snake.yaml>2.0</version.lib.snake.yaml>
         <version.lib.spring-boot>3.1.2</version.lib.spring-boot>
         <version.lib.spring-cloud>2022.0.3</version.lib.spring-cloud>
-        <version.lib.springdoc-openapi>1.7.0</version.lib.springdoc-openapi>
+        <version.lib.springdoc-openapi>2.1.0</version.lib.springdoc-openapi>
 
         <version.plugin.jib>3.3.2</version.plugin.jib>
         <version.plugin.failsafe>3.1.2</version.plugin.failsafe>
@@ -57,6 +58,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${version.lib.snake.yaml}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
