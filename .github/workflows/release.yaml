@@ -23,7 +23,7 @@ jobs:
         REGISTRY_USER: ${{ github.actor }}
         REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        VERSION=${GITHUB_REF:17}
+        VERSION=${GITHUB_REF:11}
         echo $VERSION
         echo $REGISTRY_PASSWORD | docker login ghcr.io -u $REGISTRY_USER --password-stdin
         mvn -B package --file pom.xml -Pcontainer -DskipTests
