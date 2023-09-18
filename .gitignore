@@ -23,3 +23,5 @@ buildNumber.properties
 .project
 .settings/
 .java-version
+
+.vscode/
