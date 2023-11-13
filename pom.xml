@@ -32,7 +32,7 @@
 
         <version.lib.awaitility>4.2.0</version.lib.awaitility>
         <version.lib.bedrock>7.0.2</version.lib.bedrock>
-        <version.lib.coherence>23.09</version.lib.coherence>
+        <version.lib.coherence>23.09.1</version.lib.coherence>
         <version.lib.coherence-spring>4.0.0</version.lib.coherence-spring>
         <version.lib.httpclient>4.5.14</version.lib.httpclient>
         <version.lib.lombok>1.18.28</version.lib.lombok>
