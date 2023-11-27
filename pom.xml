@@ -42,7 +42,7 @@
         <version.lib.spring-cloud>2022.0.4</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.2.0</version.lib.springdoc-openapi>
 
-        <version.plugin.dependency-check-maven>8.4.2</version.plugin.dependency-check-maven>
+        <version.plugin.dependency-check-maven>9.0.1</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.0</version.plugin.jib>
         <version.plugin.failsafe>3.2.1</version.plugin.failsafe>
         <version.plugin.surefire>3.2.1</version.plugin.surefire>
