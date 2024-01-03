@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+  Copyright (c) 2021, 2024 Oracle and/or its affiliates.
 
   Licensed under the Universal Permissive License v 1.0 as shown at
   https://oss.oracle.com/licenses/upl.
@@ -32,20 +32,21 @@
 
         <version.lib.awaitility>4.2.0</version.lib.awaitility>
         <version.lib.bedrock>7.0.2</version.lib.bedrock>
-        <version.lib.coherence>23.09</version.lib.coherence>
-        <version.lib.coherence-spring>4.0.0</version.lib.coherence-spring>
+        <version.lib.coherence>23.09.1</version.lib.coherence>
+        <version.lib.coherence-spring>4.1.1</version.lib.coherence-spring>
         <version.lib.httpclient>4.5.14</version.lib.httpclient>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.rest-assured>5.4.0</version.lib.rest-assured>
-        <version.lib.snake.yaml>2.2</version.lib.snake.yaml>
         <version.lib.spring-boot>3.2.1</version.lib.spring-boot>
-        <version.lib.spring-cloud>2022.0.4</version.lib.spring-cloud>
-        <version.lib.springdoc-openapi>2.2.0</version.lib.springdoc-openapi>
+        <version.lib.spring-cloud>2023.0.0</version.lib.spring-cloud>
+        <version.lib.springdoc-openapi>2.3.0</version.lib.springdoc-openapi>
 
         <version.plugin.dependency-check-maven>8.4.2</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.0</version.plugin.jib>
-        <version.plugin.failsafe>3.2.1</version.plugin.failsafe>
-        <version.plugin.surefire>3.2.1</version.plugin.surefire>
+        <version.plugin.failsafe>3.2.3</version.plugin.failsafe>
+        <version.plugin.maven-enforcer>3.4.1</version.plugin.maven-enforcer>
+        <version.plugin.maven-jar>3.3.0</version.plugin.maven-jar>
+        <version.plugin.surefire>3.2.3</version.plugin.surefire>
     </properties>
 
     <modules>
@@ -58,13 +59,31 @@
         <module>sockshop-test</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>${version.lib.snake.yaml}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -87,6 +106,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${version.plugin.maven-enforcer}</version>
                 <executions>
                     <execution>
                         <id>enforce-plugin-versions</id>
