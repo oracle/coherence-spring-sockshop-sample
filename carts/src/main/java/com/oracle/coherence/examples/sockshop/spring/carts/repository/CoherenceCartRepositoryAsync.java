@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024 Oracle and/or its affiliates.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at
  * https://oss.oracle.com/licenses/upl.
@@ -8,9 +8,9 @@ package com.oracle.coherence.examples.sockshop.spring.carts.repository;
 
 import com.oracle.coherence.examples.sockshop.spring.carts.model.Cart;
 import com.oracle.coherence.examples.sockshop.spring.carts.model.Item;
+import com.oracle.coherence.spring.annotation.Name;
 import com.tangosol.net.AsyncNamedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.Name;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
