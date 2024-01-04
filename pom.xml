@@ -41,7 +41,7 @@
         <version.lib.spring-cloud>2023.0.0</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.3.0</version.lib.springdoc-openapi>
 
-        <version.plugin.dependency-check-maven>8.4.2</version.plugin.dependency-check-maven>
+        <version.plugin.dependency-check-maven>9.0.7</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.0</version.plugin.jib>
         <version.plugin.failsafe>3.2.3</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.4.1</version.plugin.maven-enforcer>
