@@ -34,7 +34,7 @@
         <version.lib.bedrock>7.0.2</version.lib.bedrock>
         <version.lib.coherence>23.09.2</version.lib.coherence>
         <version.lib.coherence-spring>4.1.2</version.lib.coherence-spring>
-        <version.lib.httpclient>4.5.14</version.lib.httpclient>
+        <version.lib.httpclient>5.3.1</version.lib.httpclient>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.rest-assured>5.4.0</version.lib.rest-assured>
         <version.lib.spring-boot>3.2.2</version.lib.spring-boot>

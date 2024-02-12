@@ -78,6 +78,12 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${version.lib.httpclient}</version>
+        </dependency>
+
         <!-- test dependencies -->
         <dependency>
             <groupId>org.awaitility</groupId>
