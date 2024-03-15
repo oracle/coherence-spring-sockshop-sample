@@ -37,3 +37,6 @@ logging:
 feign:
   httpclient:
     enabled: true
+coherence:
+  tracing:
+    ratio: -1

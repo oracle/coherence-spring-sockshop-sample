@@ -22,6 +22,10 @@ spec:
       value: "1"
     - name: COHERENCE_SERVICE_NAME
       value: "Payment"
+    - name: JAEGER_SERVICE_NAME
+      value: payment
+    - name: JAEGER_ENDPOINT
+      value: "http://jaeger-collector:14268/api/traces"
   application:
     main: com.oracle.coherence.examples.sockshop.spring.payment.PaymentApp
     args:

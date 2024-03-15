@@ -77,6 +77,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+            <version>${version.lib.opentracing-spring-jaeger}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
