@@ -163,14 +163,14 @@ If you wish to scale the back-end you can issue the following command
 Scale only the orders microservice:
 
 ```bash
-$ kubectl --namespace sockshop scale coherence orders --replicas=3
+$ kubectl --namespace sockshop scale coherence/orders --replicas=3
 ```
 
 Or alternatively scale all the microservices:
 
 ```bash
 $ for name in carts catalog orders payment shipping users
-    do kubectl --namespace sockshop scale coherence $name --replicas=3
+    do kubectl --namespace sockshop scale coherence/$name --replicas=3
 done
 ```
 
