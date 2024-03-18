@@ -39,7 +39,7 @@
         <version.lib.rest-assured>5.4.0</version.lib.rest-assured>
         <version.lib.spring-boot>3.2.3</version.lib.spring-boot>
         <version.lib.spring-cloud>2023.0.0</version.lib.spring-cloud>
-        <version.lib.springdoc-openapi>2.3.0</version.lib.springdoc-openapi>
+        <version.lib.springdoc-openapi>2.4.0</version.lib.springdoc-openapi>
 
         <version.plugin.dependency-check-maven>9.0.9</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.1</version.plugin.jib>
