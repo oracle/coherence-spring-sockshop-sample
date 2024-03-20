@@ -32,3 +32,6 @@ logging:
     org.springframework.web: info
     com.oracle.coherence.spring: info
     org.apache.http: debug
+coherence:
+  tracing:
+    ratio: -1

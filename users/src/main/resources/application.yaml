@@ -34,3 +34,6 @@ logging:
     org.springframework.security: info
     org.springframework.web: info
     com.oracle.coherence.spring: info
+coherence:
+  tracing:
+    ratio: -1
