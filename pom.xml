@@ -30,7 +30,7 @@
         <container.version>${project.version}</container.version>
         <jib.goal>dockerBuild</jib.goal>
 
-        <version.lib.awaitility>4.2.0</version.lib.awaitility>
+        <version.lib.awaitility>4.2.1</version.lib.awaitility>
         <version.lib.bedrock>7.0.3</version.lib.bedrock>
         <version.lib.coherence>23.09.2</version.lib.coherence>
         <version.lib.coherence-spring>4.1.2</version.lib.coherence-spring>
@@ -39,10 +39,10 @@
         <version.lib.rest-assured>5.4.0</version.lib.rest-assured>
         <version.lib.spring-boot>3.2.3</version.lib.spring-boot>
         <version.lib.spring-cloud>2023.0.0</version.lib.spring-cloud>
-        <version.lib.springdoc-openapi>2.3.0</version.lib.springdoc-openapi>
+        <version.lib.springdoc-openapi>2.4.0</version.lib.springdoc-openapi>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
 
-        <version.plugin.dependency-check-maven>9.0.9</version.plugin.dependency-check-maven>
+        <version.plugin.dependency-check-maven>9.0.10</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.1</version.plugin.jib>
         <version.plugin.failsafe>3.2.5</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.4.1</version.plugin.maven-enforcer>
