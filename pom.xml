@@ -31,6 +31,7 @@
         <jib.goal>dockerBuild</jib.goal>
 
         <version.lib.awaitility>4.2.1</version.lib.awaitility>
+        <version.lib.bcprov>1.78</version.lib.bcprov>
         <version.lib.bedrock>7.0.3</version.lib.bedrock>
         <version.lib.coherence>24.03</version.lib.coherence>
         <version.lib.coherence-spring>4.1.3</version.lib.coherence-spring>
@@ -98,6 +99,11 @@
                 <version>${version.lib.spring-cloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>${version.lib.bcprov}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
