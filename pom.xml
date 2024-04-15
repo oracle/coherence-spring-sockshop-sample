@@ -48,7 +48,7 @@
         <version.plugin.jib>3.4.2</version.plugin.jib>
         <version.plugin.failsafe>3.2.5</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.4.1</version.plugin.maven-enforcer>
-        <version.plugin.maven-jar>3.3.0</version.plugin.maven-jar>
+        <version.plugin.maven-jar>3.4.0</version.plugin.maven-jar>
         <version.plugin.surefire>3.2.5</version.plugin.surefire>
     </properties>
 
