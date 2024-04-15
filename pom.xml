@@ -41,6 +41,7 @@
         <version.lib.spring-boot>3.2.4</version.lib.spring-boot>
         <version.lib.spring-cloud>2023.0.1</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.5.0</version.lib.springdoc-openapi>
+        <version.lib.springframework>6.1.6</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
 
         <version.plugin.dependency-check-maven>9.1.0</version.plugin.dependency-check-maven>
@@ -104,6 +105,11 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk18on</artifactId>
                 <version>${version.lib.bcprov}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${version.lib.springframework}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
