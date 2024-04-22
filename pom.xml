@@ -38,7 +38,7 @@
         <version.lib.httpclient>5.3.1</version.lib.httpclient>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.rest-assured>5.4.0</version.lib.rest-assured>
-        <version.lib.spring-boot>3.2.4</version.lib.spring-boot>
+        <version.lib.spring-boot>3.2.5</version.lib.spring-boot>
         <version.lib.spring-cloud>2023.0.1</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.5.0</version.lib.springdoc-openapi>
         <version.lib.springframework>6.1.6</version.lib.springframework>
