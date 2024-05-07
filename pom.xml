@@ -44,6 +44,7 @@
         <version.lib.springframework>6.1.6</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.jackson>2.16.2</version.lib.jackson>
+        <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
 
         <version.plugin.dependency-check-maven>9.1.0</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.2</version.plugin.jib>
