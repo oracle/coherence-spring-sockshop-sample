@@ -82,6 +82,12 @@
             <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
             <version>${version.lib.opentracing-spring-jaeger}</version>
         </dependency>
+        <!-- Force this transitive dependency -->
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-thrift</artifactId>
+            <version>${version.lib.jaeger-client}</version>
+        </dependency>
 
         <!-- force this version of dependency -->
         <dependency>
