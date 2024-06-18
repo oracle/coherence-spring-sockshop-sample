@@ -51,7 +51,7 @@
         <version.plugin.failsafe>3.3.0</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.5.0</version.plugin.maven-enforcer>
         <version.plugin.maven-jar>3.4.1</version.plugin.maven-jar>
-        <version.plugin.surefire>3.2.5</version.plugin.surefire>
+        <version.plugin.surefire>3.3.0</version.plugin.surefire>
     </properties>
 
     <modules>
