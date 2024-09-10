@@ -12,13 +12,20 @@ on:
 
 jobs:
   trivy-scan:
+    name: trivy
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/aquasecurity/trivy:latest
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-        - /home/runner/work/coherence-spring-sockshop-sample/coherence-spring-sockshop-sample:/repo
     steps:
       - uses: actions/checkout@v4
-      - name: Trivy Scan
-        run: trivy fs --exit-code 1 /repo
+      - name: Run static analysis
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'code'
