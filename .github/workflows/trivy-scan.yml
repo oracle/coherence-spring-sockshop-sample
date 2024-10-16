@@ -3,7 +3,7 @@
 # https://oss.oracle.com/licenses/upl.
 
 # ---------------------------------------------------------------------------
-# Micronaut Sockshop Scheduled Trivy Scan
+# Spring Sockshop Scheduled Trivy Scan
 # ---------------------------------------------------------------------------
 name: Scheduled Trivy Scan
 
