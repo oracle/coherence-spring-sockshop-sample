@@ -12,7 +12,7 @@ spec:
   cluster: SockShop
   role: Payment
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-payment:1.5.1
+  image: ghcr.io/oracle/coherence-spring-sockshop-payment:latest
   env:
     - name: TRACING_HOST
       value: "jaeger-collector"
