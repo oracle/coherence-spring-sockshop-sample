@@ -47,7 +47,7 @@
         <version.lib.jackson>2.18.0</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
 
-        <version.plugin.dependency-check-maven>11.0.0</version.plugin.dependency-check-maven>
+        <version.plugin.dependency-check-maven>11.1.0</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.4</version.plugin.jib>
         <version.plugin.failsafe>3.5.1</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.5.0</version.plugin.maven-enforcer>
