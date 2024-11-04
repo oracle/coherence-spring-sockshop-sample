@@ -52,7 +52,7 @@
         <version.plugin.failsafe>3.5.1</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.5.0</version.plugin.maven-enforcer>
         <version.plugin.maven-jar>3.4.2</version.plugin.maven-jar>
-        <version.plugin.surefire>3.5.1</version.plugin.surefire>
+        <version.plugin.surefire>3.5.2</version.plugin.surefire>
     </properties>
 
     <modules>
