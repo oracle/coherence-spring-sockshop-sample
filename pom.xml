@@ -39,9 +39,9 @@
         <version.lib.httpclient>5.3.1</version.lib.httpclient>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.rest-assured>5.5.0</version.lib.rest-assured>
-        <version.lib.spring-boot>3.4.0</version.lib.spring-boot>
+        <version.lib.spring-boot>3.3.5</version.lib.spring-boot>
         <version.lib.spring-cloud>2023.0.3</version.lib.spring-cloud>
-        <version.lib.springdoc-openapi>2.7.0</version.lib.springdoc-openapi>
+        <version.lib.springdoc-openapi>2.6.0</version.lib.springdoc-openapi>
         <version.lib.springframework>6.1.14</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.jackson>2.18.1</version.lib.jackson>

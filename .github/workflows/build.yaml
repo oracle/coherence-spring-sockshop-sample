@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build:
     strategy:
@@ -28,7 +31,7 @@ jobs:
     - name: Build with Maven
       env:
         MAVEN_OPTS: -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
-      run: mvn -B install -Powasp --file pom.xml -s .mvn/settings.xml
+      run: mvn -B install --file pom.xml -s .mvn/settings.xml
     - name: Push container images
       env:
         REGISTRY_USER: ${{ github.actor }}
