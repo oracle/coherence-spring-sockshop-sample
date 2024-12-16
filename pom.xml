@@ -42,7 +42,7 @@
         <version.lib.spring-boot>3.3.5</version.lib.spring-boot>
         <version.lib.spring-cloud>2023.0.4</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.6.0</version.lib.springdoc-openapi>
-        <version.lib.springframework>6.1.14</version.lib.springframework>
+        <version.lib.springframework>6.2.1</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.jackson>2.18.2</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
