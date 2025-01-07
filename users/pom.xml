@@ -160,6 +160,16 @@
 			<artifactId>jackson-dataformat-yaml</artifactId>
 			<version>${version.lib.jackson}</version>
 		</dependency>
+		<dependency>
+			<artifactId>logback-core</artifactId>
+			<groupId>ch.qos.logback</groupId>
+			<version>${version.lib.logback}</version>
+		</dependency>
+		<dependency>
+			<artifactId>logback-classic</artifactId>
+			<groupId>ch.qos.logback</groupId>
+			<version>${version.lib.logback}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.awaitility</groupId>
