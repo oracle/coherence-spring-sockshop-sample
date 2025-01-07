@@ -132,6 +132,16 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${version.lib.jackson}</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${version.lib.logback}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${version.lib.tomcat}</version>
+        </dependency>
 
         <!-- test dependencies -->
         <dependency>
