@@ -170,6 +170,11 @@
 			<groupId>ch.qos.logback</groupId>
 			<version>${version.lib.logback}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>${version.lib.okhttp}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.awaitility</groupId>
