@@ -36,14 +36,14 @@
         <version.lib.coherence>24.09</version.lib.coherence>
         <version.lib.coherence-spring>4.3.0</version.lib.coherence-spring>
         <version.lib.commons-io>2.18.0</version.lib.commons-io>
-        <version.lib.httpclient>5.3.1</version.lib.httpclient>
+        <version.lib.httpclient>5.4.1</version.lib.httpclient>
         <version.lib.logback>1.5.16</version.lib.logback>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.rest-assured>5.5.0</version.lib.rest-assured>
-        <version.lib.spring-boot>3.3.7</version.lib.spring-boot>
-        <version.lib.spring-cloud>2023.0.4</version.lib.spring-cloud>
-        <version.lib.springdoc-openapi>2.6.0</version.lib.springdoc-openapi>
-        <version.lib.springframework>6.1.14</version.lib.springframework>
+        <version.lib.spring-boot>3.4.1</version.lib.spring-boot>
+        <version.lib.spring-cloud>2024.0.0</version.lib.spring-cloud>
+        <version.lib.springdoc-openapi>2.8.1</version.lib.springdoc-openapi>
+        <version.lib.springframework>6.2.1</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.jackson>2.18.2</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
