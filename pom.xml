@@ -31,7 +31,7 @@
         <jib.goal>dockerBuild</jib.goal>
 
         <version.lib.awaitility>4.2.2</version.lib.awaitility>
-        <version.lib.bcprov>1.79</version.lib.bcprov>
+        <version.lib.bcprov>1.80</version.lib.bcprov>
         <version.lib.bedrock>7.0.5</version.lib.bedrock>
         <version.lib.coherence>24.09</version.lib.coherence>
         <version.lib.coherence-spring>4.3.0</version.lib.coherence-spring>
