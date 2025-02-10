@@ -33,7 +33,7 @@
         <version.lib.awaitility>4.2.2</version.lib.awaitility>
         <version.lib.bcprov>1.80</version.lib.bcprov>
         <version.lib.bedrock>7.0.5</version.lib.bedrock>
-        <version.lib.coherence>24.09.2</version.lib.coherence>
+        <version.lib.coherence>24.09.3</version.lib.coherence>
         <version.lib.coherence-spring>4.3.0</version.lib.coherence-spring>
         <version.lib.commons-io>2.18.0</version.lib.commons-io>
         <version.lib.httpclient>5.4.1</version.lib.httpclient>
