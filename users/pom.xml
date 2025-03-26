@@ -62,19 +62,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-crypto</artifactId>
-			<version>${version.lib.crypto}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-security-crypto</artifactId>
-					<groupId>org.springframework.security</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
