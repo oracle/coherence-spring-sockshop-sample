@@ -51,7 +51,7 @@
 
         <version.plugin.dependency-check-maven>12.1.0</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.5</version.plugin.jib>
-        <version.plugin.failsafe>3.5.2</version.plugin.failsafe>
+        <version.plugin.failsafe>3.5.3</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.5.0</version.plugin.maven-enforcer>
         <version.plugin.maven-jar>3.4.2</version.plugin.maven-jar>
         <version.plugin.surefire>3.5.3</version.plugin.surefire>
