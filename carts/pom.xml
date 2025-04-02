@@ -13,7 +13,7 @@
     <parent>
         <artifactId>sockshop-parent</artifactId>
         <groupId>com.oracle.coherence.examples.sockshop.spring</groupId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.5.2</version>
     </parent>
 
     <artifactId>carts</artifactId>
