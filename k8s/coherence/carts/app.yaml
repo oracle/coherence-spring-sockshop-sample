@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021 Oracle and/or its affiliates.
+# Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 #
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
@@ -12,20 +12,10 @@ spec:
   cluster: SockShop
   role: Carts
   replicas: 1
-  image: ghcr.io/oracle/coherence-spring-sockshop-carts:latest
+  image: ghcr.io/oracle/coherence-spring-sockshop-carts:1.5.2-SNAPSHOT
   env:
-    - name: TRACING_HOST
-      value: "jaeger-collector"
-    - name: JAEGER_SAMPLER_TYPE
-      value: "const"
-    - name: JAEGER_SAMPLER_PARAM
-      value: "1"
     - name: COHERENCE_SERVICE_NAME
       value: "Carts"
-    - name: JAEGER_SERVICE_NAME
-      value: carts
-    - name: JAEGER_ENDPOINT
-      value: "http://jaeger-collector:14268/api/traces"
   application:
     main: com.oracle.coherence.examples.sockshop.spring.carts.CartsApp
     args:
@@ -35,6 +25,14 @@ spec:
   jvm:
     memory:
       heapSize: 2g
+    args:
+      - "-Dotel.java.global-autoconfigure.enabled=true"
+      - "-Dotel.service.name=carts"
+      - "-Dotel.metrics.exporter=none"
+      - "-Dotel.logs.exporter=none"
+      - "-Dotel.exporter.otlp.traces.endpoint=http://jaeger-inmemory-instance-collector:4318/v1/traces"
+      - "-Dotel.sdk.disabled=false"
+      - "-Dcoherence.tracing.ratio=0"
   coherence:
     metrics:
       enabled: true

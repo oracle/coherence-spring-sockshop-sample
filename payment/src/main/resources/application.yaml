@@ -10,14 +10,6 @@ spring:
   application:
     name: Payment
 management:
-  tracing:
-    enabled: false
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: http://jaeger-agent:9411/api/v2/spans
-      # endpoint: http://127.0.0.1:9411/api/v2/spans # Zipkin & Jaeger
   endpoints:
     web:
       exposure:
@@ -32,6 +24,9 @@ logging:
     org.springframework.web: info
     com.oracle.coherence.spring: info
     org.apache.http: debug
-coherence:
-  tracing:
-    ratio: -1
+otel:
+  traces:
+    exporter: otlp
+  exporter:
+    otlp:
+      endpoint: http://jaeger-inmemory-instance-collector:4318/v1/traces
