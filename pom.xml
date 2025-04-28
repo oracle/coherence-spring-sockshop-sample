@@ -13,7 +13,7 @@
     <groupId>com.oracle.coherence.examples.sockshop.spring</groupId>
     <artifactId>sockshop-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>1.5.3-SNAPSHOT</version>
 
     <properties>
         <sockshop.root>${basedir}</sockshop.root>
@@ -35,7 +35,7 @@
         <version.lib.bedrock>7.0.6</version.lib.bedrock>
         <version.lib.coherence>25.03</version.lib.coherence>
         <version.lib.coherence-spring>4.3.0</version.lib.coherence-spring>
-        <version.lib.commons-io>2.18.0</version.lib.commons-io>
+        <version.lib.commons-io>2.19.0</version.lib.commons-io>
         <version.lib.httpclient>5.4.3</version.lib.httpclient>
         <version.lib.logback>1.5.18</version.lib.logback>
         <version.lib.lombok>1.18.28</version.lib.lombok>
@@ -44,12 +44,12 @@
         <version.lib.spring-boot>3.4.4</version.lib.spring-boot>
         <version.lib.spring-cloud>2024.0.1</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.8.6</version.lib.springdoc-openapi>
-        <version.lib.springframework>6.2.5</version.lib.springframework>
+        <version.lib.springframework>6.2.6</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.jackson>2.18.3</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
 
-        <version.plugin.dependency-check-maven>12.1.0</version.plugin.dependency-check-maven>
+        <version.plugin.dependency-check-maven>12.1.1</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.5</version.plugin.jib>
         <version.plugin.failsafe>3.5.3</version.plugin.failsafe>
         <version.plugin.maven-enforcer>3.5.0</version.plugin.maven-enforcer>
