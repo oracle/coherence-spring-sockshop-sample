@@ -14,35 +14,16 @@ spec:
   replicas: 1
   image: ghcr.io/oracle/coherence-spring-sockshop-payment:1.5.2-SNAPSHOT
   env:
-    - name: TRACING_HOST
-      value: "jaeger-collector"
-    - name: JAEGER_SAMPLER_TYPE
-      value: "const"
-    - name: JAEGER_SAMPLER_PARAM
-      value: "1"
     - name: COHERENCE_SERVICE_NAME
       value: "Payment"
-    - name: JAEGER_SERVICE_NAME
-      value: payment
-    - name: JAEGER_ENDPOINT
-      value: "http://jaeger-collector:14268/api/traces"
   application:
     main: com.oracle.coherence.examples.sockshop.spring.payment.PaymentApp
     args:
       - "--port=8080"
-      - "--management.tracing.enabled=false"
       - "--coherence.server.startup-timeout=5m"
   jvm:
     memory:
       heapSize: 2g
-    args:
-      - "-Dotel.java.global-autoconfigure.enabled=true"
-      - "-Dotel.service.name=payment"
-      - "-Dotel.metrics.exporter=none"
-      - "-Dotel.logs.exporter=none"
-      - "-Dotel.exporter.otlp.traces.endpoint=http://jaeger-inmemory-instance-collector:4318/v1/traces"
-      - "-Dotel.sdk.disabled=false"
-      - "-Dcoherence.tracing.ratio=0"
   coherence:
     metrics:
       enabled: true

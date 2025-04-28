@@ -30,11 +30,13 @@
         <container.version>${project.version}</container.version>
         <jib.goal>dockerBuild</jib.goal>
 
+        <coherence.group.id>com.oracle.coherence</coherence.group.id>
+
         <version.lib.awaitility>4.3.0</version.lib.awaitility>
         <version.lib.bcprov>1.80</version.lib.bcprov>
         <version.lib.bedrock>7.0.6</version.lib.bedrock>
-        <version.lib.coherence>25.03</version.lib.coherence>
-        <version.lib.coherence-spring>4.3.0</version.lib.coherence-spring>
+        <version.lib.coherence>15.1.1-0-0-SNAPSHOT</version.lib.coherence>
+        <version.lib.coherence-spring>4.3.1-SNAPSHOT</version.lib.coherence-spring>
         <version.lib.commons-io>2.18.0</version.lib.commons-io>
         <version.lib.httpclient>5.4.1</version.lib.httpclient>
         <version.lib.logback>1.5.18</version.lib.logback>
@@ -46,6 +48,7 @@
         <version.lib.springdoc-openapi>2.8.6</version.lib.springdoc-openapi>
         <version.lib.springframework>6.2.5</version.lib.springframework>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
+        <version.lib.otel-instrumentation>2.14.0</version.lib.otel-instrumentation>
         <version.lib.jackson>2.18.3</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
 
@@ -95,7 +98,7 @@
             <dependency>
                 <groupId>io.opentelemetry.instrumentation</groupId>
                 <artifactId>opentelemetry-instrumentation-bom</artifactId>
-                <version>2.14.0</version>
+                <version>${version.lib.otel-instrumentation}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

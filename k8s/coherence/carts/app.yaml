@@ -20,19 +20,10 @@ spec:
     main: com.oracle.coherence.examples.sockshop.spring.carts.CartsApp
     args:
       - "--port=8080"
-      - "--management.tracing.enabled=false"
       - "--coherence.server.startup-timeout=5m"
   jvm:
     memory:
       heapSize: 2g
-    args:
-      - "-Dotel.java.global-autoconfigure.enabled=true"
-      - "-Dotel.service.name=carts"
-      - "-Dotel.metrics.exporter=none"
-      - "-Dotel.logs.exporter=none"
-      - "-Dotel.exporter.otlp.traces.endpoint=http://jaeger-inmemory-instance-collector:4318/v1/traces"
-      - "-Dotel.sdk.disabled=false"
-      - "-Dcoherence.tracing.ratio=0"
   coherence:
     metrics:
       enabled: true

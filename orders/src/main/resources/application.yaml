@@ -29,9 +29,20 @@ logging:
 feign:
   httpclient:
     enabled: true
+coherence:
+  tracing:
+    ratio: 1
 otel:
+  sdk:
+    disabled: false
   traces:
     exporter: otlp
   exporter:
     otlp:
-      endpoint: http://jaeger-inmemory-instance-collector:4318/v1/traces
+      traces:
+        endpoint: http://jaeger-inmemory-instance-collector:4317
+        protocol: grpc
+  metrics:
+    exporter: none
+  logs:
+    exporter: none

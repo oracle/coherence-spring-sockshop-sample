@@ -59,7 +59,7 @@
             <version>${version.lib.coherence-spring}</version>
         </dependency>
         <dependency>
-            <groupId>com.oracle.coherence.ce</groupId>
+            <groupId>${coherence.group.id}</groupId>
             <artifactId>coherence</artifactId>
             <version>${version.lib.coherence}</version>
         </dependency>
@@ -68,11 +68,6 @@
         <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
             <artifactId>opentelemetry-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-api-incubator</artifactId>
-            <version>1.48.0-alpha</version>
         </dependency>
 
         <!-- force this version of dependency -->
