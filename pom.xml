@@ -40,7 +40,7 @@
         <version.lib.logback>1.5.18</version.lib.logback>
         <version.lib.lombok>1.18.28</version.lib.lombok>
         <version.lib.okhttp>4.12.0</version.lib.okhttp>
-        <version.lib.rest-assured>5.5.1</version.lib.rest-assured>
+        <version.lib.rest-assured>5.5.2</version.lib.rest-assured>
         <version.lib.spring-boot>3.4.5</version.lib.spring-boot>
         <version.lib.spring-cloud>2024.0.1</version.lib.spring-cloud>
         <version.lib.springdoc-openapi>2.8.8</version.lib.springdoc-openapi>
