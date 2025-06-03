@@ -23,13 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinRestTemplateBuilderCustomizer;
+import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientBuilderCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @SecurityScheme(
@@ -87,7 +86,8 @@ public class UsersApp implements ApplicationRunner {
 	}
 
 	@Bean
-	public ZipkinRestTemplateBuilderCustomizer zipkinRestTemplateCustomizer() {
-		return restTemplateBuilder -> restTemplateBuilder.requestFactory(HttpComponentsClientHttpRequestFactory.class);
+	public ZipkinHttpClientBuilderCustomizer zipkinHttpClientCustomizer() {
+		return builder -> {
+		};
 	}
 }
