@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinRestTemplateBuilderCustomizer;
+import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientBuilderCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -56,7 +56,8 @@ public class PaymentApp {
 	}
 
 	@Bean
-	public ZipkinRestTemplateBuilderCustomizer zipkinRestTemplateCustomizer() {
-		return restTemplateBuilder -> restTemplateBuilder.requestFactory(HttpComponentsClientHttpRequestFactory.class);
+	public ZipkinHttpClientBuilderCustomizer zipkinHttpClientCustomizer() {
+		return builder -> {
+		};
 	}
 }
