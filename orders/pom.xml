@@ -58,6 +58,12 @@
             <artifactId>commons-io</artifactId>
             <version>${version.lib.commons-io}</version>
         </dependency>
+        <!-- override for CVE-2025-48976 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.6.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
