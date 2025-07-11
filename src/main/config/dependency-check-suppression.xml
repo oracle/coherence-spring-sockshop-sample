@@ -7,4 +7,8 @@
 -->
 
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <!-- commons-fileupload; not used by this project -->
+  <suppress>
+    <cve>CVE-2025-48976</cve>
+  </suppress>
 </suppressions>
