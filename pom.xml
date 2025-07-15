@@ -49,6 +49,7 @@
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
         <version.lib.jackson>2.19.1</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
+        <version.lib.apache.commons.lang3>3.18.0</version.lib.apache.commons.lang3>
 
         <version.plugin.dependency-check-maven>12.1.3</version.plugin.dependency-check-maven>
         <version.plugin.jib>3.4.6</version.plugin.jib>
@@ -116,6 +117,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${version.lib.springframework}</version>
+            </dependency>
+            <!-- override for CVE-2025-48924 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.lib.apache.commons.lang3}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
