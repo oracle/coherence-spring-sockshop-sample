@@ -47,7 +47,7 @@
         <version.lib.springframework>6.2.8</version.lib.springframework>
         <version.lib.tomcat-embed>10.1.43</version.lib.tomcat-embed>
         <version.lib.opentracing-spring-jaeger>3.3.1</version.lib.opentracing-spring-jaeger>
-        <version.lib.jackson>2.19.1</version.lib.jackson>
+        <version.lib.jackson>2.19.2</version.lib.jackson>
         <version.lib.jaeger-client>1.8.1</version.lib.jaeger-client>
         <version.lib.apache.commons.lang3>3.18.0</version.lib.apache.commons.lang3>
 
